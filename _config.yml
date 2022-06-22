@@ -160,7 +160,7 @@ pageview:
 ## => Search
 ##############################
 search:
-  provider: "google" # "default" (default), false, "google", "custom"
+  provider: "default" # "default" (default), false, "google", "custom"
 
   ## Google Custom Search Engine
   google:
@@ -175,7 +175,7 @@ analytics:
   ## Google Analytics
   google:
     tracking_id : "G-LWS0H2N7N3" # Google Analytics id for the site
-    anonymize_ip: true # Anonymize IP tracking for Analytics
+    anonymize_ip: false # Anonymize IP tracking for Analytics
 
 
 ## => Build
