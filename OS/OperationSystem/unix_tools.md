@@ -2,7 +2,7 @@
 layout: default
 title: unix系統小工具
 parent:   Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 ---
 
 {: .no_toc }

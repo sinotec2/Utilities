@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Operation System
-parent: Utilities
+parent: Operation Systems
 has_children: true
-permalink: /utilities/OperationSystem/
+permalink: /OS/OperationSystem/
 last_modified_date:   2021-12-29 13:57:25
 ---
 

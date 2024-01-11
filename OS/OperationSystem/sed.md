@@ -2,7 +2,7 @@
 layout: default
 title: sed
 parent: Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2023-01-23 16:19:14
 tags: sed 
 ---

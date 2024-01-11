@@ -2,7 +2,7 @@
 layout: default
 title:  mpich編譯及應用 
 parent:   Parallel Computation
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2022-04-25 12:20:36
 ---
 # mpich編譯及應用

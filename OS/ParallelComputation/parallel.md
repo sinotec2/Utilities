@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Parallel Computation
-parent: Utilities
+parent: Operation Systems
 has_children: true
-permalink: /utilities/ParallelComputation/
+permalink: /OS/ParallelComputation/
 last_modified_date:   2022-04-25 12:19:41
 ---
 

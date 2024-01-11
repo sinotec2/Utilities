@@ -2,7 +2,7 @@
 layout: default
 title: CPU使用率之個人加總
 parent: Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2023-07-26 09:52:44
 tags: os bash
 ---
