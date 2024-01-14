@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Operation Systems
-nav_order: 1
+title: Just the Docs-descriptions
+nav_order: 99
 has_children: true
-permalink: /OS/
+permalink: /docs/
 last_modified_date: I2024-01-11 15:58:26
 tags: operation_systems
 ---
 
-# Operation Systems
+# Just the Docs-descriptions
 
 
 ## Table of contents

@@ -3,6 +3,7 @@ layout: default
 title: Tables
 parent: UI Components
 nav_order: 4
+grand_parent: Just the Docs-descriptions
 ---
 
 # Tables

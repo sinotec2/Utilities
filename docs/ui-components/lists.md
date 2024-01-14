@@ -2,6 +2,7 @@
 layout: default
 title: Lists
 parent: UI Components
+grand_parent: Just the Docs-descriptions
 nav_order: 5
 ---
 

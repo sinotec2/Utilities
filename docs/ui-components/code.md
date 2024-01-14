@@ -2,6 +2,7 @@
 layout: default
 title: Code
 parent: UI Components
+grand_parent: Just the Docs-descriptions
 has_children: true
 nav_order: 6
 ---
