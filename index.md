@@ -13,7 +13,7 @@ last_modified_date: 2022-12-06 05:47:44
 這裡分享小工具與小經驗
 {: .fs-6 .fw-300 }
 
-[News at 2024-01-15][okm]{: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [sinotec2.github.io](https://sinotec2.github.io/){: .btn .fs-5 .mb-4 .mb-md-0 } [blogs](https://sinotec2.github.io/FAQ/){: .btn .fs-5 .mb-4 .mb-md-0 } [OpenKM][okm]{: .btn .fs-5 .mb-4 .mb-md-0 } [AIEE][aiee]{: .btn .fs-5 .mb-4 .mb-md-0 }[Utilities][util]{: .btn .fs-5 .mb-4 .mb-md-0 }
+[News at 2024-01-15][okm]{: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [sinotec2.github.io](https://sinotec2.github.io/){: .btn .fs-5 .mb-4 .mb-md-0 } [blogs](https://sinotec2.github.io/FAQ/){: .btn .fs-5 .mb-4 .mb-md-0 } [OpenKM][okm]{: .btn .fs-5 .mb-4 .mb-md-0 } [AIEE][aiee]{: .btn .fs-5 .mb-4 .mb-md-0 }[Focus-On-Air-Quality][faq]{: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -124,6 +124,6 @@ email, or any other method with the owners of this repository before making a ch
 [okm]: <https://sinotec2.github.io/OpenKM/> "OpenKM是一個免費/自由的文檔管理系統，提供用於管理任意文件的Web界面。"
 [aiee]: <https://sinotec2.github.io/AIEE/> "這裡分享有關環境工程方面AI的應用及學習成果"
 [util]: <https://sinotec2.github.io/Utilities/> "這裡分享有關環境工程方面AI的應用及學習成果"
-
+[faq]: <https://sinotec2.github.io/Focus-on-Air-Quality/> "這裡分享有關環境工程方面AI的應用及學習成果"
 
 [^2]: 125.229.149.182為Hinet給定，如遇機房更新或系統因素，將不會保留。使用者敬請見諒，逕洽作者：sinotec2@gmail.com.
