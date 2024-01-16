@@ -45,7 +45,12 @@ tags: Crawlers pdf
 
 5. **轉換資料到 DataFrame 並合併**：
     - 將 `data_list` 轉換為一個新的 DataFrame `df`。
-    - 將 `df` 合併到初始的 `df0` DataFrame 中。
+    - 將 `df` 合併(`concat`)到初始的 `df0` DataFrame 中。
+
+```python
+  df = pd.DataFrame(data_list)
+  combined_df = pd.concat([df0, df], ignore_index=True)
+```
 
 6. **新增類別資訊並儲存 CSV 檔案**：
     - 對於 `df0` 中的每個 `group_id`，從 `gp_cat` 字典中尋找對應的類別 `cat` 並加入 DataFrame 中。
