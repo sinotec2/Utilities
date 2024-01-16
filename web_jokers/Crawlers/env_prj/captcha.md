@@ -308,6 +308,29 @@ not_found=['111年度雲林縣石化業專用監測車操作維護計畫','111�
 - 此時browser會因強制關閉而出現確認對話框，需使用者選擇繼續下載、或跳開不存檔。
   - 繼續下載：會發生錯亂，因同時新的browser會下載下一個檔案，這會造成新檔名與內容錯亂的困擾。
   - 放棄下載、跳開不存：在結果目錄下會產生一個長度0的新檔案，直接刪除即可。下此再從頭檢查一遍，就可補上。
+  - 手動搬移：經過確認內容之後，將下載區的檔案，搬遷到正確的位置，並重新更名。
+
+![](2024-01-16-11-43-23.png)
+
+### answered by Claude2
+
+Firefox在下載時間過長或檔案大小過大時,會彈出確認框詢問使用者是否取消下載,這對自動化的影響很大。 可以透過以下方法避免:
+
+1. 在about:config頁面中,將browser.download.manager.showWhenStarting設定為false,可以停用這個確認彈窗。
+
+2. 設定browser.helperApps.neverAsk.saveToDisk為需要的MIME類型,例如application/pdf等,這樣firefox會自動下載這種類型檔案,而不會詢問。
+
+3. 在下載前透過執行js程式碼增加超時時間,減少逾時的情況:
+
+```js
+await driver.executeScript(" window.setTimeout(function(){window.onbeforeunload=null;},100000);");
+```
+
+4. 利用selenium的backgroud_downloader方法在背景下載檔案,避免阻塞執行緒。
+
+5. 在自動化結束前檢查已下載的文件,如果發現未完成的,可以選擇性重新下載。
+
+結合適當的超時設定、後台下載、檔案檢查機制,可以規避firefox的下載確認彈跳窗問題,提高自動化穩定性。
 
 ### jupyter使用的firefox不正常閃退
 

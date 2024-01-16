@@ -5,7 +5,7 @@ parent: Crawlers
 grand_parent: Web Jokers
 has_children: true
 last_modified_date: 2023-06-12 08:56:43
-permalink: /web_jokers/Crawlers/PDF\'s
+permalink: /web_jokers/Crawlers/PDFs
 tags: Crawlers pdf
 ---
 
