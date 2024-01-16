@@ -2,7 +2,7 @@
 layout: default
 title: linux entry
 parent:   Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2022-12-03 05:34:22
 ---
 

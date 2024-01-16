@@ -2,7 +2,7 @@
 layout: default
 title: VS Code安裝使用
 parent:   Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2022-11-10 09:01:53
 tags: note_system
 ---

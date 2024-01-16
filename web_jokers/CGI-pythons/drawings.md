@@ -2,7 +2,7 @@
 layout: default
 title:  drawings CGI-pythons
 parent: CGI-pythons
-grand_parent: Utilities
+grand_parent: Web Jokers
 last_modified_date: 2022-06-11 21:21:57
 tags: CGI_Pythons
 ---

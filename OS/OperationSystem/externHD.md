@@ -2,7 +2,7 @@
 layout: default
 title: Mac讀寫ntfs格式外接硬碟
 parent: Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2022-12-13 17:03:13
 ---
 

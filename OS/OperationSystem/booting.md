@@ -2,7 +2,7 @@
 layout: default
 title: linux之啟動
 parent:   Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2022-11-11 09:01:53
 tags: reboot
 ---

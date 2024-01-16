@@ -2,7 +2,7 @@
 layout: default
 title: 自動添加並啟用IP黑名單
 parent:   Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2022-04-28 10:09:48
 ---
 

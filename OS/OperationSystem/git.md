@@ -2,7 +2,7 @@
 layout: default
 title: git and github
 parent:   Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2023-07-18 14:49:54
 tags: cpuff CMAQ sed git
 ---

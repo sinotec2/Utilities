@@ -2,7 +2,7 @@
 layout: default
 title: API之設定
 parent:   Operation System
-grand_parent: Utilities
+grand_parent: Operation Systems
 last_modified_date: 2024-01-02 13:33:58
 tags: API
 ---
