@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Markdown
-parent: Utilities
+parent: Formats
 has_children: true
 permalink: /Formats/Markdown/
 last_modified_date: 2022-06-17 10:21:23

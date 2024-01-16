@@ -1,7 +1,7 @@
 ---
 layout: default
 title: grib Relatives
-parent: Utilities
+parent: Formats
 has_children: true
 permalink: /Formats/grib/
 last_modified_date:   2022-08-09 10:54:30

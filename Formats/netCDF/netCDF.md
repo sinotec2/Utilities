@@ -1,7 +1,7 @@
 ---
 layout: default
 title: NetCDF Relatives
-parent: Utilities
+parent: Formats
 has_children: true
 permalink: /Formats/netCDF/
 last_modified_date:   2021-12-10 11:31:33
