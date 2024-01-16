@@ -1,3 +1,4 @@
+
 ---
 layout: default
 title:  線上分析程序——OLAP
@@ -331,4 +332,39 @@ OLAP 主要用於商業智慧和決策支援系統中，幫助組織更好地理
     - 分析測試結果，評估系統的性能是否滿足預期要求。根據結果，可能需要進行硬體升級、資料庫優化或其他調整。
 
 定期執行性能測試，特別是在系統進行重大更改或升級之前，有助於確保資料庫系統能夠應對未來的工作負載。
+
+## MySQL + OLAP
+
+您好，MySQL OLAP是一种在线分析处理技术，它可以帮助用户在MySQL数据库中进行复杂的数据分析¹。如果您正在寻找开源的MySQL OLAP工具，以下是一些可供参考的工具：
+
+1. **OpenOLAP for MySQL**：这是一个开源的OLAP工具，支持R-OLAP和M-OLAP功能，适用于MySQL5.0.x ²。
+2. **Apache Kylin**：这是一个分布式的OLAP数据仓库，适用于大数据环境³。
+3. **ClickHouse**：这是一个快速的开源列式数据库管理系统，可以使用SQL查询实时生成分析数据报告⁴。
+4. **MySQL HeatWave**：这是一个完全托管的数据库服务，可以将事务、分析和机器学习服务结合到一个MySQL数据库中，而无需进行ETL复制¹。
+
+希望这些信息能够帮助到您！
+
+來源: 與 Bing 的交談， 2024/1/16
+(1) MySQL HeatWave: One Database for OLTP, OLAP, ML & Lakehouse. https://www.mysql.com/products/mysqlheatwave/.
+(2) OpenOLAP for MySQL download | SourceForge.net. https://sourceforge.net/projects/r-kajiyama/.
+(3) Apache Kylin | Analytical Data Warehouse for Big Data. https://kylin.apache.org/.
+(4) Fast Open-Source OLAP DBMS - ClickHouse. https://clickhouse.com/.
+(5) A Quick Guide to MySQL HeatWave with MySQL Shell for VS Code - Oracle Blogs. https://blogs.oracle.com/mysql/post/a-quick-guide-to-mysql-heatwave-olap-with-mysql-shell-for-vs-code.
+
+### 算力發生在何處
+
+在這樣的架構中，使用者點選計算服務時，實際的計算執行位置取決於你的系統設計和架構。以下是可能的情境：
+
+1. **計算在 Windows IIS 中執行：**
+   - 如果計算服務是透過前端使用者的請求觸發，而該計算服務實際上是嵌入在 Windows IIS 中的應用程序，則計算可能在 Windows 環境中執行。這通常適用於需要使用 Windows 相關 API 或工具的應用。
+
+2. **計算在 Linux 工作站中執行：**
+   - 如果計算服務的邏輯是在 Linux 工作站上實現的，並且可以通過網絡連接從 Windows IIS 中調用，那麼計算可能會在 Linux 環境中執行。這樣的場景可能需要透過跨平台的通信協議（例如REST API）來實現。
+
+3. **計算分布式執行：**
+   - 在一個更複雜的架構中，計算可能是分布式執行的，一部分在 Windows IIS 中，另一部分在 Linux 工作站中。這種情況可能需要使用者請求在前端觸發計算，並在背後透過合適的通信機制將計算工作分發到適當的環境中。
+
+總體而言，執行計算的確切位置取決於你的應用架構、計算邏輯的實現和跨平台通信的方式。需確保整個系統的設計能夠有效協同工作，以滿足你的用例需求。
+
+
 
