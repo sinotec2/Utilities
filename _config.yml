@@ -107,7 +107,7 @@ enable_copy_code_button: true
 # Aux links for the upper right navigation
 aux_links:
   "Utilities at GitHub":
-    - "https//github.com/sinotec2/Utilities"
+    - "//github.com/sinotec2/Utilities"
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
