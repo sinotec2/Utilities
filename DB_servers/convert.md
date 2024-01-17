@@ -22,6 +22,7 @@ tags: DB_servers
 
 ## 背景
 
+
 ### 如何用python將一個DataFrame 寫成mysql的資料庫?
 
 你可以使用 `pandas` 库的 `to_sql` 方法将一个 DataFrame 写入 MySQL 数据库。首先，确保你已经安装了 `pandas` 和 `sqlalchemy` 这两个库。可以使用以下命令进行安装：
