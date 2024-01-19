@@ -1,10 +1,10 @@
 ---
 layout: default
 title:  RESTful API Server 
-parent: Crawlers
+parent: API Servers
 grand_parent: Web Jokers
-last_modified_date: 2023-06-12 08:56:43
-tags: Crawlers 
+last_modified_date: 2024-01-19 13:25:11
+tags: API_Server 
 ---
 
 # RESTful 伺服器之搭建
@@ -22,9 +22,7 @@ tags: Crawlers
 
 ## 背景
 
-### 
-
-架設 RESTful API 伺服器需要以下步驟：
+### 架設 RESTful API 伺服器需的步驟
 
 1. **選擇 Web 框架：**
    首先，選擇一個適合你的程式語言的 Web 框架。常見的選擇包括：
