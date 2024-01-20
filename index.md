@@ -13,7 +13,7 @@ last_modified_date: 2024-01-16 15:27:26
 這裡分享小工具與小經驗
 {: .fs-6 .fw-300 }
 
-[News at 2024-01-15][okm]{: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [sinotec2.github.io](https://sinotec2.github.io/){: .btn .fs-5 .mb-4 .mb-md-0 } [blogs](https://sinotec2.github.io/FAQ/){: .btn .fs-5 .mb-4 .mb-md-0 } [OpenKM][okm]{: .btn .fs-5 .mb-4 .mb-md-0 } [AIEE][aiee]{: .btn .fs-5 .mb-4 .mb-md-0 }[Focus-On-Air-Quality][faq]{: .btn .fs-5 .mb-4 .mb-md-0 }
+[News at 2024-01-15][okm]{: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [每日空品預報和其他](https://sinotec2.github.io/){: .btn .fs-5 .mb-4 .mb-md-0 } [blogs](https://sinotec2.github.io/FAQ/){: .btn .fs-5 .mb-4 .mb-md-0 } [OpenKM][okm]{: .btn .fs-5 .mb-4 .mb-md-0 } [AIEE][aiee]{: .btn .fs-5 .mb-4 .mb-md-0 }[Focus-On-Air-Quality][faq]{: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
