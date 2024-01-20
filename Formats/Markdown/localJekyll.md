@@ -193,22 +193,7 @@ pipeline:
 
 然後應用通知步驟，如下所示：
 
-1 
-2 
-3 
-4 
-5 
-6 
-7 
-8 9 10 
-11 12 13 14
-
-
-
-
-
-	
-
+```bash
   notify-via-slack:
     image: plugins/slack
     webhook:
@@ -222,58 +207,23 @@ pipeline:
       
         [DRONE CI]: ** : /
         ( -  | )
-      
+```
 
 根據狀態，您應該會收到類似如下的通知：
 
-影像
-新增 Docker 組合
+![](https://user-images.githubusercontent.com/567298/56622206-6e356580-662f-11e9-8d93-286c9c126d24.png)
+
+### 新增 Docker 組合
 
 接下來，我們需要宣告將 jekyll 服務部署到 swarm 所需的 docker compose 檔案：
 
-1
-
-	
-
+```bash
 $ vim docker-compose.yml
+```
 
 並填入此資訊（只需更改您自己的環境/設定的值）：
 
-1 
-2 
-3 
-4 
-5 6 
-7 
-8 
-9 
-10 
-11 
-12 
-13 
-14 
-15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 
-30 31 32 33
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
+```bash
 version: '3.5'
 
 services:
@@ -307,33 +257,30 @@ services:
 networks:
   appnet:
     external: true
+```
 
-推送到Github
+### 推送到Github
 
 現在我們需要將我們的.drone.yml和推docker-compose.yml送到 github。由於儲存庫是在無人機上啟動的，任何對 master 的推送都會觸發管道，因此在這次推送之後，我們應該去無人機上查看管道的運作。
 
-新增未追蹤的檔案並推送到github：
+- 新增未追蹤的檔案並推送到github：
 
-1 
-2 
-3 
-4
-
-	
-
+```bash 
 $ git add .drone.yml
 $ git add docker-compose.yml
 $ git commit -m "add drone and docker config"
 $ git push origin master
+```
 
 當您轉到無人機用戶介面時，您應該看到管道輸出，它看起來或多或少像這樣（看看它有多漂亮！:D）
 
-影像
-測試傑基爾
+![](https://user-images.githubusercontent.com/567298/56620236-91a8e200-6628-11e9-9278-38e3305fdcd7.png)
+
+### 測試Jekyll
 
 如果部署已完成，您應該能夠在配置的網域上存取您的應用程式。我造訪 Jekyll 時的回應截圖：
 
-影像
+![](https://user-images.githubusercontent.com/567298/56620280-af764700-6628-11e9-9d4f-c2592e6cf561.png)
 
 絕對令人驚奇！我真的很喜歡無人機！
 
