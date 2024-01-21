@@ -38,6 +38,10 @@ tags: note_system
 
 ## GitHub Pages 与 Gitee Pages 上的 Jekyll
 
+##
+
+source: Appleboy(February 26, 2020) [用五分鐘安裝好 Drone 搭配 GitHub 自動化環境](https://blog.wu-boy.com/2020/02/install-drone-with-github-in-five-minutes/)
+
 ## 使用 Drone CI 建置 Jekyll 網站並部署到 Docker Swarm
 
 - 來源：阮貝克的博客2019年4月23日下午 5:57
