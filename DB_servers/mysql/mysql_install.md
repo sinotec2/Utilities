@@ -1,12 +1,14 @@
 ---
 layout: default
-title:  mysql
-parent: DB_servers
+title:  mysql之安裝
+parent: mysql
+grand_parent: DB_servers
 last_modified_date: 2024-01-16 10:51:11
 tags: mysql
 ---
 
-# mysql
+# mysql安裝
+
 {: .no_toc }
 
 <details open markdown="block">
@@ -21,8 +23,6 @@ tags: mysql
 ---
 
 ## 背景
-
-## mysql安裝
 
 在 Linux 中，安裝 MySQL 可以透過軟體套件管理器來完成。 以下是一些常見的 Linux 發行版的安裝步驟。
 
@@ -112,3 +112,107 @@ mysql -u root -p
 (7) undefined. [dev.mysql](https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.2).
 
 ## mycnf內容設定
+
+### 說明
+
+MySQL 的設定檔是用來指定 MySQL 伺服器行為的檔案。 在 MySQL 中，設定檔通常被稱為 `my.cnf`（在 Windows 上可能是 `my.ini`）。 這個檔案包含了一系列設定選項，讓你可以自訂 MySQL 伺服器的各種方面，例如資料庫目錄、連接埠號碼、字元集、緩衝池大小等。
+
+以下是一個典型的 MySQL 設定檔 `my.cnf` 的一些重要設定選項以及它們的意義：
+
+1. **[mysqld] 部分：**
+    這是 MySQL 伺服器的主要配置部分。 以下是其中一些常見的選項：
+
+    - `datadir`：MySQL 資料庫檔案儲存的目錄路徑。
+    - `port`：MySQL 伺服器監聽的連接埠號碼。
+    - `character-set-server`：伺服器使用的字元集。
+    - `max_connections`：允許的最大連線數。
+
+    範例：
+    ```ini
+    [mysqld]
+    datadir=/var/lib/mysql
+    port=3306
+    character-set-server=utf8mb4
+    max_connections=100
+    ```
+
+2. **[client] 部分：**
+    這是 MySQL 用戶端的設定部分，包含客戶端使用的預設字元集等選項。
+
+    範例：
+    ```ini
+    [client]
+    default-character-set=utf8mb4
+    ```
+
+3. **[mysql] 部分：**
+    這是 MySQL 命令列客戶端的設定部分。
+
+    範例：
+    ```ini
+    [mysql]
+    default-character-set=utf8mb4
+    ```
+
+4. **[mysqldump] 部分：**
+    這是 mysqldump 工具的設定部分。
+
+    範例：
+    ```ini
+    [mysqldump]
+    default-character-set=utf8mb4
+    ```
+
+設定檔通常位於以下位置之一：
+
+- **Linux/Unix 系統：**
+   - `/etc/my.cnf`
+   - `/etc/mysql/my.cnf`
+   - `/usr/etc/my.cnf`
+   - `~/.my.cnf` （用戶級配置）
+
+- **Windows 系統：**
+   - `C:\ProgramData\MySQL\MySQL Server x.x\my.ini` （MySQL 安裝路徑）
+   - `C:\Program Files\MySQL\MySQL Server x.x\my.ini` （MySQL 安裝路徑）
+
+請注意，實際的設定檔路徑可能會因作業系統、MySQL 版本和安裝方式而異。 你可以透過 MySQL 的 `SHOW VARIABLES` 指令或 `mysqld --help --verbose` 指令來查看 MySQL 正在使用的設定檔路徑。
+
+在修改設定檔之後，可能需要重新啟動 MySQL 伺服器以使變更生效。
+
+### 範例
+
+```bash
+openkm@master /etc
+$ cat my.cnf
+# For advice on how to change settings please see
+# http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html
+
+[mysqld]
+#
+# Remove leading # and set to the amount of RAM for the most important data
+# cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.
+# innodb_buffer_pool_size = 128M
+#
+# Remove leading # to turn on a very important data integrity option: logging
+# changes to the binary log between backups.
+# log_bin
+#
+# Remove leading # to set options mainly useful for reporting servers.
+# The server defaults are faster for transactions and fast SELECTs.
+# Adjust sizes as needed, experiment to find the optimal values.
+# join_buffer_size = 128M
+# sort_buffer_size = 2M
+# read_rnd_buffer_size = 2M
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+# Recommended in standard MySQL setup
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+```
