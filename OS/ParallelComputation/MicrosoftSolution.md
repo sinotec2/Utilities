@@ -1,6 +1,30 @@
+---
+layout: default
+title:  遠端執行計算之微軟方案
+parent:   Parallel Computation
+grand_parent: Operation Systems
+last_modified_date: 2022-04-25 12:20:36
+---
 
+# 遠端執行計算之微軟方案
+{: .no_toc }
 
-### Microsoft Solutions
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
+
+- 環評工作中有許多情況是必須鎖定在PC上執行，而多台PC的主從架構，不是微軟公司創辦人的強項。
+
+## Microsoft Solutions
 
 地端（On-premises）解決方案，以下是一些適用於本地環境的 Microsoft 工具和方案：
 
