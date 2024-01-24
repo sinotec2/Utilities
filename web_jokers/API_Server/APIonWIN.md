@@ -1,3 +1,26 @@
+---
+layout: default
+title:  RESTful API Server 
+parent: API Servers
+grand_parent: Web Jokers
+last_modified_date: 2024-01-19 13:25:11
+tags: API_Server 
+---
+
+# Window 平台上的API伺服器
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 在 Windows 平台上，有多種方案可以用來建立 API 伺服器。 以下是一些常見的方案：
 
