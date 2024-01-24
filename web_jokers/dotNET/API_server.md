@@ -1,3 +1,26 @@
+---
+layout: default
+title:   .NET的API功能
+parent: dotNET connections
+grand_parent: Web Jokers
+last_modified_date: 2024-01-19 13:47:15
+tags: API_Server 
+---
+
+# .NET的API功能
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 ASP.NET Core 提供了強大的 API 開發功能，透過 MVC 框架和 Web API 控制器，你可以輕鬆建立和管理 API。 以下是一個簡單的 ASP.NET Core API 的啟動和範例說明。
 
