@@ -98,7 +98,7 @@ mysql -u root -p
 
 7. **啟動 MySQL**：使用 `/usr/local/mysql/support-files/mysql.server start` 命令啟動 MySQL¹²。
 
-8. **修改 root 用戶的密碼**：使用 `mysqladmin -uroot -p password` 命令修改 root 用戶的密碼¹²。
+8. **修改 root 用戶的密碼**：使用 `mysqladmin -u root -p password` 命令修改 root 用戶的密碼¹²。
 
 請注意，這些步驟可能會因為您的 Linux 發行版和 MySQL 版本的不同而有所變化。在進行操作時，請確保您已經根據您的具體情況進行了適當的調整。希望這些資訊對您有所幫助！
 
@@ -216,3 +216,104 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
 ```
+
+## 重設root密碼
+
+### yum
+
+```bash
+sudo yum install mysql-server mysql-client
+```
+安装期间，你将被要求设置 MySQL root 用户的密码。
+
+### mysqladmin
+
+在使用 `yum` 安裝 MySQL 的過程中，系統可能不會在安裝過程中詢問您設定 MySQL root 用戶的密碼⁵。這是因為密碼的設定通常在 MySQL 伺服器配置的步驟中完成⁵。
+
+安裝完成後，您可以使用以下命令來設定 root 用戶的密碼³：
+
+```bash
+mysqladmin -u root password "your_new_password";
+```
+
+### skip-grant-tables
+
+如果您在設定密碼時遇到問題，例如無法登入，您可以嘗試以下步驟來重設密碼²：
+1. 在 `/etc/my.cnf` 文件中添加一行 `skip-grant-tables`，這樣可以繞過密碼驗證²。
+2. 重啟 MySQL 服務²。
+3. 登入 MySQL，然後使用以下 SQL 語句來修改密碼²：
+    ```sql
+    use mysql;
+    update mysql.user set authentication_string=password('your_new_password') where user='root';
+    flush privileges;
+    quit;
+    ```
+4. 最後，刪除 `/etc/my.cnf` 文件中的 `skip-grant-tables`，然後再次重啟 MySQL 服務²。
+
+請注意，這些命令需要在終端機或命令提示字元中執行。如果您在執行這些命令時遇到任何問題，請隨時告訴我，我會很樂意提供進一步的幫助！
+
+來源: 與 Bing 的交談， 2024/1/23
+(1) 如何在 Ubuntu 20.04 上安装 MySQL - [阿里云开发者社区](https://developer.aliyun.com/article/758177).
+(2) Linux/UNIX 上yum安装 MySQL-腾讯云开发者社区-[腾讯云](https://cloud.tencent.com/developer/article/1888692).
+(3) Linux CentOS7通过yum安装mysql-server - [CSDN博客](https://blog.csdn.net/zhang7761/article/details/109018190).
+(4) MySQL :: MySQL 8.0 Reference Manual :: 2.5.1 Installing MySQL on Linux Using the MySQL Yum Repository. [dev.mysql](https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html).
+(5) Linux yum安装指定版本的MySQL（如MySQL5.7） - [CSDN博客](https://blog.csdn.net/li_wen_jin/article/details/105140360).
+(6) [undefined](https://dev.mysql.com/downloads/repo/yum/).
+(7) [undefined](https://www.cnblogs.com/cyl048/p/6879085.html).
+(8) [undefined](http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm).
+
+## 如何新增mysql的使用者帳密?
+
+在 MySQL 中，你可以使用 `CREATE USER` 和 `GRANT` 語句來建立新使用者並授予權限。 以下是一些基本的步驟：
+
+### 步驟1：登入 MySQL 伺服器
+
+使用 MySQL 用戶端登入 MySQL 伺服器，可以使用以下命令：
+
+```bash
+mysql -u root -p
+```
+
+這將提示你輸入 MySQL root 使用者的密碼。
+
+### 步驟2：建立新用戶
+
+```sql
+CREATE USER 'new_username'@'localhost' IDENTIFIED BY 'user_password';
+```
+
+- `new_username` 是你要建立的新使用者名稱。
+- `localhost` 表示該使用者只能從本機連線到 MySQL。 如果你希望允許從任何地方連接，可以使用 `'%'` 來代替 `'localhost'`。
+- `'user_password'` 是新使用者的密碼。 請使用安全的密碼。
+
+### 步驟3：授予權限
+
+接下來，你需要為新使用者授予適當的權限。 例如，如果你要為新使用者授予所有資料庫的全部權限，可以使用以下命令：
+
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'new_username'@'localhost' WITH GRANT OPTION;
+```
+
+- `*.*` 表示所有資料庫和所有資料表。
+- `WITH GRANT OPTION` 允許該使用者授予權限給其他使用者。
+
+### 步驟4：刷新權限
+
+在進行了權限變更後，你需要刷新 MySQL 的權限表：
+
+```sql
+FLUSH PRIVILEGES;
+```
+
+### 範例：
+
+假設你要建立一個用戶名為 `myuser`，密碼為 `mypassword`，並且具有對所有資料庫的全部權限的用戶，你可以執行以下 SQL 命令：
+
+```sql
+CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypassword';
+GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
+請根據你的實際需求和安全性要求進行調整。 建立使用者並授予權限是資料庫安全的一個重要方面，確保僅為使用者提供他們實際需要的最小權限。
+
