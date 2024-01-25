@@ -43,7 +43,7 @@ Druid 主要用於處理即時數據、事件數據、日誌數據等工作負�
 
 ### 完整介紹與比較
 
-［ITxiaoshen blog](https://www.cnblogs.com/itxiaoshen/p/17081162.html#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF)
+[ITxiaoshen blog](https://www.cnblogs.com/itxiaoshen/p/17081162.html#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF)
 
 
 ## 安裝
