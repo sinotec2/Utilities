@@ -1,8 +1,8 @@
-
 ---
 layout: default
 title:  線上分析程序——OLAP
-parent: DB_servers
+parent: OLAP
+grand_parent: DB_servers
 last_modified_date: 2024-01-07 20:26:18
 tags: DB_servers
 ---
