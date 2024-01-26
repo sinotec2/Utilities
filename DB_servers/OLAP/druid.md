@@ -138,3 +138,26 @@ df0.to_csv('df0.csv',index=False)
 
 總的來說，沒有一種方法適用於所有情況，最佳策略取決於具體的使用案例和需求。
 
+是的，Apache Druid 提供了一個 HTTP API，允許遠端程式進行連接和與 Druid 集群進行通信。這個 API 提供了多種功能，包括查詢數據、查看集群狀態、提交索引建構任務等。
+
+以下是 Druid 的一些主要 API 端點：
+
+1. **Broker API：**
+   - `/druid/v2`: 這是 Druid 的查詢 API 端點，用於提交和查詢數據。
+   - `/status`: 提供有關集群健康狀態的信息。
+
+2. **Coordinator API：**
+   - `/druid/coordinator/v1`: 提供有關 Druid 集群的一致性、分片分發等信息。
+   - `/druid/coordinator/v1/rules`: 管理自動分片分發的規則。
+
+3. **Overlord API：**
+   - `/druid/indexer/v1/task`: 提交和管理索引建構任務。
+
+4. **Historical API：**
+   - `/druid/historical/v1`: 用於歷史節點的查詢和查看索引信息。
+
+5. **MiddleManager API：**
+   - `/druid/indexer/v1/worker`: 提供有關中間管理器節點的信息。
+
+這僅僅是一些 Druid API 的例子，實際上，Druid 提供了更多的 API 端點，以支持不同的功能和管理操作。你可以查閱 Druid 的官方文檔以獲取完整的 API 參考和相關信息。
+
