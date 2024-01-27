@@ -1,10 +1,10 @@
 ---
 layout: default
 title:  Blog
-parent: 
+parent: Static Site Generators
 grand_parent: Web Jokers
 last_modified_date: 2023-06-12 08:56:43
-tags: OAuth
+tags: blog 
 ---
 
 # 部落格的基本組成與功能
