@@ -1,3 +1,26 @@
+---
+layout: default
+title:  Blog
+parent: 
+grand_parent: Web Jokers
+last_modified_date: 2023-06-12 08:56:43
+tags: OAuth
+---
+
+# 部落格的基本組成與功能
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 部落格網站的元件和功能可以因網站的目標、目標受眾和內容而有所不同。然而，以下是一些常見且可能有助於提升部落格網站價值和使用者體驗的元件和功能：
 
