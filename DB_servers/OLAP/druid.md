@@ -181,4 +181,21 @@ Apache Druid 是一個開源的實時數據庫，通常用於快速查詢和分�
 
 Druid 的記憶體使用可以根據具體的使用情境進行調整和配置。在設置 Druid 環境時，建議參考官方文檔以獲得最新和最準確的配置建議。
 
+## 權限管理
+
+Druid 提供了一些機制來管理用戶訪問權限，但這可能需要透過其他工具或自定義的解決方案來實現更細緻的權限控制。
+
+基本上，Druid 主要有以下幾種權限機制：
+
+1. **Segment-level Security：** Druid 支援在段級別（segment-level）實現安全性。這意味著你可以限制用戶只能查看某些段（segments），以控制他們對數據的訪問。
+
+2. **Query Granularity：** 你可以使用查詢級別（query granularity）來控制用戶對數據的訪問程度。這可以限制用戶僅能查詢某些特定的字段。
+
+3. **Coarse-Grained Access Control：** Druid 支援對服務層進行粗粒度的訪問控制。這允許你根據 IP 地址或其他一般性的方式來限制用戶對 Druid 服務的訪問。
+
+4. **Authentication and Authorization Plugins：** Druid 支援自定義的身份驗證（authentication）和授權（authorization）插件。這使得你可以根據特定的需求實現更複雜的權限管理。
+
+然而，要實現更具體和差異化的權限管理，可能需要結合 Druid 的基本機制，使用外部的身份驗證系統或設計自定義的授權邏輯。這可能包括整合 LDAP、使用 Apache Ranger 等外部權限管理工具，或者實現自定義的 Druid 插件。詳細實現方式取決於你的具體需求和環境。
+
+
 
