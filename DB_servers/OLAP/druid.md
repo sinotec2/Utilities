@@ -229,3 +229,36 @@ druid.auth.authorizerName=metadata
 
 請注意，以上僅為一個簡單的示例，實際配置取決於你的 LDAP 伺服器和 Druid 的版本。在實施之前，建議參考 Druid 官方文檔，特別是與你使用的 Druid 版本相對應的文檔，以獲得更具體的信息。
 
+### 其他插件
+
+在 Druid 中，除了 LDAP 插件外，還有其他一些與權限管理相關的插件。以下是一些 Druid 中用於權限管理的插件：
+
+1. **BasicAuthentication：**
+   - **描述：** 基本身份驗證插件，通過使用者名稱和密碼進行身份驗證。
+   - **配置範例：**
+     ```properties
+     # Authentication Configuration
+     druid.auth.authenticatorChain=["basic"]
+     druid.auth.authenticator.basic.type=basic
+     druid.auth.authenticator.basic.initialAdminUser=username
+     druid.auth.authenticator.basic.initialAdminPassword=password
+     ```
+
+2. **MetadataStoreAuthorizer：**
+   - **描述：** 元數據存儲授權插件，是 Druid 預設的授權插件。它基於元數據中的規則控制用戶對 Druid 的訪問權限。
+   - **配置範例：**
+     ```properties
+     # Authorization Configuration
+     druid.auth.authorizerName=metadata
+     ```
+
+3. **PermissiveAuthorizer：**
+   - **描述：** 一個寬鬆的授權插件，允許所有操作，通常用於測試或開發環境。
+   - **配置範例：**
+     ```properties
+     # Authorization Configuration
+     druid.auth.authorizerName=permissive
+     ```
+
+這些插件提供了在 Druid 中配置不同類型權限管理策略的選擇。在使用這些插件時，需要仔細閱讀相關的官方文檔，確保插件的配置與 Druid 的版本相符合。配置中可能需要指定用於初始化的管理員用戶和密碼等信息，以確保正確的權限設定。
+
