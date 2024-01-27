@@ -161,3 +161,24 @@ df0.to_csv('df0.csv',index=False)
 
 這僅僅是一些 Druid API 的例子，實際上，Druid 提供了更多的 API 端點，以支持不同的功能和管理操作。你可以查閱 Druid 的官方文檔以獲取完整的 API 參考和相關信息。
 
+## Druid記憶體的管理
+
+Apache Druid 是一個開源的實時數據庫，通常用於快速查詢和分析大型數據集。Druid 的記憶體使用和配置主要取決於其不同的組件和配置。
+
+以下是一些關於 Druid 記憶體使用的重要概念：
+
+1. **JVM Heap 設置：** Druid 的主要組件運行在 Java 虛擬機（JVM）上，因此 JVM 的堆設置對於整體性能至關重要。你可以通過調整 Java 虛擬機的 `-Xmx` 和 `-Xms` 參數，來配置 Druid 的堆大小。這兩個參數分別表示 Java 虛擬機的最大和初始堆大小。
+
+2. **Segment 讀取緩存：** Druid 中的 Segment 是數據的基本單位，而 Segment 讀取緩存用於緩存已經讀取的 Segment，以提高查詢性能。你可以配置 Segment 讀取緩存的大小。
+
+3. **Historical 節點的 Offheap 記憶體：** 在 Druid 中，Historical 節點負責存儲歷史數據段。這些數據通常存儲在 Offheap 記憶體中，而不是 Java 堆中。你可以配置 Historical 節點上的 Offheap 記憶體的大小。
+
+4. **MiddleManager 節點的 Offheap 記憶體：** MiddleManager 節點用於處理索引建構任務。與 Historical 節點類似，MiddleManager 也可以配置 Offheap 記憶體的大小。
+
+5. **Broker 節點的記憶體：** Broker 節點通常用於處理查詢。你可以配置 Broker 節點的 JVM 堆大小，以及相關的記憶體參數。
+
+6. **Coordinator 節點的內存：** Coordinator 節點主要負責元數據的管理。你可以配置 Coordinator 節點的 JVM 堆大小。
+
+Druid 的記憶體使用可以根據具體的使用情境進行調整和配置。在設置 Druid 環境時，建議參考官方文檔以獲得最新和最準確的配置建議。
+
+
