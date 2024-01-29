@@ -1,13 +1,14 @@
 ---
 layout: default
-title:  Druid
-parent: OLAP
+title:  Druid Q&A
+parent: Apache Druid
 grand_parent: DB_servers
+grand_parent: OLAP
 last_modified_date: 2024-01-07 20:26:18
 tags: DB_servers Druid
 ---
 
-# Druid Apache
+# Apache Druid General Q&A
 {: .no_toc }
 
 <details open markdown="block">

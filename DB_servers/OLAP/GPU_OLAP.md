@@ -20,6 +20,7 @@ tags: DB_servers
 </details>
 
 ---
+
 ## 背景
 
 - 是有一些OLAP方案支持GPU加速並且是開源的。例如，MapD（現在被稱為OmniSci）是一個基於GPU的OLAP系統，它已經開源了其核心數據庫和相關的可視化庫¹。
