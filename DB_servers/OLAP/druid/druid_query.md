@@ -135,4 +135,4 @@ GROUP BY 1,2
 ORDER BY 3 DESC
 ```
 
-- 注意：不指定排序方式即維正向排序，如`ORDER BY 1`。
+- 注意：不指定排序方式即為正向排序，如`ORDER BY 1`。
