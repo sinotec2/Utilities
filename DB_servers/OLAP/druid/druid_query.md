@@ -26,7 +26,7 @@ tags: DB_servers Druid
 
 - Apache Druid伺服器是個高算力、適合大型資料庫的線上樞紐分析伺服器，已有成熟穩定的介面、使用簡單的SQL語言，操作容易。
 - 伺服器本身同時具有資料庫伺服器、API伺服器、權限伺服器等等功能，適合作為發展平台。
-- 伺服器可以使用到工作站80%的記憶體(240G/300G)、40個核心(vs 99)。
+- 伺服器可以使用到工作站80%的記憶體(240G among 300G)、47個核心(among 99)。
 - 目前範例資料庫一年約有1百30萬筆記錄，未來還會增加中。
 
 ## 快速啟動
@@ -184,8 +184,8 @@ ORDER BY 3 DESC
   - 如果是太單純的csv檔案，系統會需要使用者確認格式。
   - 內設是正則文字檔(`regex`)，可以右邊的下拉選單選擇`csv`
   - 選擇`csv`後，其他既設選項都會隨之改變
+![](2024-01-30-15-19-56.png)
 
-![](2024-01-30-12-16-23.png)
 
 - csv檔案設定
   - 表頭：系統會自動跳開表頭，如果要多跳行，需要設定1行以上。
@@ -199,6 +199,25 @@ ORDER BY 3 DESC
   - 系統會讀取資料表的欄位名稱，提供程式碼在**程式碼輸入板**
   - 除了確認欄位是否都要載入，也要確認是否每一欄都要能做區分(PARTITIONED、可分群組)。
   - 如果不需要，直接刪除就不會執行載入，可減省記憶體。
+
+```SQL
+REPLACE INTO "BusinessOrganization" OVERWRITE ALL
+WITH "ext" AS (
+  SELECT *
+  FROM TABLE(
+    EXTERN(
+      '{"type":"local","baseDir":"/nas2/sespub/epa_IWRMS","filter":"BusinessOrganization.csv"}',
+      '{"type":"csv","findColumnsFromHeader":true}'
+    )
+  ) EXTEND ("事業機構管編" VARCHAR, "事業機構名稱" VARCHAR)
+)
+SELECT
+  "事業機構管編",
+  "事業機構名稱"
+FROM "ext"
+PARTITIONED BY ALL
+```
+
 - 確認使用計算資源(Mask tasks)
   - 如果沒有指定，系統會自行規畫最大上限。以devp工作站而言，會規畫一半的核心給這個資料表。這將會造成使用容量的限制及競爭。
   - 如果表格不大、使用人數不多，規劃小量的算力即可。
