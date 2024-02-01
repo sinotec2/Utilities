@@ -52,3 +52,48 @@ tags: VuPress
 (6) [undefined](https://plugins.jenkins.io/gitea/).
 
 (7) [undefined](https://gitea.com).
+
+## Jenkins Pipeline
+
+在 Jenkins 中設定 Pipeline 以推送 VuePress Markdown 文件，您可以使用 Jenkins Pipeline 腳本。下面是一個簡單的範例，假設您的 VuePress 項目位於 Git 存儲庫中：
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // 檢查程式碼庫
+                git 'https://your-github-repo/vuepress-project.git'
+            }
+        }
+
+        stage('Build and Deploy') {
+            steps {
+                script {
+                    // 安裝 VuePress 和相依套件
+                    sh 'npm install'
+
+                    // 建構 VuePress
+                    sh 'npm run build'
+
+                    // 此處可能需要其他設定，視您的專案而定
+
+                    // 將生成的靜態文件複製到伺服器或其他位置
+                    // 這裡只是一個示例，您可能需要根據實際情況進行更改
+                    sh 'cp -r docs/.vuepress/dist/* /path/to/deployment/location/'
+                }
+            }
+        }
+    }
+}
+```
+
+在這個 Pipeline 中：
+
+1. `Checkout` 階段使用 `git` 步驟從您的 Git 存儲庫檢出代碼。
+2. `Build and Deploy` 階段中，使用 `npm install` 安裝相依套件，然後執行 `npm run build` 來建構 VuePress。
+3. 最後，將生成的靜態文件複製到部署位置。請注意，此處的 `cp` 命令僅為示例，您需要根據實際情況更改路徑。
+
+請確保在 Jenkins 中安裝了相關的插件（如 Git、Node.js、npm），並檢查 Jenkinsfile 是否符合您的專案結構和需求。
