@@ -121,3 +121,9 @@ if __name__ == '__main__':
 在這個例子中，`/callback` 路由處理程序使用訪問令牌向 Google 的 People API 發送請求，以獲取用戶的基本信息。具體來說，這個示例使用了 Google+ API，但由於該 API 將於日後停用，建議使用新的 People API。
 
 你可以根據你的需求使用不同的 Google API 端點來獲取用戶信息。要了解有關 People API 或其他相關 API 的更多信息，請查閱 Google 開發者文檔。
+
+## google developers官網說明
+
+- [使用 OAuth 2.0 存取 Google API ](https://developers.google.com/identity/protocols/oauth2?hl=zh-tw)
+
+key=API_KEY

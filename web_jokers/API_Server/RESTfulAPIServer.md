@@ -160,6 +160,7 @@ FastAPI 是一個基於 Python 的現代、快速（fast）、Web 框架，設�
 FastAPI 是一個現代且強大的 Web 框架，特別適用於構建高效、易於維護和自動文檔化的 API。
 
 ### API金鑰
+
 API 金鑰（API Key）是一種用於識別和驗證 API 使用者身份的機制。這是在許多 API 中常見的安全措施之一，以確保只有經過授權的應用程式或使用者可以訪問特定的 API 資源。以下是一些 API 金鑰的相關資訊：
 
 1. **用途：**
@@ -217,6 +218,7 @@ OAuth 的主要流程如下：
 OAuth 提供了多種授權流程，包括授權碼流程（Authorization Code Flow）、隱式流程（Implicit Flow）、密碼流程（Password Credentials Flow）等，以應對不同的應用場景。這種標準的設計有助於確保安全性、隱私性和互操作性。
 
 ### JWT
+
 JWT（JSON Web Token）是一種開放標準（RFC 7519），定義了一種緊湊且自包含的方法，用於在各方之間安全地傳輸資訊作為 JSON 對象。JWT 可以使用 HMAC 算法或使用 RSA 或 ECDSA 的公開/私有金鑰對進行簽署，以驗證傳送者的身份並確保資訊的完整性。
 
 JWT 由三個部分組成：
