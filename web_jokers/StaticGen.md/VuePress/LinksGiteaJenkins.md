@@ -38,10 +38,17 @@ tags: VuPress
 希望這些信息對您有所幫助！
 
 來源: 與 Bing 的交談， 2024/1/21
+
 (1) Gitea 与 Jenkins 的集成实践，打造你的专属 CI/CD 系统 - Gitea - [博客园](https://www.cnblogs.com/Gitea/p/jenkins.html).
+
 (2) VuePress搭建博客教程（含部署到gitee） | [临渊的博客](http://linyuanstudy.gitee.io/linyuanstudy/frontEnd/VuePress%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B.html).
+
 (3) 前端自动化部署jenkins+gitee一个博客系统vuePress项目_vuepress gitee 自动化-[CSDN博客](https://blog.csdn.net/weixin_42424283/article/details/128738568).
+
 (4) 【Linux】云服务器自动化部署VuePress博客（[Jenkins](https://blog.51cto.com/returntmp/7330501)).
+
 (5) Jenkins实现Vuepress自动化部署(上)-安装配置Jenkins - [掘金](https://juejin.cn/post/6969542924182749198).
+
 (6) [undefined](https://plugins.jenkins.io/gitea/).
+
 (7) [undefined](https://gitea.com).
