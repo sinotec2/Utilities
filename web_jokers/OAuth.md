@@ -176,3 +176,55 @@ key=API_KEY
 如何聯繫我們並對您的個人信息提出要求。
 如果您想了解更多關於我們的隱私政策，或者如果您想要了解您的個人信息，請聯繫我們的客戶支持部門。您可以通過電子郵件、電話或書信聯繫我們。如果您擁有權限，您可以聯繫我們的客戶支持部門以更改您的個人信息。
 
+### googleapiclient
+
+```python
+使用 OAuth 2.0 進行身份驗證通常涉及以下步驟：
+
+1. **建立專案：** 在 Google 開發者控制台建立一個專案。這將為您提供用於身份驗證的 client ID 和 client secret。
+
+2. **啟用 API：** 啟用您的專案所需的 API。這可以在 Google 開發者控制台的 "API 和服務" > "憑證" 頁面上完成。
+
+3. **建立憑證：** 在 "API 和服務" > "憑證" 頁面，建立 OAuth 2.0 用戶端 ID。在建立時，您需要指定應用程式的類型（例如 Web 應用程式、原生應用程式、服務帳戶等）和重新導向 URI。
+
+4. **獲取授權碼：** 在應用程式中導向用戶以獲取授權碼。使用 Google 提供的 OAuth 2.0 授權端點。
+
+5. **獲取存取令牌：** 使用授權碼交換存取令牌。這通常是使用後端伺服器完成的，並需要將授權碼、用戶端 ID、用戶端密碼等信息提交到 OAuth 2.0 授權端點。
+
+6. **使用 API：** 使用存取令牌調用所需的 API。將存取令牌包含在 API 請求中的標頭中。
+
+以下是一個簡單的 Python 程式碼範例，使用 `google-auth` 庫進行 OAuth 2.0 身份驗證：
+
+```python
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+
+# 填入您的 client ID 和 client secret
+CLIENT_ID = 'your-client-id'
+CLIENT_SECRET = 'your-client-secret'
+REDIRECT_URI = 'your-redirect-uri'
+
+# 獲取授權碼的 URL
+auth_url = f'https://accounts.google.com/o/oauth2/auth?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope=https://www.googleapis.com/auth/drive.metadata.readonly&response_type=code'
+
+# 導向用戶以獲取授權碼
+print(f'請前往以下網址獲取授權碼：\n{auth_url}')
+
+# 在獲取授權碼的同時，您也需要指定用戶端 ID、用戶端密碼等信息以獲取存取令牌
+# 獲取授權碼之後，使用它來交換存取令牌
+authorization_code = input('輸入獲取到的授權碼：')
+
+# 交換授權碼以獲取存取令牌
+credentials = Credentials.from_authorization_code(authorization_code, client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI)
+
+# 使用 API（這裡以 Google Drive API 為例）
+from googleapiclient.discovery import build
+
+service = build('drive', 'v3', credentials=credentials)
+
+# 使用 service 來進行 API 請求
+# ...
+```
+
+在實際應用中，您需要更好地管理授權碼和存取令牌，並根據您的需求配置適當的 API 權限。確保保護應用程式的機密信息，例如 client secret。
+```
