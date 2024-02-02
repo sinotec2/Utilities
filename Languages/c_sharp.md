@@ -1,3 +1,24 @@
+---
+layout: default
+title: C sharp
+nav_order: 99
+has_children: true
+parent: Languages
+permalink: /Languages
+last_modified_date: 2024-01-26 11:10:57
+tags: operation_systems
+---
+
+# C# Language
+
+## Table of contents
+
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 ### try 
 
