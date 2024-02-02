@@ -1,6 +1,30 @@
+---
+layout: default
+title:  Security Q&A
+parent: Apache Druid
+grand_parent: DB_servers
+grand_parent: OLAP
+last_modified_date: 2024-01-07 20:26:18
+tags: DB_servers Druid
+---
 
+# Apache Druid Security Q&A
+{: .no_toc }
 
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
 
+---
+
+## 背景
+
+- 安全與權限管理是伺服器的基礎設定。在測試與生產階段有很大的差異。
 
 ## 權限管理
 
