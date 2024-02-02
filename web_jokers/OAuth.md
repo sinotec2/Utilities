@@ -35,37 +35,37 @@ tags: OAuth
 
    下面是一個簡單的例子，使用 `requests-oauthlib`：
 
-   ```python
-   from requests_oauthlib import OAuth2Session
-   from flask import Flask, request, redirect, session, url_for
+```python
+from requests_oauthlib import OAuth2Session
+from flask import Flask, request, redirect, session, url_for
 
-   app = Flask(__name__)
+app = Flask(__name__)
 
-   # Replace these values with your own
-   client_id = 'your_client_id'
-   client_secret = 'your_client_secret'
-   redirect_uri = 'your_redirect_uri'
-   authorization_base_url = 'https://accounts.google.com/o/oauth2/auth'
-   token_url = 'https://accounts.google.com/o/oauth2/token'
+# Replace these values with your own
+client_id = 'your_client_id'
+client_secret = 'your_client_secret'
+redirect_uri = 'your_redirect_uri'
+authorization_base_url = 'https://accounts.google.com/o/oauth2/auth'
+token_url = 'https://accounts.google.com/o/oauth2/token'
 
-   @app.route('/')
-   def index():
-       google = OAuth2Session(client_id, redirect_uri=redirect_uri)
-       authorization_url, state = google.authorization_url(authorization_base_url, access_type="offline", prompt="select_account")
+@app.route('/')
+def index():
+    google = OAuth2Session(client_id, redirect_uri=redirect_uri)
+    authorization_url, state = google.authorization_url(authorization_base_url, access_type="offline", prompt="select_account")
 
-       return redirect(authorization_url)
+    return redirect(authorization_url)
 
-   @app.route('/callback')
-   def callback():
-       google = OAuth2Session(client_id, redirect_uri=redirect_uri)
-       google.fetch_token(token_url, authorization_response=request.url, client_secret=client_secret)
+@app.route('/callback')
+def callback():
+    google = OAuth2Session(client_id, redirect_uri=redirect_uri)
+    google.fetch_token(token_url, authorization_response=request.url, client_secret=client_secret)
 
-       # Now you have the access token in google.token
-       return 'Logged in successfully!'
+    # Now you have the access token in google.token
+    return 'Logged in successfully!'
 
-   if __name__ == '__main__':
-       app.run(debug=True)
-   ```
+if __name__ == '__main__':
+    app.run(debug=True)
+```
 
    在這個例子中，當用戶訪問應用程序首頁時，他們將被重定向到 Google 登錄頁面。在用戶成功登錄後，他們將被重定向回你的應用程序，並擁有一個訪問令牌。
 
