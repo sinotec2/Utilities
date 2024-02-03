@@ -71,3 +71,6 @@ sudo apt-get install krb5-user krb5-config
 
 這樣就能夠在 Linux 上進行 Kerberos 相關配置和使用。當然，具體的安裝方式可能會因 Linux 發行版而異，你可以參考相應發行版的文檔或官方指南進行配置。
 
+### 
+
+[在 apache httpd 內採用 Kerberos 進行驗証](https://wiki.centos.org/zh(2d)tw(2f)HowTos(2f)HttpKerberosAuth.html）
