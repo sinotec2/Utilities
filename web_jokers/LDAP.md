@@ -61,3 +61,44 @@ LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼�
 
 請注意，macOS 並不是專門設計用於建立企業級身分識別管理解決方案的作業系統。 因此，對於生產環境，可能需要考慮使用專為此設計的作業系統，例如 Linux。 在 macOS 上建構身分識別管理系統時，可能需要適應性更強的配置和管理。
 
+## LDAP的應用
+
+### mail2000
+
+根據[Mail2000 V7 使用者手冊](http://manual.openfind.com.tw/m2kv7/sp1/tw/index.html)，**Mail2000** 可以接受 **LDAP** 認證。以下是設定步驟：
+
+1. 確認底層 **LDAP pam conf** 設定完成：
+    - 編輯 `/webmail/etc/daemon_pam.conf`，新增以下行：
+        ```
+        Module = pam auth sufficient 2 /webmail/pam_modules/pam_ldap.so SELF SET_COOKIE|UPD_LOC_PASS
+        ```
+    - 重新啟動 **Mail2000** 服務：
+        ```
+        /webmail/tools/restartshm
+        /webmail/tools/reloadini
+        ```
+
+2. 進入 **Mail2000** 管理者介面：
+    - 開啟 **LDAP 登入驗證**：
+        - 選擇 **[開啟]**。
+    - 填寫基本組態驗證設定：
+        - **Base LDAP 資料搜尋起點**：指定 **RDN**。
+        - **LDAP 資料主機**：填入 **Root DN** 的相關資訊。
+        - **Password**：填入 **Root DN** 的密碼。
+        - **Host**：填入 **LDAP** 資料主機名稱，例如 `ldap.openfind.com.tw` 或 `127.0.0.1`。您也可以設定多台 **LDAP** 伺服器，用逗號隔開。
+        - **Port**：填入 **LDAP** 資料主機的連接埠。
+        - **TLS 安全性傳輸設定**：如果使用 **TLS**，請設定相應的連接埠（例如：636）。
+
+3. 進階組態驗證設定：
+    - 設定取得帳號 **DN** 和帳號 **ID** 的過濾條件和資料欄位。
+
+4. 設定完成後，點選 **[確定]** 儲存設定值，並點選旁邊的 **[測試]** 以驗證設定是否正確。
+
+如果設定值正確，您將看到 **"測試成功"** 的訊息。¹²
+
+來源: 與 Bing 的交談， 2024/2/4
+(1) Mail2000 [模組] LDAP 登入驗證設定 – Openfind. https://openfind.zendesk.com/hc/zh-tw/articles/5337299077775-Mail2000-%E6%A8%A1%E7%B5%84-LDAP-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89%E8%A8%AD%E5%AE%9A.
+(2) LDAP 設定說明 - MailGates 管理者手冊 - Chung Yuan Christian University. https://mailspam.cycu.edu.tw/mg/help/tw/adm/ldap.htm.
+(3) Mail2000電子信箱_常見問題. http://doc.mail2000.com.tw/m2k/faq_sign-up_a2-3.htm.
+(4) Mail2000 FAQ - Openfind 網擎資訊. https://www.openfind.com.tw/taiwan///products/dl/mail2000/Mail2000_FAQ.pdf.
+
