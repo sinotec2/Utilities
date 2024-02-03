@@ -75,4 +75,27 @@ sudo apt-get install krb5-user krb5-config
 
 - httpd :[在 apache httpd 內採用 Kerberos 進行驗証](https://wiki.centos.org/zh(2d)tw(2f)HowTos(2f)HttpKerberosAuth.html）
 - NFS:[如何設定讓 NFS 共用資料夾使用 Kerberos？](https://kb.synology.com/zh-tw/DSM/tutorial/how_to_set_up_kerberized_NFS)
-- 
+
+## Apache Druid 設定
+
+根據[Apache Druid官方文檔](https://druid.apache.org/docs/latest/development/extensions-core/druid-kerberos/)，我將簡要描述Druid的Kerberos設定。
+
+1. **Kerberos驗證機制**：Apache Druid的Kerberos擴展可用於保護Druid進程的HTTP端點。它使用簡單且受保護的GSSAPI協商機制SPNEGO。要啟用Kerberos驗證，請確保在擴展的加載列表中包含`druid-kerberos`。
+
+2. **設定步驟**：
+    - 在`extensions`配置中添加`druid-kerberos`。
+    - 創建一個名為`MyKerberosAuthenticator`的驗證器，並將其添加到`authenticatorChain`中。
+    - 配置`MyKerberosAuthenticator`的屬性，例如`serverPrincipal`（SPNEGO服務主體）、`serverKeytab`（SPNEGO服務密鑰表）等。
+    - 設置`cookieSignatureSecret`以簽署身份驗證Cookie。
+    - 可選：指定`authorizerName`以將請求定向到相應的授權器。
+
+3. **注意事項**：
+    - Druid進程使用的SPNEGO主體必須以HTTP開頭，並且必須具有形式為“HTTP/_HOST@REALM”的格式。
+    - 請注意，Kerberos驗證器的`excludedPaths`屬性已被移除，因為路徑排除功能現在由所有驗證器/授權器通用地處理，請參閱主要的身份驗證文檔。
+
+希望這些簡要說明對您有所幫助！如果您需要更詳細的信息，請參閱官方文檔¹²³。
+
+來源: 與 Bing 的交談， 2024/2/3
+(1) Kerberos Apache® Druid. https://druid.apache.org/docs/latest/development/extensions-core/druid-kerberos/.
+(2) Authentication and Authorization | Apache® Druid. https://druid.apache.org/docs/latest/operations/auth/.
+(3) Enable Kerberos authentication in Apache Druid - Cloudera. https://docs.cloudera.com/HDPDocuments/HDP3/HDP-3.1.4/adding-druid/content/druid_enable_kerberos_authentication.html.
