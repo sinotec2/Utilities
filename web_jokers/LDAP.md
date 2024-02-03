@@ -2,6 +2,42 @@
 
 ## 背景
 
+### AD vs LDAP
+
+Active Directory (AD) 和 LDAP (Lightweight Directory Access Protocol) 是兩個用於身份驗證和帳戶管理的不同概念。以下是對比它們的一些主要特點：
+
+**Active Directory (AD):**
+
+1. **概念：** AD 是由 Microsoft 開發的目錄服務，提供了一個集中式的帳戶管理和身份驗證系統。
+   
+2. **使用場域：** 主要用於 Windows 環境，特別是企業中使用 Windows Server 的情況。AD 還包括其他功能，如群組政策、DNS 管理等。
+
+3. **整合性：** AD 通常與其他 Microsoft 產品和服務（如 Exchange、SharePoint 等）集成得更緊密。
+
+4. **安全性：** 提供高度的安全性，支持 Kerberos 協議，並有豐富的安全功能，如密碼政策、帳戶鎖定等。
+
+5. **管理工具：** 使用者和資源的管理通常透過 Windows Server 上的 Active Directory Users and Computers 工具進行。
+
+**LDAP (Lightweight Directory Access Protocol):**
+
+1. **概念：** LDAP 是一個開放標準的通訊協議，用於訪問和維護分散式目錄信息服務。
+
+2. **使用場域：** LDAP 是跨平台的，可用於各種操作系統和應用程式，並且不僅限於 Windows 環境。常見於企業、學術機構和網際網路應用。
+
+3. **整合性：** LDAP 是一個通用協議，可以與多種應用程式和服務集成，包括電子郵件、網路服務、VPN 等。
+
+4. **安全性：** 提供基本的安全性，可以透過 SSL/TLS 進行加密，但相對於 AD，可能需要額外的配置和擴充。
+
+5. **管理工具：** LDAP 沒有固定的管理工具，管理通常透過 LDAP 客戶端工具、Web 管理介面或自定義程式實現。
+
+**應用場域時機選擇：**
+
+- **選擇 AD：** 在 Windows 環境中，特別是當組織使用 Microsoft 產品時，AD 提供了更緊密的整合和管理功能。
+
+- **選擇 LDAP：** 當需要跨平台支持，或者在非 Windows 環境中運行的情況下，LDAP 提供了更靈活的選擇。
+
+總體而言，AD 和 LDAP 都有其優勢和適用場景，選擇取決於組織的需求、環境和技術堆棧。
+
 LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼樣的角色權限，而不是人工進行審查管理嗎？
 
 ## 注意事項
