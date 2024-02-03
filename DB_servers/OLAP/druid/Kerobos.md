@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  Druid Q&A
+title:  Kerobos
 parent: Apache Druid
 grand_parent: DB_servers
 grand_parent: OLAP
