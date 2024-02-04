@@ -85,6 +85,7 @@ LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼�
 1. **FreeIPA:**
     - **官方網站：** [FreeIPA](https://www.freeipa.org/)
     - **描述：** FreeIPA 是一個整合了 LDAP 目錄服務、Kerberos 認證和 DNS 的身份管理解決方案。 它提供了 Web 介面，使用戶能夠自行管理密碼、SSH 金鑰等。
+    - [demo](https://ipa.demo1.freeipa.org/ipa/ui/)
 
 2. **FusionDirectory:**
     - **官方網站：** [FusionDirectory](https://www.fusiondirectory.org/)
