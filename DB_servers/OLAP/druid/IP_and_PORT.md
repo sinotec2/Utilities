@@ -1,14 +1,14 @@
 ---
 layout: default
-title:  Druid Q&A
+title:  IP and Port Settings
 parent: Apache Druid
 grand_parent: DB_servers
 grand_parent: OLAP
-last_modified_date: 2024-01-07 20:26:18
+last_modified_date: 2024-02-04 16:04:23
 tags: DB_servers Druid
 ---
 
-# Apache Druid General Q&A
+# Apache Druid IP and Port Settings
 {: .no_toc }
 
 <details open markdown="block">
