@@ -1,10 +1,30 @@
+---
+layout: default
+title:  Security And Authentication
+parent: dotNET connections
+grand_parent: Web Jokers
+last_modified_date: 2024-01-19 13:47:15
+tags: SecAndAuth 
+---
 
+# LDAP
+{: .no_toc }
 
-## 背景
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景s
 
 ### AD vs LDAP
 
-Active Directory (AD) 和 LDAP (Lightweight Directory Access Protocol) 是兩個用於身份驗證和帳戶管理的不同概念。以下是對比它們的一些主要特點：
+活動目錄Active Directory (AD) 和輕量級目錄訪問協定LDAP (Lightweight Directory Access Protocol) 是兩個用於身份驗證和帳戶管理的不同概念。以下是對比它們的一些主要特點：
 
 **Active Directory (AD):**
 
@@ -133,10 +153,11 @@ LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼�
 如果設定值正確，您將看到 **"測試成功"** 的訊息。¹²
 
 來源: 與 Bing 的交談， 2024/2/4
-(1) Mail2000 [模組] LDAP 登入驗證設定 – Openfind. https://openfind.zendesk.com/hc/zh-tw/articles/5337299077775-Mail2000-%E6%A8%A1%E7%B5%84-LDAP-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89%E8%A8%AD%E5%AE%9A.
-(2) LDAP 設定說明 - MailGates 管理者手冊 - Chung Yuan Christian University. https://mailspam.cycu.edu.tw/mg/help/tw/adm/ldap.htm.
-(3) Mail2000電子信箱_常見問題. http://doc.mail2000.com.tw/m2k/faq_sign-up_a2-3.htm.
-(4) Mail2000 FAQ - Openfind 網擎資訊. https://www.openfind.com.tw/taiwan///products/dl/mail2000/Mail2000_FAQ.pdf.
+
+- (1) Mail2000 [模組] LDAP 登入驗證設定 – [Openfind](https://openfind.zendesk.com/hc/zh-tw/articles/5337299077775-Mail2000-%E6%A8%A1%E7%B5%84-LDAP-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89%E8%A8%AD%E5%AE%9A).
+- (2) LDAP 設定說明 - MailGates 管理者手冊 - [Chung Yuan Christian University](https://mailspam.cycu.edu.tw/mg/help/tw/adm/ldap.htm).
+- (3) [Mail2000電子信箱_常見問題](http://doc.mail2000.com.tw/m2k/faq_sign-up_a2-3.htm).
+- (4) Mail2000 FAQ - Openfind [網擎資訊](https://www.openfind.com.tw/taiwan///products/dl/mail2000/Mail2000_FAQ.pdf).
 
 根據[Mail2000 V7 使用者手冊](http://manual.openfind.com.tw/m2kv7/sp1/tw/index.html)，**Mail2000** 可以同時接受 **LDAP** 認證和其內部設定的帳號密碼管理系統。以下是設定步驟：
 
@@ -170,21 +191,22 @@ LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼�
 如果設定值正確，您將看到 **"測試成功"** 的訊息。¹²
 
 來源: 與 Bing 的交談， 2024/2/4
-(1) Mail2000 [模組] LDAP 登入驗證設定 – Openfind. https://openfind.zendesk.com/hc/zh-tw/articles/5337299077775-Mail2000-%E6%A8%A1%E7%B5%84-LDAP-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89%E8%A8%AD%E5%AE%9A.
-(2) LDAP 設定說明 - MailGates 管理者手冊 - Chung Yuan Christian University. https://mailspam.cycu.edu.tw/mg/help/tw/adm/ldap.htm.
-(3) Mail2000電子信箱_常見問題. http://doc.mail2000.com.tw/m2k/faq_sign-up_a2-3.htm.
-(4) Mail2000 FAQ - Openfind 網擎資訊. https://www.openfind.com.tw/taiwan///products/dl/mail2000/Mail2000_FAQ.pdf.
-(5) Mail2000 V7 使用者手冊 - Openfind 網擎資訊. http://manual.openfind.com.tw/m2kv7/sp1/tw/index.html.
-(6) Mail2000 電子信箱：個人信箱常見問題 ─ 密碼問題. https://doc.mail2000.com.tw/m2k_faq_sign-up1.html.
-(7) 2014 年 9 月：MailCloud雙重認證—為你的帳號多加一道鎖 - MailCloud 企業雲端服務. https://www.mailcloud.com.tw/htm/EDM/1409/index.html.
-(8) Mail2000 常見問題. https://www.mail2000.com.tw/faq.htm.
-(9) Mail2000可警示異常登入，強化密碼修改與自動轉寄保護 | iThome. https://bing.com/search?q=Mail2000+%e9%9b%bb%e9%83%b5%e4%bc%ba%e6%9c%8d%e5%99%a8+LDAP+%e6%94%af%e6%8f%b4.
-(10) Mail2000可警示異常登入，強化密碼修改與自動轉寄保護 | iThome. https://www.ithome.com.tw/review/89957.
-(11) Mail2000 線上說明系統 - Openfind Mail2000 電子信箱. https://www.mail2000.com.tw/help/index.html?e2-5.
-(12) 如何使用郵件軟體收取信件？ - Openfind Mail2000 電子信箱. http://www.mail2000.com.tw/help/2-5.htm.
-(13) Mail2000電子信箱—行動裝置設定資訊. https://www.mail2000.com.tw/rev9/mobile.html.
-(14) Mail2000 電子信箱：手機收信特色功能. https://doc.mail2000.com.tw/intro_mobile_faq02.html.
-(15) undefined. http://mail2000.com.tw.
+
+- (1) Mail2000 [模組] LDAP 登入驗證設定 – [Openfind](https://openfind.zendesk.com/hc/zh-tw/articles/5337299077775-Mail2000-%E6%A8%A1%E7%B5%84-LDAP-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89%E8%A8%AD%E5%AE%9A).
+- (2) LDAP 設定說明 - MailGates 管理者手冊 - [Chung Yuan Christian University](https://mailspam.cycu.edu.tw/mg/help/tw/adm/ldap.htm).
+- (3) Mail2000電子信箱_[常見問題](http://doc.mail2000.com.tw/m2k/faq_sign-up_a2-3.htm).
+- (4) Mail2000 FAQ - [Openfind 網擎資訊](https://www.openfind.com.tw/taiwan///products/dl/mail2000/Mail2000_FAQ.pdf).
+- (5) Mail2000 V7 使用者手冊 - Openfind [網擎資訊](http://manual.openfind.com.tw/m2kv7/sp1/tw/index.html).
+- (6) Mail2000 電子信箱：個人信箱常見問題 ─ [密碼問題](https://doc.mail2000.com.tw/m2k_faq_sign-up1.html).
+- (7) 2014 年 9 月：MailCloud雙重認證—為你的帳號多加一道鎖 - [MailCloud 企業雲端服務](https://www.mailcloud.com.tw/htm/EDM/1409/index.html).
+- (8) Mail2000 常見問題. https://www.mail2000.com.tw/faq.htm.
+- (9) Mail2000可警示異常登入，強化密碼修改與自動轉寄保護, [iThome](https://bing.com/search?q=Mail2000+%e9%9b%bb%e9%83%b5%e4%bc%ba%e6%9c%8d%e5%99%a8+LDAP+%e6%94%af%e6%8f%b4).
+- (10) Mail2000可警示異常登入，強化密碼修改與自動轉寄保護, [iThome](https://www.ithome.com.tw/review/89957).
+- (11) Mail2000 線上說明系統 - [Openfind Mail2000 電子信箱](https://www.mail2000.com.tw/help/index.html?e2-5).
+- (12) 如何使用郵件軟體收取信件？ - [Openfind Mail2000 電子信箱](http://www.mail2000.com.tw/help/2-5.htm).
+- (13) Mail2000電子信箱—[行動裝置設定資訊](https://www.mail2000.com.tw/rev9/mobile.html).
+- (14) Mail2000 電子信箱：[手機收信特色功能](https://doc.mail2000.com.tw/intro_mobile_faq02.html).
+- (15) [undefined]((http://mail2000.com.tw).
 
 ## 外部使用
 
@@ -207,3 +229,9 @@ LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼�
 8. **防火牆設置：** 在防火牆上設置適當的規則，僅允許必要的通信流量進入和離開 Druid 伺服器。
 
 以上建議是為了加強外部登入的安全性，同時確保內部 Druid 伺服器的安全性。請注意，實施這些安全措施需要仔細計劃，根據實際情況進行調整。
+
+[realm]: <> "`Realm` 這個英文詞在中文中可以翻譯為「領域」、「領土」、「範圍」等，具體的翻譯可能取決於上下文和使用的領域。在不同的上下文中，`realm` 可以有不同的含義：
+1. **網路安全和身份驗證：** 在網路安全領域，`realm` 常用來表示一個身份驗證或授權的區域或範圍。例如，某個網站可能有不同的 `realms`，每個 `realm` 代表一個獨立的身份驗證區域，用戶需要在進入不同的 `realm` 時提供相應的憑證。
+2. **遊戲：** 在遊戲中，`realm` 可能指的是遊戲中的一個虛構世界、區域或伺服器。例如，在多人線上遊戲中，不同的 `realms` 可能代表不同的遊戲伺服器，玩家可以在這些伺服器中選擇進行遊戲。
+3. **神話和文學：** 在文學和神話中，`realm` 可以指的是一個王國、領域或領土，常用於描述特定的區域或國度。
+總的來說，`realm` 是一個相對通用的詞彙，其含義可能因上下文而異。在科技和網路領域，它通常與身份驗證、安全性或虛擬空間有關。"
