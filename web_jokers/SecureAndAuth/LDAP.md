@@ -1,7 +1,7 @@
 ---
 layout: default
-title:  Security And Authentication
-parent: dotNET connections
+title:  LDAP
+parent: Security And Authentication
 grand_parent: Web Jokers
 last_modified_date: 2024-01-19 13:47:15
 tags: SecAndAuth 
@@ -20,7 +20,7 @@ tags: SecAndAuth
 </details>
 ---
 
-## 背景s
+## 背景
 
 ### AD vs LDAP
 
