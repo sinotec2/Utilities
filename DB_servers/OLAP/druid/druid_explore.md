@@ -49,7 +49,7 @@ tags: DB_servers Druid
   - 內設是時序圖(Time Chart)：折線區塊圖，可做堆疊。其他還有4種。
   - 柱狀圖(Bar Chart)：適合X軸是類別、文字或整數欄位
   - 表格(Table)：將前述Query SQL程式語言的功能，以下拉選單等方式來達成樞紐分析。
-  - 圓餅圖(Pai chart)：適合類別的個數或數量聚合結果
+  - 圓餅圖(Pie chart)：適合類別的個數或數量聚合結果
   - 多軸圖(Multi-axis chart)：時序折線圖，Y1、Y2可以有不同單位
 
 ![](druid_pngs/../explore_png/charts.png)
@@ -89,7 +89,7 @@ tags: DB_servers Druid
 
 ![](druid_pngs/../explore_png/table.png)
 
-### 圓餅圖(Pai chart)
+### 圓餅圖(Pie chart)
 
 - 圓餅圖相對其他圖算是單純，就只有一欄數字與一欄類別。但是druid還是提供了簡單的控制介面
   - 切片欄位(Slice column)
