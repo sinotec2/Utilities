@@ -60,3 +60,13 @@ forwarders {
 5. **DNS 層級的安全性：** 考慮實施 DNSSEC（DNS Security Extensions）等安全機制，以確保 DNS 查詢的安全性。
 
 綜上所述，通常情況下，多個內部 DNS 伺服器是可以共存的，但需要進行良好的管理和配置，以確保整體的 DNS 系統正確運作。
+
+### FreeIPA server vs network-scripts 
+
+FreeIPA（Free Identity, Policy and Audit）是一個整合性的身分識別管理解決方案，它包含了許多不同的元件，包括 LDAP、Kerberos、DNS 等。它不僅僅是 DNS 或網路配置管理的工具。
+
+在CentOS系統上，`/etc/sysconfig/network-scripts/` 目錄通常用於配置網路介面的相關設定，如IP地址、網路協議等。但是FreeIPA作為身分識別管理的工具，主要關注在身分識別、授權和審計等方面，並且不直接影響CentOS網路設定的目錄。
+
+在啟用FreeIPA伺服器之後，網路配置通常仍然由CentOS的標準網路設定工具來管理。FreeIPA的設定通常是透過自身的管理界面或命令行工具進行的，而不是直接透過 `/etc/sysconfig/network-scripts/` 目錄。
+
+因此，FreeIPA的上線不會直接影響CentOS標準網路配置目錄下的檔案，除非你在FreeIPA的設定中有明確的配置指示需要改變網路設定。
