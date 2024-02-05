@@ -1,3 +1,27 @@
+---
+layout: default
+title:  Local DNS Conflicts
+parent: Internal DNS
+grand_parent: Web Jokers
+last_modified_date: 2024-01-19 13:47:15
+tags: SecAndAuth 
+---
+
+# 本地DNS可能的衝突
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
+
 
 
 ### 內部與外部的衝突
