@@ -116,4 +116,17 @@ sudo systemctl start httpd
 
 總體而言，SSL/TLS 的使用有助於確保 FreeIPA 系統的安全通信和數據保護。
 
+### httpd.conf
+
+在 FreeIPA 中，`httpd.conf` 檔案通常不需要直接修改。相反，FreeIPA 使用 Apache 的配置碎片 (configuration snippets) 來管理不同的模塊和功能。
+
+如果您需要調整 Apache 的配置，請查看 `/etc/httpd/conf.d/` 目錄，您可能會在這個目錄下找到 FreeIPA 相關的配置文件。比如，可能會有 `ipa.conf`、`ipa-pki-proxy.conf` 等。
+
+在這些配置文件中，您可以找到有關 FreeIPA Web 介面和相關服務的 Apache 配置。請謹慎進行修改，最好在進行更改之前先備份文件。任何配置更改後，您應該重新啟動 Apache 服務以應用這些更改：
+
+```bash
+sudo systemctl restart httpd
+```
+
+總的來說，請儘量使用 FreeIPA 提供的工具和命令來管理系統，以確保一致性和兼容性。手動修改 Apache 配置時需要謹慎操作。
 
