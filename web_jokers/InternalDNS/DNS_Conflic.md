@@ -68,3 +68,52 @@ FreeIPA（Free Identity, Policy and Audit）是一個整合性的身分識別管
 在啟用FreeIPA伺服器之後，網路配置通常仍然由CentOS的標準網路設定工具來管理。FreeIPA的設定通常是透過自身的管理界面或命令行工具進行的，而不是直接透過 `/etc/sysconfig/network-scripts/` 目錄。
 
 因此，FreeIPA的上線不會直接影響CentOS標準網路配置目錄下的檔案，除非你在FreeIPA的設定中有明確的配置指示需要改變網路設定。
+
+### httpd重複啟動
+
+FreeIPA 伺服器通常會包括 Apache HTTP Server 作為其架構的一部分，用於提供 Web 介面和其他相關服務。在大多數情況下，當您啟動 FreeIPA 伺服器時，系統應該會自動啟動 Apache HTTP Server。
+
+您可以使用以下命令檢查 Apache HTTP Server 的狀態：
+
+```bash
+sudo systemctl status httpd
+```
+
+如果 Apache HTTP Server 已經在運行，您應該會看到類似以下的輸出：
+
+```
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2023-01-04 15:30:00 UTC; 2min 30s ago
+     Docs: man:httpd(8)
+           man:apachectl(8)
+ Main PID: 1234 (httpd)
+   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+    Tasks: 55 (limit: 1150)
+   CGroup: /system.slice/httpd.service
+           ├─1234 /usr/sbin/httpd -DFOREGROUND
+           ├─1235 /usr/sbin/httpd -DFOREGROUND
+           ├─1236 /usr/sbin/httpd -DFOREGROUND
+           └─...
+
+```
+
+如果看到 "Active: active (running)"，表示 Apache HTTP Server 正在運行。
+
+如果因某種原因未自動啟動，您可以使用以下命令手動啟動 Apache：
+
+```bash
+sudo systemctl start httpd
+```
+
+確保 Apache HTTP Server 正確啟動後，您應該能夠訪問 FreeIPA Web 介面。
+
+### SSL與TLS
+
+是的，FreeIPA 在安裝過程中會配置和使用 SSL/TLS 以保護通信。這有助於確保在 FreeIPA 環境中的數據傳輸是安全的。
+
+通常，FreeIPA 會使用自簽名的 SSL 憑證。這意味著您在首次連接到 FreeIPA Web 介面時，瀏覽器可能會顯示 SSL 警告，因為簽名憑證不是由廣泛受信任的證書機構（CA）簽發的。您可以選擇接受這些警告，或者如果需要更高的安全性，您可以將 FreeIPA 配置為使用由 CA 簽發的憑證。
+
+總體而言，SSL/TLS 的使用有助於確保 FreeIPA 系統的安全通信和數據保護。
+
+
