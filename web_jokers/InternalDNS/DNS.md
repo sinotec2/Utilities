@@ -1,3 +1,26 @@
+---
+layout: default
+title:  Local DNS Settings
+parent: Security And Authentication
+grand_parent: Web Jokers
+last_modified_date: 2024-01-19 13:47:15
+tags: SecAndAuth 
+---
+
+# 本地DNS的設置
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 
 ## 本地DNS伺服器
