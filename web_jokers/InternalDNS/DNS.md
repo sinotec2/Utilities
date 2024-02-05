@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  Local DNS Settings
-parent: Security And Authentication
+parent: Internal DNS
 grand_parent: Web Jokers
 last_modified_date: 2024-01-19 13:47:15
 tags: SecAndAuth 
@@ -54,20 +54,3 @@ tags: SecAndAuth
 
 這只是一個基本的步驟概述，具體的步驟可能會因你所使用的 Linux 發行版和 BIND 版本而有所不同。 確保查看 BIND 的文檔以取得更詳細的指南。
 
-### 內外DNS重複設定問題
-
-確保你的本地 DNS 伺服器配置正確，僅在區域網路中提供服務，對外部網域不造成影響。檢查路由器或網路設定，防止本機 DNS 伺服器向外部公開，確保僅為區域網路提供服務。
-
-若要使用自建的本機 DNS 伺服器，需將裝置或網路設定中的 DNS 更改為本機 DNS 伺服器的 IP 位址，確保網域解析透過自建的 DNS 伺服器進行。
-
-使用公共 DNS 服務時，需將 DNS 設定更改為本地 DNS 伺服器的 IP 位址，以充分利用自建的 DNS 服務。藉此可在本地自訂網域解析，但需注意本機 DNS 伺服器配置或記錄不足可能導致解析失敗。
-
-若在網路設定中將 DNS 變更為本機 DNS 伺服器的 IP 位址，而該伺服器無相應 DNS 解析規則，裝置可能無法正常存取互聯網。解決方法是在本機 DNS 伺服器配置中新增上游 DNS 伺服器，將未知的網域請求轉送給公共 DNS 伺服器，確保同時提供自訂解析和正常的網際網路存取。
-
-透過在本機 DNS 伺服器的設定檔中新增上游 DNS 伺服器的 IP 位址，如下所示：
-```
-forwarders {
-     8.8.8.8; // 可新增其他上游 DNS 伺服器的 IP 位址
-};
-```
-確保本機 DNS 伺服器能夠在無法解析自訂網域名稱時轉送請求給公用 DNS 伺服器，保障裝置正常存取網際網路。
