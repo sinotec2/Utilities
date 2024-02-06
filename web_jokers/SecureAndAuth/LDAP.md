@@ -121,6 +121,30 @@ LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼�
 
 ## LDAP的應用
 
+### Gitea
+
+是的，Gitea 支持使用 LDAP 進行登入。LDAP（Lightweight Directory Access Protocol）是一種用於存儲和檢索目錄信息的協定，它通常用於集中式身份驗證和授權管理。
+
+以下是在 Gitea 中配置 LDAP 登入的一般步驟，詳情請參閱[官網說明](https://docs.gitea.com/usage/authentication)
+
+1. 登入 Gitea：使用管理員帳戶登入到 Gitea。
+
+2. 轉到 "Site Administration"：點擊右上角的管理員頭像，然後選擇 "Site Administration"。
+
+3. 進入 "Authentication" 設置：在左側的選單中，找到 "Authentication" 選項，然後選擇 "Authentication Sources"。
+
+4. 新增 LDAP 身份驗證源：點擊 "New Authentication Source" 按鈕，然後選擇 "LDAP" 作為身份驗證類型。
+
+5. 配置 LDAP 連接：填寫所需的 LDAP 連接信息，包括主機、端口、基本 DN（Distinguished Name）等。
+
+6. 測試連接：通常，您可以使用 "Test Connection" 按鈕來測試 LDAP 連接是否正常。
+
+7. 設置用戶名屬性：根據您的 LDAP 設置，請確保正確設置用戶名屬性，例如 "uid" 或 "sAMAccountName"。
+
+8. 完成配置：完成所有必要的配置後，點擊 "Submit" 或 "Save" 以應用變更。
+
+以上僅為一般步驟，實際操作可能因 Gitea 版本而異。建議參考 Gitea 的官方文檔或相應版本的管理介面以進行準確的配置。
+
 ### mail2000
 
 根據[Mail2000 V7 使用者手冊](http://manual.openfind.com.tw/m2kv7/sp1/tw/index.html)，**Mail2000** 可以接受 **LDAP** 認證。以下是設定步驟：
