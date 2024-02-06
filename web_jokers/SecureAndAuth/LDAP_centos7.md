@@ -55,10 +55,9 @@ files is the Directory Manager password
 - 修正程式
   - `/usr/lib/python2.7/site-packages/ipaserver/install/plugins/upload_cacr`
 - 修正項目
-  - `trust_flags.has_key`
+  - 原程式：`trust_flags.has_key`
   - `trust_flags`可能是個class或者是tuple，如果是class，其中的`has_key`屬性，其實就是第1個引數的名稱(一個boolean)，
   - 現在的python不會這樣解讀了。
-- 
 
 ## Terminology
 
@@ -93,3 +92,5 @@ FQDN 的主要作用是唯一地標識網際網路上的特定主機。這在網
 |11|32.17|
 |12|32.53|
 |13|32.54|
+|node03|31.47|
+
