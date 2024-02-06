@@ -124,7 +124,7 @@ LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼�
 
 是的，Gitea 支持使用 LDAP 進行登入。LDAP（Lightweight Directory Access Protocol）是一種用於存儲和檢索目錄信息的協定，它通常用於集中式身份驗證和授權管理。
 
-以下是在 Gitea 中配置 LDAP 登入的一般步驟：
+以下是在 Gitea 中配置 LDAP 登入的一般步驟，詳情請參閱[官網說明](https://docs.gitea.com/usage/authentication)
 
 1. 登入 Gitea：使用管理員帳戶登入到 Gitea。
 
