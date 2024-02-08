@@ -72,12 +72,13 @@ Druid 使用該memberOf屬性來透過 LDAP 確定群組的成員資格。如果
 
 若要將 Druid 設定為使用 LDAP 驗證，請依照下列步驟操作。有關設定檔的位置，請參閱設定參考。
 
-在 LDAP 系統中建立一個用戶，您將使用該用戶與 Druid 進行內部通訊並作為 LDAP 初始管理員用戶。有關詳細信息，請參閱安全概述。在下面的範例中，LDAP 使用者是internal@example.com。
+1. 在 LDAP 系統中建立一個用戶，您將使用該用戶與 Druid 進行內部通訊並作為 LDAP 初始管理員用戶。有關詳細信息，請參閱安全概述。在下面的範例中，LDAP 使用者是internal@example.com。
 
-啟用檔案druid-basic-security中的副檔名common.runtime.properties。
+2. 啟用檔案druid-basic-security中的副檔名common.runtime.properties。
 
-在該common.runtime.properties文件中，為 LDAP 屬性新增以下行並將這些值替換為您自己的值。有關這些屬性的詳細信息，請參閱Druid 基本安全性。
+3. 在該common.runtime.properties文件中，為 LDAP 屬性新增以下行並將這些值替換為您自己的值。有關這些屬性的詳細信息，請參閱Druid 基本安全性。
 
+```bash
 druid.auth.authenticatorChain=["ldap"]
 druid.auth.authenticator.ldap.type=basic
 druid.auth.authenticator.ldap.enableCacheNotifications=true
@@ -98,19 +99,23 @@ druid.auth.authorizer.ldapauth.type=basic
 druid.auth.authorizer.ldapauth.initialAdminUser=internal@example.com
 druid.auth.authorizer.ldapauth.initialAdminRole=admin
 druid.auth.authorizer.ldapauth.roleProvider.type=ldap
-
+```
 
 請注意以下事項：
 
-bindUser：連接 LDAP 的使用者。這應該是您用於測試 LDAP 搜尋的相同使用者。
-userSearch：您的 LDAP 搜尋語法。
-userAttribute：用戶搜尋屬性。
-internal@example.com是您在步驟 1 中建立的 LDAP 使用者。在範例中，它既充當內部用戶端使用者又充當初始管理員使用者。
-資訊
-在上面的範例中，Druid 自動扶梯和 LDAP 初始管理員使用者設定為相同使用者 - internal@example.com。如果自動扶梯設定為其他用戶，則必須按照步驟 4 和 5 建立群組對應並指派初始角色，然後叢集的其餘部分才能運作。
+- bindUser：連接 LDAP 的使用者。這應該是您用於測試 LDAP 搜尋的相同使用者。
+- userSearch：您的 LDAP 搜尋語法。
+- userAttribute：用戶搜尋屬性。
+- internal@example.com是您在步驟 1 中建立的 LDAP 使用者。在範例中，它既充當內部用戶端使用者又充當初始管理員使用者。
 
-將群組映射儲存到 JSON 檔案。範例文件groupmap.json如下所示：
+- 重要資訊提醒
+  - 在上面的範例中，Druid 自動扶梯和 LDAP 初始管理員使用者設定為相同使用者 - internal@example.com。
+  - 如果自動扶梯設定為其他用戶，則必須按照步驟 4 和 5 建立群組對應並指派初始角色，然後叢集的其餘部分才能運作。
 
+4. 將群組映射儲存到 JSON 檔案。範例文件groupmap.json如下所示：
+
+
+```json
 {
    "name": "mygroupmap",
    "groupPattern": "CN=mygroup,CN=Users,DC=example,DC=com",
@@ -118,20 +123,23 @@ internal@example.com是您在步驟 1 中建立的 LDAP 使用者。在範例中
       "readRole"
    ]
 }
+```
 
 在範例中，LDAP 群組mygroup對應到 Druid 角色readRole，映射名稱為mygroupmap。
 
 使用 Druid API 建立群組對應並根據 JSON 檔案指派初始角色。groupmap.json以下範例使用curl 建立為LDAP 群組定義的對應mygroup：
 
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X POST -d @groupmap.json http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/groupMappings/mygroupmap
-
+```
 
 檢查群組映射是否建立成功。以下範例請求列出了所有群組對應：
 
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X GET  http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/groupMappings
+```
 
-
-將 LDAP 群組對應到 Druid
+## 將 LDAP 群組對應到 Druid
 完成初始設定和映射後，您可以將更多 LDAP 群組對應到 Druid 角色。LDAP群組的成員可以存取對應Druid角色的權限。
 
 創建德魯伊
