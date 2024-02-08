@@ -18,17 +18,20 @@ druid.auth.authenticator.MyKerberosAuthenticator.type=kerberos
 - 若要使用 Kerberos 驗證器，請將帶有類型的驗證器新增kerberos至authenticatorChain。
 - 上面的範例使用名稱“MyKerberosAuthenticator”作為身份驗證器。
 
+### 指派
+
 - 命名身份驗證器的配置:透過以下形式的屬性進行指派
 
-
+```java
 druid.auth.authenticator.<authenticatorName>.<authenticatorProperty>
-
+```
 
 本文檔其餘部分的設定範例將使用「kerberos」作為所配置的身份驗證器的名稱。
 
 
-財產	可能的值	描述	預設	必需的
-druid.auth.authenticator.kerberos.serverPrincipal	HTTP/_HOST@EXAMPLE.COM	druid 程序使用的 SPNEGO 服務主體	空的	是的
+財產	|可能的值|描述|預設|必需項目
+|-|-|-|-|-
+druid.auth.authenticator.kerberos.serverPrincipal|HTTP/_HOST@EXAMPLE.COM	druid 程序使用的 SPNEGO 服務主體	空的	是的
 druid.auth.authenticator.kerberos.serverKeytab	/etc/security/keytabs/spnego.service.keytab	druid 程序使用的 SPNEgo 服務金鑰表	空的	是的
 druid.auth.authenticator.kerberos.authToLocal	RULE:[1:$1@$0](druid@EXAMPLE.COM)s/.*/druid DEFAULT	它允許您設定將主體名稱對應到本機使用者名稱的一般規則。如果正在翻譯的主體名稱沒有明確映射，則將使用它。	預設	不
 druid.auth.authenticator.kerberos.cookieSignatureSecret	secretString	用於簽署身分驗證 cookie 的秘密。如果您有多個 druid 節點在同一台機器上使用不同的連接埠運行，建議明確設定它，因為 Cookie 規範不保證連接埠隔離。	隨機值	不
