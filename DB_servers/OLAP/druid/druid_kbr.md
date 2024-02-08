@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  Druid數據探索
+title:  使用Kerberos進行身分驗證
 parent: Apache Druid
 grand_parent: DB_servers
 grand_parent: OLAP
@@ -26,7 +26,6 @@ tags: DB_servers Druid
 
 - 這項Apache Druid 擴展插件可使用 Kerberos 對 Druid 程序進行驗證。
 - 此擴充功能新增了一個驗證器，用於使用簡單且受保護的[GSSAPI](#gasapi)協商機制[SPNEGO](#spnego)來保護 HTTP 端點。確保包含 druid-kerberos在擴充功能載入清單中。
-
 
 ## 建立
 
@@ -91,9 +90,13 @@ druid.auth.authenticator.kerberos.authToLocal允許您設定將主體名稱對�
 - 在某些情況下，當使用者隸屬於許多安全群組時，標頭的成長將會超出了 druid 預設可以處理的範圍。
 - 在這種情況下，可以透過設定`druid.server.http.maxRequestHeaderSize`（預設8KiB）和druid.router.http.maxRequestBufferSize（預設8KiB）來增加druid可以處理的最大請求標頭大小。
 
-## 配置 Kerberos 升級
+## Kerberos 升級功能之配置
 
-Druid 內部程序使用升級的 http 用戶端相互通訊。啟用 Kerberos 的升級 HTTP 用戶端可以透過以下屬性進行設定 -
+- 使用Kerberos插件，Druid 內部的過程彼此之間將會透過一種升級、強化的 HTTP 客戶端進行通信。
+- 在這種情境下，"escalated" 的意思可能是指經過提升、強化、或升級，表明這個 HTTP 客戶端可能具有一些特殊權限、安全性提升，或者其他升級的特性。
+- 簡而言之，Druid 內部的模組之間通過 HTTP 客戶端相互溝通，而這個客戶端可能有一些特殊屬性或權限，使其能夠在內部過程之間進行更強化的通信。
+- Druid 是使用升級後的內部程序來與http 用戶端相互通訊。
+- 啟用 Kerberos 的升級 HTTP 用戶端可以透過以下屬性進行設定
 
 財產	範例值	描述	預設	必需的
 druid.escalator.type	kerberos	用於內部進程通訊的 Escalator 用戶端類型。	不適用	是的
@@ -102,28 +105,32 @@ druid.escalator.internalClientKeytab	/etc/security/keytabs/druid.keytab	用於�
 druid.escalator.authorizerName	MyBasicAuthorizer	請求應發送至的授權者。	不適用	是的
 kerberos 安全性時存取 Druid HTTP 端點
 
-要透過curl存取druid HTTP端點，用戶需要先使用kinit以下命令登入 -
+- 需要透過curl存取druid HTTP端點，用戶需要先使用kinit以下命令登入
 
+```bash
 kinit -k -t <path_to_keytab_file> user@REALM.COM
+```
 
+- 登入成功後使用klist指令驗證登入是否成功
+- 現在您可以使用curl命令存取druid HTTP端點，如下所示:
 
-登入成功後使用klist指令驗證登入是否成功
-
-現在您可以使用curl命令存取druid HTTP端點，如下所示 -
-
+```bash 
 curl --negotiate -u:anyUser -b ~/cookies.txt -c ~/cookies.txt -X POST -H'Content-Type: application/json' <HTTP_END_POINT>
+```
 
+- 例如，要將查詢從文件傳送query.json到 Druid Broker，請使用此命令:
 
-例如，要將查詢從文件傳送query.json到 Druid Broker，請使用此命令 -
-
+```bash
 curl --negotiate -u:anyUser -b ~/cookies.txt -c ~/cookies.txt -X POST -H'Content-Type: application/json'  http://broker-host:port/druid/v2/?pretty -d @query.json
+```
 
+注意：
+- 以上命令將使用 SPNEgo 協商機制首次對使用者進行身份驗證，並將身份驗證 cookie 儲存在檔案中。
+- 對於後續請求，cookie 將用於身份驗證。
 
-注意：以上命令將使用 SPNEgo 協商機制首次對使用者進行身份驗證，並將身份驗證 cookie 儲存在檔案中。對於後續請求，cookie 將用於身份驗證。
+## 從網頁
 
-從網頁
-
-要從瀏覽器存取 Coordinator/Overlord 控制台，您需要將瀏覽器配置為 SPNego 身份驗證，如下所示 -
+- 要從瀏覽器存取 Coordinator/Overlord 控制台，您需要將瀏覽器配置為 SPNego 身份驗證，如下所示 -
 
 Safari - 無需配置。
 Firefox - 開啟 Firefox 並依照下列步驟操作 -
