@@ -10,11 +10,10 @@
 
 ## 建立
 
-
+```java
 druid.auth.authenticatorChain=["MyKerberosAuthenticator"]
-
 druid.auth.authenticator.MyKerberosAuthenticator.type=kerberos
-
+```
 
 - 若要使用 Kerberos 驗證器，請將帶有類型的驗證器新增kerberos至authenticatorChain。
 - 上面的範例使用名稱“MyKerberosAuthenticator”作為身份驗證器。
@@ -95,3 +94,26 @@ IE瀏覽器 -
 發送查詢
 
 許多 HTTP 用戶端程式庫（例如 Apache Commons HttpComponents ）已經支援執行 SPNEGO 驗證。您可以使用任何可用的 HTTP 用戶端程式庫與 druid 叢集進行通訊。
+
+
+## Terminology
+
+### SSSPI
+
+GSSAPI（Generic Security Services Application Program Interface）是一種通用的安全服務應用程式介面。它是一個標準的應用程式編程界面，用於在不同的應用程式和協議之間提供通用的安全服務。GSSAPI 的目標是提供一種標準的方式，使應用程式能夠進行安全通信，而無需深入了解底層的安全機制。
+
+GSSAPI 的主要特點包括：
+
+1. **通用性：** GSSAPI 設計成通用的 API，允許應用程式使用相同的代碼與不同的安全機制進行交互。
+
+2. **安全機制獨立性：** GSSAPI 可以與多種不同的安全機制（例如Kerberos、NTLM等）一起使用，使應用程式無需直接處理底層安全協議的細節。
+
+3. **單點登入：** GSSAPI 支援單點登入（Single Sign-On），這使得一次認證可以被用於多個不同的應用程式和服務。
+
+4. **跨平台性：** GSSAPI 的標準化有助於實現跨平台的安全通信，無論是在不同的操作系統還是編程語言中。
+
+5. **支援加密和數位簽名：** GSSAPI 提供了加密、數位簽名等安全功能，確保通信的機密性和完整性。
+
+GSSAPI 常用於支援安全的網路應用程式，例如客戶端-服務器應用程式、電子郵件和網際網路協議等，以確保在不安全的網路環境中進行通信時的安全性。
+
+
