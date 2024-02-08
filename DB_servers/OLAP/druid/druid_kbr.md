@@ -129,20 +129,25 @@ curl --negotiate -u:anyUser -b ~/cookies.txt -c ~/cookies.txt -X POST -H'Content
 - 以上命令將使用 SPNEgo 協商機制首次對使用者進行身份驗證，並將身份驗證 cookie 儲存在檔案中。
 - 對於後續請求，cookie 將用於身份驗證。
 
-## 從網頁
+## 從瀏覽器存取 Coordinator/Overlord 控制台
 
-- 要從瀏覽器存取 Coordinator/Overlord 控制台，您需要將瀏覽器配置為 SPNego 身份驗證，如下所示 -
+- 您需要將瀏覽器配置為 SPNego 身份驗證，如下所示 -
 
-Safari - 無需配置。
-Firefox - 開啟 Firefox 並依照下列步驟操作 -
-前往about:config並蒐索network.negotiate-auth.trusted-uris.
-雙擊並添加以下值："http://druid-coordinator-hostname:ui-port"和"http://druid-overlord-hostname:port"
-Google Chrome - 從命令列執行以下命令 -
+- Safari 
+  - 無需配置。
+- Firefox：開啟 Firefox 並依照下列步驟操作 
+  - 前往about:config並蒐索network.negotiate-auth.trusted-uris.
+  - 雙擊並添加以下值："http://druid-coordinator-hostname:ui-port"和"http://druid-overlord-hostname:port"
+- Google Chrome：從命令列執行以下命令
+
+```bash
 google-chrome --auth-server-whitelist="druid-coordinator-hostname" --auth-negotiate-delegate-whitelist="druid-coordinator-hostname"
 google-chrome --auth-server-whitelist="druid-overlord-hostname" --auth-negotiate-delegate-whitelist="druid-overlord-hostname"
-IE瀏覽器 -
-配置受信任的網站以包括"druid-coordinator-hostname"和"druid-overlord-hostname"
-允許 UI 網站協商。
+```
+
+- IE瀏覽器
+  - 配置受信任的網站，包括"druid-coordinator-hostname"和"druid-overlord-hostname"
+  - 允許 UI 網站協商。
 發送查詢
 
 許多 HTTP 用戶端程式庫（例如 Apache Commons HttpComponents ）已經支援執行 SPNEGO 驗證。您可以使用任何可用的 HTTP 用戶端程式庫與 druid 叢集進行通訊。
