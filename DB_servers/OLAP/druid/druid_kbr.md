@@ -148,9 +148,11 @@ google-chrome --auth-server-whitelist="druid-overlord-hostname" --auth-negotiate
 - IE瀏覽器
   - 配置受信任的網站，包括"druid-coordinator-hostname"和"druid-overlord-hostname"
   - 允許 UI 網站協商。
-發送查詢
 
-許多 HTTP 用戶端程式庫（例如 Apache Commons HttpComponents ）已經支援執行 SPNEGO 驗證。您可以使用任何可用的 HTTP 用戶端程式庫與 druid 叢集進行通訊。
+## 使用程式發送查詢
+
+- 許多 HTTP 用戶端程式庫（例如 Apache Commons HttpComponents ）已經支援執行 SPNEGO 驗證。
+- 您可以使用任何可用的 HTTP 用戶端程式庫與 druid 叢集進行通訊。
 
 
 ## Terminology
