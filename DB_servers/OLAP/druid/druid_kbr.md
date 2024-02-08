@@ -103,7 +103,8 @@ druid.escalator.type	kerberos	用於內部進程通訊的 Escalator 用戶端類
 druid.escalator.internalClientPrincipal	druid@EXAMPLE.COM	主要用戶名，用於內部進程通信	不適用	是的
 druid.escalator.internalClientKeytab	/etc/security/keytabs/druid.keytab	用於內部進程通訊的密鑰表檔案的路徑	不適用	是的
 druid.escalator.authorizerName	MyBasicAuthorizer	請求應發送至的授權者。	不適用	是的
-kerberos 安全性時存取 Druid HTTP 端點
+
+## 啟動kerberos驗證後Druid HTTP 各端點的存取
 
 - 需要透過curl存取druid HTTP端點，用戶需要先使用kinit以下命令登入
 
