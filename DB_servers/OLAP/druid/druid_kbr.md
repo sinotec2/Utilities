@@ -1,6 +1,26 @@
+---
+layout: default
+title:  Druid數據探索
+parent: Apache Druid
+grand_parent: DB_servers
+grand_parent: OLAP
+last_modified_date: 2024-01-31 19:49:51
+tags: DB_servers Druid
+---
 
+# # Apache Druid 安裝Kerberos驗證系統
+{: .no_toc }
 
-# Apache Druid 安裝Kerberos驗證系統
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
 
 ## 背景
 
