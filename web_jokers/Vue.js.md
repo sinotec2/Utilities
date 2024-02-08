@@ -1,5 +1,5 @@
 
-## 
+## Linux上有Vue方案嗎？
 
 是的，Vue.js 可以在 Linux 上進行開發和運行。Vue.js 是一個用於構建用戶界面的 JavaScript 框架，它主要用於開發單頁應用程式（SPA）。在 Linux 上，您可以使用 Vue CLI 或者將 Vue.js 直接嵌入到您的 HTML 文件中。
 
