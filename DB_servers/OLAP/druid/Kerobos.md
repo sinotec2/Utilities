@@ -78,7 +78,7 @@ sudo apt-get install krb5-user krb5-config
 
 ## Apache Druid 設定
 
-根據[Apache Druid官方文檔](https://druid.apache.org/docs/latest/development/extensions-core/druid-kerberos/)，我將簡要描述Druid的Kerberos設定。
+根據[Apache Druid官方文檔](https://druid.apache.org/docs/latest/development/extensions-core/druid-kerberos/)，我將簡要描述Druid的Kerberos設定。中文詮釋版，可以詳見[Apache Druid 安裝Kerberos驗證系統](./druid_kbr.md)
 
 1. **Kerberos驗證機制**：Apache Druid的Kerberos擴展可用於保護Druid進程的HTTP端點。它使用簡單且受保護的GSSAPI協商機制SPNEGO。要啟用Kerberos驗證，請確保在擴展的加載列表中包含`druid-kerberos`。
 

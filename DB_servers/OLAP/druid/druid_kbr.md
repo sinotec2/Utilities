@@ -8,7 +8,7 @@ last_modified_date: 2024-01-31 19:49:51
 tags: DB_servers Druid
 ---
 
-# # Apache Druid 安裝Kerberos驗證系統
+# Apache Druid 安裝Kerberos驗證系統
 {: .no_toc }
 
 <details open markdown="block">
@@ -49,13 +49,13 @@ druid.auth.authenticator.<authenticatorName>.<authenticatorProperty>
 
 ### 插件特質
 
-特質項目	|可能的值|描述|預設|必需項目
+特質項目|可能的值|描述|預設|必需項目
 |-|-|-|-|-
-druid.auth.authenticator.kerberos.serverPrincipal|HTTP/_HOST@EXAMPLE.COM	druid 程序使用的 SPNEGO 服務主體	空的	是的
-druid.auth.authenticator.kerberos.serverKeytab	/etc/security/keytabs/spnego.service.keytab	druid 程序使用的 SPNEgo 服務金鑰表	空的	是的
-druid.auth.authenticator.kerberos.authToLocal	RULE:[1:$1@$0](druid@EXAMPLE.COM)s/.*/druid DEFAULT	它允許您設定將主體名稱對應到本機使用者名稱的一般規則。如果正在翻譯的主體名稱沒有明確映射，則將使用它。	預設	不
-druid.auth.authenticator.kerberos.cookieSignatureSecret	secretString	用於簽署身分驗證 cookie 的秘密。如果您有多個 druid 節點在同一台機器上使用不同的連接埠運行，建議明確設定它，因為 Cookie 規範不保證連接埠隔離。	隨機值	不
-druid.auth.authenticator.kerberos.authorizerName	取決於可用的授權者	請求應發送至的授權者	空的	是的
+druid.auth.authenticator.kerberos.serverPrincipal|HTTP/_HOST@EXAMPLE.COM|druid 程序使用的 SPNEGO 服務主體|空的|是的
+druid.auth.authenticator.kerberos.serverKeytab|/etc/security/keytabs/spnego.service.keytab|druid 程序使用的 SPNEgo 服務金鑰表|空的|是的
+druid.auth.authenticator.kerberos.authToLocal|RULE:[1:$1@$0](druid@EXAMPLE.COM)s/.*/druid DEFAULT|它允許您設定將主體名稱對應到本機使用者名稱的一般規則。如果正在翻譯的主體名稱沒有明確映射，則將使用它。|預設|不
+druid.auth.authenticator.kerberos.cookieSignatureSecret|secretString|用於簽署身分驗證 cookie 的秘密。如果您有多個 druid 節點在同一台機器上使用不同的連接埠運行，建議明確設定它，因為 Cookie 規範不保證連接埠隔離。|隨機值|不
+druid.auth.authenticator.kerberos.authorizerName|取決於可用的授權者|請求應發送至的授權者|空的|是的
 
 - 請注意，druid 程序使用的 SPNego 主體必須以 HTTP 開頭（由RFC-4559指定），且格式必須為「HTTP/_HOST@REALM」。特殊字串_HOST將自動替換為config的值druid.host
 
@@ -98,11 +98,12 @@ druid.auth.authenticator.kerberos.authToLocal允許您設定將主體名稱對�
 - Druid 是使用升級後的內部程序來與http 用戶端相互通訊。
 - 啟用 Kerberos 的升級 HTTP 用戶端可以透過以下屬性進行設定
 
-財產	範例值	描述	預設	必需的
-druid.escalator.type	kerberos	用於內部進程通訊的 Escalator 用戶端類型。	不適用	是的
-druid.escalator.internalClientPrincipal	druid@EXAMPLE.COM	主要用戶名，用於內部進程通信	不適用	是的
-druid.escalator.internalClientKeytab	/etc/security/keytabs/druid.keytab	用於內部進程通訊的密鑰表檔案的路徑	不適用	是的
-druid.escalator.authorizerName	MyBasicAuthorizer	請求應發送至的授權者。	不適用	是的
+財產|範例值|描述|預設|必需的
+|-|-|-|-|-
+druid.escalator.type|kerberos|用於內部進程通訊的 Escalator 用戶端類型。|不適用|是的
+druid.escalator.internalClientPrincipal|druid@EXAMPLE.COM|主要用戶名，用於內部進程通信|不適用|是的
+druid.escalator.internalClientKeytab|/etc/security/keytabs/druid.keytab|用於內部進程通訊的密鑰表檔案的路徑|不適用|是的
+druid.escalator.authorizerName|MyBasicAuthorizer|請求應發送至的授權者。|不適用|是的
 
 ## 啟動kerberos驗證後Druid HTTP 各端點的存取
 

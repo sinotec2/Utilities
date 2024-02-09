@@ -82,15 +82,3 @@ hostname.domain.top-level-domain
 
 FQDN 的主要作用是唯一地標識網際網路上的特定主機。這在網路通信、DNS 解析和許多其他網路相關的應用中都是重要的。
 
-### ses-dcNN.sinotech-eng.com vs 200.200.xxx.yyy
-
-|NN|xxx.yyy|
-|-|-|
-|5|32.11|
-|9|32.29|
-|10|32.52|
-|11|32.17|
-|12|32.53|
-|13|32.54|
-|node03|31.47|
-
