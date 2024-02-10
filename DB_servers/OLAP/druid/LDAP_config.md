@@ -26,7 +26,9 @@ tags: DB_servers Druid
 
 您可以使用輕量級目錄存取協定 (LDAP)來保護對 Apache Druid 的存取。本主題介紹如何使用 LDAP 和 LDAP over TLS (LDAPS) 設定 Druid 驗證和授權。此處範例將會顯示 Active Directory LDAP 系統的設定。
 
-第一步是為 Druid 啟用 LDAP 身份驗證和授權。然後，您將 LDAP 群組對應到 Druid 角色並為這些角色指派權限。完成此配置後，您可以選擇啟用 LDAPS 以使 LDAP 流量保密且安全。
+- 第一步是為 Druid 啟用 LDAP 身份驗證和授權。
+- 然後，您將 LDAP 群組對應到 Druid 角色並為這些角色指派權限。
+- 完成此配置後，您可以選擇啟用 LDAPS 以使 LDAP 流量保密且安全。
 
 ## 事前準備
 
