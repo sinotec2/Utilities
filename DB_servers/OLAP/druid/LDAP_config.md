@@ -36,9 +36,12 @@ tags: DB_servers Druid
 
 ### 檢查您的 LDAP
 
-測試您的 LDAP 連線以驗證它是否適用於使用者憑證。稍後在此過程中，您將 Druid 配置為 LDAP 身份驗證，並使用該使用者作為bindUser.
+- 測試您的 LDAP 連線以驗證它是否適用於使用者憑證。
+- 稍後在此過程中，您將 Druid 配置為 LDAP 身份驗證，並以該使用者作為綁定用戶（bindUser）.
 
-以下範例命令測試用戶的連線myuser@example.com。輸入您的 LDAP 伺服器 IP 位址。如果 LDAP 實例偵聽除 之外的端口，請修改 LDAP 實例的連接埠號碼389。
+- 以下範例旨在測試用戶的連線，用戶的DN=myuser@example.com。
+  - 輸入您的 LDAP 伺服器 IP 位址。
+  - 如果您的LDAP伺服器實例偵聽對象是除389之外的端口，請修改 LDAP 實例的連接埠號碼389。
 
 ```bash
 ldapwhoami -vv -H ldap://ip_address:389  -D "myuser@example.com" -W
@@ -47,28 +50,31 @@ ldapwhoami -vv -H ldap://ip_address:389  -D "myuser@example.com" -W
 出現提示時輸入使用者的密碼並驗證指令是否成功。如果失敗，請檢查以下內容：
 
 - 確保您的 LDAP 執行個體使用正確的連接埠。
-- 檢查網路防火牆是否阻止連接到 LDAP 連接埠。
+- 檢查伺服器的網路防火牆是否阻止其他機器連接到 LDAP 連接埠。
 - 查看您的 LDAP 實作詳細信息，以了解您是否需要在 LDAP 伺服器上專門允許 LDAP 用戶端。如果是這樣，請將 Druid Coordinator 伺服器新增至允許清單。
 
 ### 測試您的 LDAP
 
-LDAP 連線正常後，搜尋使用者。myuser例如，下列指令在 Active Directory 系統中搜尋使用者。此sAMAccountName屬性特定於 Active Directory，包含經過驗證的使用者身分：
+- LDAP 連線正常後，搜尋使用者。例如myuser。
+- 下列指令也可在 Active Directory 系統中搜尋使用者。此sAMAccountName屬性特定於 Active Directory，包含經過驗證的使用者身分：
 
 ```bash
 ldapsearch -x -W -H ldap://ip_address:389  -D "cn=admin,dc=example,dc=com" -b "dc=example,dc=com" "(sAMAccountName=myuser)" +
 ```
 
-memberOf結果中的屬性顯示使用者所屬的群組。例如，以下回應顯示該使用者是該mygroup群組的成員：
+- memberOf結果中的屬性顯示使用者所屬的群組。
+- 例如以下回應顯示該使用者乃是mygroup群組的成員：
 
 ```bash
 memberOf: cn=mygroup,ou=groups,dc=example,dc=com
 ```
 
-您可以在後續步驟中使用此資訊將 LDAP 群組對應到 Druid 角色。
+- 您可以在後續步驟中使用此資訊將 LDAP 群組對應到 Druid 角色。
 
-### 資訊
+### 重要資訊
 
-Druid 使用該memberOf屬性來透過 LDAP 確定群組的成員資格。如果您的 LDAP 伺服器實作不包含此屬性，則在將LDAP 群組對應到 Druid 角色時必須完成一些附加步驟。
+- 透過LDAP，Druid 使用memberOf屬性來確定群組的成員資格。
+- 如果您的 LDAP 伺服器實作不包含此屬性，則在將LDAP 群組對應到角色時，必須完成其他的附加步驟。
 
 ### 配置 Druid 進行 LDAP
 
