@@ -1,5 +1,30 @@
+---
+layout: default
+title:  生產階段佈局考量
+parent: Apache Druid
+grand_parent: DB_servers
+grand_parent: OLAP
+last_modified_date: 2024-01-07 20:26:18
+tags: DB_servers Druid
+---
 
-## 條件與疑點
+# 生產階段的佈局考量
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
+
+有關生產階段如何佈局的條件與疑點：
 
 - 我有一組 infinitiv 10G的叢聚內網、一台管理、可以對外，2台只在內網運作，這樣的架構在Druid的生產佈局中，可以怎麼規劃？
 - 外網速率是1G、內網速率是10G，這樣的架構，你會怎麼佈建？
