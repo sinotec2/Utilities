@@ -60,6 +60,70 @@ tags: SecAndAuth
 
 LDAP有可能讓使用者自行登記其個資、由程式判斷應賦予什麼樣的角色權限，而不是人工進行審查管理嗎？
 
+## 現成測試用的LDAP伺服器
+
+### copyprogramming
+
+- Are there any available practice AD and LDAP servers in the form of a sample? by [copyprogramming.com](https://copyprogramming.com/howto/is-there-a-sample-ad-ldap-server-for-practice)
+
+### forumsys
+
+- seems not work
+- [forumsys.com](https://www.forumsys.com/2022/05/10/online-ldap-test-server/)
+
+![](https://www.forumsys.com/wp-content/uploads/2021/12/Forum-Systems-Homepage-Logo.png)
+
+- Server: ldap.forumsys.com
+- Port: 389 
+- `-H ldpa://ldap.forumsys.com:389`
+- Bind DN: cn=read-only-admin,dc=example,dc=com
+- Bind Password: password
+- All user passwords are password. You may also bind to individual Users (uid) or the two Groups (ou) that include: 
+- ou=mathematicians,dc=example,dc=com,uid=...
+  - riemann
+  - gauss
+  - euler
+  - euclid
+- ou=scientists,dc=example,dc=com,uid=...
+  - einstein
+  - newton
+  - galieleo
+  - tesla
+- usage: [stackoverflow](https://stackoverflow.com/questions/7667197/is-there-any-free-ldap-server-with-data)
+- curl command
+- ldapsearch not works: `ldapsearch -x -H ldap://ldap.forumsys.com:389 -D "ou=scientists,dc=example,dc=com,uid=einstein" -w "password" -b "dc=example,dc=com"`
+
+### docker instance: upekshejay
+
+- [Simple LDAP Auth Server](https://hub.docker.com/r/upekshejay/simple-ldap-test-server)
+  - [Docker Pull Command](docker pull upekshejay/simple-ldap-test-server)
+  - common-password: "`itachi`", /* password for all the users */
+
+ldapsearch -x -H ldap://0.0.0.0:389 -D "ou=users,dc=mtr,dc=com,cn=kamal" -w "itachi" -b "dc=mtr,dc=com"`
+
+### docker instance: openldap
+
+- [使用 Docker 建置 LDAP 系統](https://chrislee0728.medium.com/使用-docker-建置-ldap-系統-82370c53bc9f)
+  - 注意：文中8080在druid系統中已被佔用，須更改新的端口。
+- 第一次登入(http://localhost:7081)的資訊如下：使用者名稱：cn=admin,dc=example,dc=org密碼：admin
+- 因為是docker,所以ldap/ldaps端口有些不同，方便為8389/8636,在docker.composer.yml中有設定。
+
+```bash
+ldapsearch -x -H ldap://localhost:8389 -D "cn=admin,dc=example,dc=org" -w "admin" -b "cn=yckuang,cn=grp1,ou=Servers,dc=example,dc=org"
+```
+
+- ldapsear with filtering
+
+```bash
+ldapsearch -x -W -H ldap://localhost:8389  -D "cn=admin,dc=example,dc=org" -b "dc=example,dc=org" "(cn=yckuang)"
+```
+
+### dummyldap
+
+[intelie/dummyldap](https://github.com/intelie/dummyldap)
+
+ldapsearch -x -H ldap://localhost:389 -D "ou=scientists,dc=example,dc=com,uid=einstein" -w "password" -b "dc=example,dc=com"
+
 ## 注意事項
 
 是的，LDAP 可以被設計為允許使用者自助註冊和管理其個人資料，同時由程式進行角色和權限的判斷。 這通常涉及到自服務入口網站和自動化的身份管理流程。
