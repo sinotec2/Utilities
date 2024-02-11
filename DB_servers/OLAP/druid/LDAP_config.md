@@ -8,7 +8,7 @@ last_modified_date: 2024-02-06 11:22:37
 tags: DB_servers Druid
 ---
 
-# 配置 LDAP 身份驗證 
+# 配置 LDAP 身份驗證
 {: .no_toc }
 
 <details open markdown="block">
@@ -109,16 +109,51 @@ druid.auth.authorizer.ldapauth.initialAdminRole=admin
 druid.auth.authorizer.ldapauth.roleProvider.type=ldap
 ```
 
+### 配置說明
+
+這些配置是用於 Druid 的身份驗證和授權的設定。以下是這些設定的解釋：
+
+1. **`druid.escalator.type=basic`：**
+   - 這個配置指定 Druid 使用Escalator類型函式。在這裡，它設置為 `basic`，表明 Druid 使用基本的身份驗證和授權機制。
+
+2. **`druid.escalator.internalClientUsername=internal@example.com`：**
+   - 這是 Druid 內部客戶端使用的用戶名，用於內部服務之間的通信。
+
+3. **`druid.escalator.internalClientPassword=internaluserpassword`：**
+   - 內部客戶端的密碼，用於內部服務之間的通信。
+
+4. **`druid.escalator.authorizerName=ldapauth`：**
+   - 這個配置指定 Druid 使用的授權器的名稱。在這裡，它設置為 `ldapauth`，表明 Druid 將使用 LDAP 身份驗證和授權。
+
+5. **`druid.auth.authorizers=["ldapauth"]`：**
+   - 此配置設定 Druid 使用的所有授權器的名稱列表。在這裡，僅指定了一個名稱 `ldapauth`。
+
+6. **`druid.auth.authorizer.ldapauth.type=basic`：**
+   - 這裡指定了 `ldapauth` 授權器的類型，設置為 `basic`。
+
+7. **`druid.auth.authorizer.ldapauth.initialAdminUser=internal@example.com`：**
+   - LDAP 授權器的初始管理員用戶名，此用戶在啟動時將具有管理權限。
+
+8. **`druid.auth.authorizer.ldapauth.initialAdminRole=admin`：**
+   - LDAP 授權器的初始管理員角色，此角色在啟動時將具有管理權限。
+
+9. **`druid.auth.authorizer.ldapauth.roleProvider.type=ldap`：**
+   - 此配置指定 Druid 使用的角色提供者的類型，這裡設置為 `ldap`，表明 Druid 使用 LDAP 作為角色提供者。
+
+總的來說，這些配置表明 Druid 使用基本的身份驗證和 LDAP 作為授權機制。它設置了初始管理員的用戶名、角色和 LDAP 連接的一些相關設定。這些設定在 Druid 啟動時將被應用，並影響 Druid 的身份驗證和授權行為。
+
+### 設定注意事項
+
 請注意以下事項：
 
 - bindUser：連接 LDAP 的使用者。這應該是您用於測試 LDAP 搜尋的相同使用者。
-- userSearch：您的 LDAP 搜尋語法。
-- userAttribute：用戶搜尋屬性。
+- userSearch ：您的 LDAP 搜尋語法。
+- userAttribute ：用戶搜尋屬性。
 - internal@example.com是您在步驟 1 中建立的 LDAP 使用者。在範例中，它既充當內部用戶端使用者又充當初始管理員使用者。
 
 - 重要資訊提醒
-  - 在上面的範例中，Druid 自動扶梯和 LDAP 初始管理員使用者設定為相同使用者 - internal@example.com。
-  - 如果自動扶梯設定為其他用戶，則必須按照步驟 4 和 5 建立群組對應並指派初始角色，然後叢集的其餘部分才能運作。
+  - 在上面的範例中，Druid Escalator和 LDAP 初始管理員使用者設定為相同使用者 - internal@example.com。
+  - 如果Escalator設定為其他用戶，則必須按照步驟 4 和 5 建立群組對應並指派初始角色，然後叢集的其餘部分才能運作。
 
 4. 將群組映射儲存到 JSON 檔案。範例文件groupmap.json如下所示：
 
