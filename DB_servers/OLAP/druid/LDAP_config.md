@@ -62,8 +62,8 @@ ldapwhoami -vv -H ldap://ip_address:389  -D "myuser@example.com" -W
 ldapsearch -x -W -H ldap://ip_address:389  -D "cn=admin,dc=example,dc=com" -b "dc=example,dc=com" "(sAMAccountName=myuser)" +
 ```
 
-- memberOf結果中的屬性顯示使用者所屬的群組。
-- 例如以下回應顯示該使用者乃是mygroup群組的成員：
+- `memberOf`結果中的屬性顯示使用者所屬的群組。
+- 例如以下回應顯示該使用者乃是`mygroup`群組的成員：
 
 ```bash
 memberOf: cn=mygroup,ou=groups,dc=example,dc=com
@@ -82,9 +82,9 @@ memberOf: cn=mygroup,ou=groups,dc=example,dc=com
 
 1. 在 LDAP 系統中建立一個用戶，您將使用該用戶與 Druid 進行內部通訊並作為 LDAP 初始管理員用戶。有關詳細信息，請參閱安全概述。在下面的範例中，LDAP 使用者是internal@example.com。
 
-2. 啟用檔案druid-basic-security中的副檔名common.runtime.properties。
+2. 啟用`druid-basic-security`目錄中的外掛控制檔，名稱也是`common.runtime.properties`。
 
-3. 在該common.runtime.properties文件中，為 LDAP 屬性新增以下行並將這些值替換為您自己的值。有關這些屬性的詳細信息，請參閱Druid 基本安全性。
+3. 在該`common.runtime.properties`文件中，為 LDAP 屬性新增以下行並將這些值替換為您自己的值。有關這些屬性的詳細信息，請參閱Druid 基本安全性。
 
 ```bash
 druid.auth.authenticatorChain=["ldap"]
@@ -185,36 +185,40 @@ curl -i -v  -H "Content-Type: application/json" -u internal -X GET  http://local
 ## 將 LDAP 群組對應到 Druid
 完成初始設定和映射後，您可以將更多 LDAP 群組對應到 Druid 角色。LDAP群組的成員可以存取對應Druid角色的權限。
 
-創建德魯伊
-若要建立 Druid 角色，您可以使用 Druid REST API 向協調器程序提交 POST 請求，也可以使用 Druid 控制台。
+### 創建德魯伊角色
 
-下面的範例用作localhost協調器主機和8081連接埠。根據部署的詳細資訊修改這些屬性。
+- 若要建立 Druid 角色，您可以使用 Druid REST API 向協調器程序提交 POST 請求，也可以使用 Druid 控制台。
+- 下面的範例用作localhost協調器主機和8081連接埠。根據部署的詳細資訊修改這些屬性。
+- 建立名為readRole的角色的範例請求：
 
-建立名為 的角色的範例請求readRole：
-
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X POST  http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/roles/readRole 
+```
 
+- 檢查Druid是否成功創建角色。以下範例請求列出了所有角色：
 
-檢查Druid是否成功創建角色。以下範例請求列出了所有角色：
-
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X GET  http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/roles
+```
 
+### 為Druid新增權限
 
-為Druid
-一旦您擁有了 Druid 角色，您就可以為其新增權限。以下範例新增對資料來源的唯讀存取權限wikipedia。
+- 一旦您擁有了 Druid 角色，您就可以為其新增權限。以下範例新增對資料來源的唯讀存取權限wikipedia。
+- 在名為perm.json的檔案中給予以下 ：
 
-在名為 的檔案中給予以下 JSON perm.json：
-
+```json
 [
     { "resource": { "name": "wikipedia", "type": "DATASOURCE" }, "action": "READ" },
     { "resource": { "name": ".*", "type": "STATE" }, "action": "READ" },
     { "resource": {"name": ".*", "type": "CONFIG"}, "action": "READ"}
 ]
+```
 
 以下請求將 JSON 檔案中的權限與readRole角色關聯：
 
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X POST -d@perm.json  http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/roles/readRole/permissions
-
+```
 
 Druid 使用者需要STATE和CONFIG權限才能在 Druid 控制台中查看資料來源。如果您只想指派查詢權限，您可以僅套用READ檔案第一行的權限perm.json。
 
@@ -223,6 +227,7 @@ Druid 使用者需要STATE和CONFIG權限才能在 Druid 控制台中查看資�
 建立群組
 現在您可以將 LDAP 群組對應到 Druid 角色。以下範例請求建立一個名為 name 的對應mygroupmap。mygroup它假定目錄中存在名為 的群組。
 
+```json
 {
     "name": "mygroupmap",
     "groupPattern": "CN=mygroup,CN=Users,DC=example,DC=com",
@@ -230,21 +235,25 @@ Druid 使用者需要STATE和CONFIG權限才能在 Druid 控制台中查看資�
         "readRole"
     ]
 }
+```
 
 以下範例請求配置映射-角色映射位於檔案中groupmap.json。有關範例文件的內容，請參閱為 LDAP 驗證設定 Druid 。
 
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X POST -d @groupmap.json http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/groupMappings/mygroupmap
-
+```
 
 若要檢查群組對映是否已建立成功，下列請求會列出所有群組對應：
 
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X GET http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/groupMappings
-
+```
 
 以下範例請求返回mygroupmap群組的詳細資訊：
 
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X GET http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/groupMappings/mygroupmap
-
+```
 
 以下範例請求將角色新增queryRole至映射中mygroupmap：
 

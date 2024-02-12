@@ -1,3 +1,30 @@
+---
+layout: default
+title:  Druid安全設定
+parent: Apache Druid
+grand_parent: DB_servers
+grand_parent: OLAP
+last_modified_date: 2024-02-12 14:15:31
+tags: DB_servers Druid
+---
+
+# Apache Druid 之安全設定
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
+
+- 文件來源：[Security overview](https://druid.apache.org/docs/latest/operations/security-overview/)
 
 ## 安全概述
 
@@ -33,7 +60,7 @@
   - 例如，僅將 Broker 連接埠公開給執行查詢的下游應用程式。
   - 您可以限制對特定 IP 位址或網段的訪問，以進一步加強和增強安全性。
 
-### 適用於 Druid 授權認證模型的建議：
+### 適用於 Druid 授權認證模型的建議
 
 - 僅向受信任的使用者授予DATASOURCE WRITE權限。
   - Druid 的信任模型會假設這些使用者與執行 Web 控制台程序的作業 系統使用者具有相同的權限。
@@ -95,7 +122,7 @@ druid.server.https.certAlias=druid
 
 - 有關更多信息，請參閱TLS 支援和簡單 SSLContext 提供者模組。
 
-### 身份驗證和
+### 身份驗證和授權
 
 您可以設定身份驗證和授權來控制對 Druid API 的存取。然後配置使用者、角色和權限，如下部分所述。common.runtime.properties在叢集中所有 Druid 伺服器上的檔案中進行設定變更。
 
@@ -105,23 +132,23 @@ druid.server.https.certAlias=druid
 
 ![Druid安全檢查流程](https://druid.apache.org/assets/images/security-model-1-52af921005928cc8df8fa854071ac883.png)
 
-
-
 ## 啟用身份驗證器
 
-- 要在 Druid 中對請求進行身份驗證，您需要設定一個身份驗證器。 
+- 要在 Druid 中對請求進行身份驗證，您需要設定一個身份驗證器。
   - HTTP 基本驗證、LDAP 和 Kerberos 都有驗證器之擴充外掛。
+  - 以下將引導您完成啟用基本驗證的範例設定步驟：
+- 將外掛檔名`indruid-basic-security`加入通用設定檔`common.runtime.properties`中的外掛清單`druid.extensions.loadList`中。
+  - 如要快速入門安裝，可以參考位於`conf/druid/cluster/_common`目錄下屬性檔案`common.runtime.properties`中的建議。(參考[屬性檔範例說明](./common.runtime.properties.md))
 
-以下將引導您完成啟用基本驗證的範例設定步驟：
-
-將副檔名加入indruid-basic-security中。例如，對於快速入門安裝，屬性檔案位於：druid.extensions.loadListcommon.runtime.propertiesconf/druid/cluster/_common
-
+```python
 druid.extensions.loadList=["druid-basic-security", "druid-histogram", "druid-datasketches", "druid-kafka-indexing-service"]
+```
 
-在同一 common.runtime.properties 檔案中設定基本的驗證器、授權器和自動扶梯設定。Escalator 定義了 Druid 進程如何相互驗證。
+在同一 common.runtime.properties 檔案中設定基本的驗證器、授權器和Escalator設定。 Escalator 定義了 Druid 進程如何相互驗證。
 
 範例配置：
 
+```python
 # Druid basic security
 druid.auth.authenticatorChain=["MyBasicMetadataAuthenticator"]
 druid.auth.authenticator.MyBasicMetadataAuthenticator.type=basic
@@ -151,10 +178,10 @@ druid.escalator.authorizerName=MyBasicMetadataAuthorizer
 druid.auth.authorizers=["MyBasicMetadataAuthorizer"]
 
 druid.auth.authorizer.MyBasicMetadataAuthorizer.type=basic
+```
 
-重新啟動叢集。
-
-請參閱以下主題以獲取更多資訊：
+- 重新啟動叢集。
+- 請參閱以下主題以獲取更多資訊：
 
 身份驗證和授權，以了解有關身份驗證器、自動扶梯和授權器的更多資訊。
 基本安全性，以了解有關上述範例中使用的擴充功能的更多資訊。
@@ -171,44 +198,49 @@ Pythondruidapi庫作為 Druid 教程的一部分提供，用於設定使用者�
 
 以下步驟示範了範例設定流程：
 
-資訊
-對於非 TLS 連接，預設協調器 API 連接埠為 8081；對於安全連接，預設協調器 API 連接埠為 8281。
+- 資訊
+  - 對於非 TLS 連接，預設協調器 API 連接埠為 8081；對於安全連接，預設協調器 API 連接埠為 8281。
+  - 透過向 發出 POST 請求來建立使用者druid-ext/basic-security/authentication/db/MyBasicMetadataAuthenticator/users/<USERNAME>。替換<USERNAME>為您嘗試建立的新使用者名稱。例如：
 
-透過向 發出 POST 請求來建立使用者druid-ext/basic-security/authentication/db/MyBasicMetadataAuthenticator/users/<USERNAME>。替換<USERNAME>為您嘗試建立的新使用者名稱。例如：
-
+```bash
 curl -u admin:password1 -XPOST https://my-coordinator-ip:8281/druid-ext/basic-security/authentication/db/MyBasicMetadataAuthenticator/users/myname
+```
 
+- 資訊
+  - 如果啟用了 TLS，請務必相應地調整curl 命令。例如，如果您的 Druid 伺服器使用自簽名證書，您可以選擇包含insecurecurl 選項以放棄對curl 命令進行證書檢查。
+  - 透過向 發出 POST 請求來新增使用者憑證druid-ext/basic-security/authentication/db/MyBasicMetadataAuthenticator/users/<USERNAME>/credentials。例如：
 
-資訊
-如果啟用了 TLS，請務必相應地調整curl 命令。例如，如果您的 Druid 伺服器使用自簽名證書，您可以選擇包含insecurecurl 選項以放棄對curl 命令進行證書檢查。
-
-透過向 發出 POST 請求來新增使用者憑證druid-ext/basic-security/authentication/db/MyBasicMetadataAuthenticator/users/<USERNAME>/credentials。例如：
-
+```bash
 curl -u admin:password1 -H'Content-Type: application/json' -XPOST https://my-coordinator-ip:8281/druid-ext/basic-security/authentication/db/MyBasicMetadataAuthenticator/users/myname/credentials --data-raw '{"password": "my_password"}'
+```
 
+  - 對於您建立的每個身分驗證者用戶，透過向 發出 POST 請求來建立對應的授權者使用者druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/users/<USERNAME>。例如：
 
-對於您建立的每個身分驗證者用戶，透過向 發出 POST 請求來建立對應的授權者使用者druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/users/<USERNAME>。例如：
-
+```bash
 curl -u admin:password1 -XPOST https://my-coordinator-ip:8281/druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/users/myname
-
+```
 
 建立授權者角色以透過向 發出 POST 請求來控制權限druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/roles/<ROLENAME>。例如：
 
+```bash
 curl -u admin:password1 -XPOST https://my-coordinator-ip:8281/druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/roles/myrole
-
+```
 
 透過向 發出 POST 請求來為使用者指派角色druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/users/<USERNAME>/roles/<ROLENAME>。例如：
 
+```bash
 curl -u admin:password1 -XPOST https://my-coordinator-ip:8281/druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/users/myname/roles/myrole | jq
-
+```
 
 最後，為角色附加權限以控制他們如何與 Druid 進行互動druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/roles/<ROLENAME>/permissions。例如：
 
+```bash
 curl -u admin:password1 -H'Content-Type: application/json' -XPOST --data-binary @perms.json https://my-coordinator-ip:8281/druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/roles/myrole/permissions
-
+```
 
 的有效負載perms.json應採用以下形式：
 
+```json
 [
    {
      "resource": {
@@ -225,9 +257,10 @@ curl -u admin:password1 -H'Content-Type: application/json' -XPOST --data-binary 
      "action": "READ"
    }
 ]
+```
 
-資訊
-注意：Druid 將資源名稱視為正規表示式（regex）。您可以使用特定資料來源名稱或正規表示式一次授予多個資料來源的權限。
+- 資訊
+  - 注意：Druid 將資源名稱視為正規表示式（regex）。您可以使用特定資料來源名稱或正規表示式一次授予多個資料來源的權限。
 
 配置 LDAP
 作為使用基本元資料驗證器的替代方法，您可以使用 LDAP 對使用者進行身份驗證。有關為 LDAP 和 LDAPS 配置 Druid 的信息，請參閱配置 LDAP 身份驗證。
