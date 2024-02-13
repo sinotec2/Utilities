@@ -267,13 +267,15 @@ curl -i -v  -H "Content-Type: application/json" -u internal -X POST http://local
 您想要為使用者設定其他 Druid 角色，這些角色未對應到使用者所屬的 LDAP 群組。
 將 LDAP 使用者新增myuser至 Druid 的範例請求：
 
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X POST http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/users/myuser 
-
+```
 
 將使用者指派myuser給queryRole角色的範例請求：
 
+```bash
 curl -i -v  -H "Content-Type: application/json" -u internal -X POST http://localhost:8081/druid-ext/basic-security/authorization/db/ldapauth/users/myuser/roles/queryRole
-
+```
 
 啟用 LDAP over TLS (LDAPS 
 在 Druid 中設定 LDAP 驗證後，您可以選擇使用傳輸層安全性 (TLS) （以前稱為安全通訊端層 (SSL) ）技術使 LDAP 流量保密且安全。
@@ -291,30 +293,35 @@ curl -i -v  -H "Content-Type: application/json" -u internal -X POST http://local
 
 下面的範例說明了 HTTPS 用戶端和 LDAP 用戶端都使用一個金鑰儲存的選項，但如果您願意，也可以為 ldap 使用單獨的專用信任儲存。
 
+```bash
 keytool -import -trustcacerts -keystore path/to/cacerts -storepass truststorepassword -alias aliasName -file path/to/certificate.cer
-
+```
 
 替換path/to/cacerts為信任庫的路徑、truststorepassword信任庫密碼、aliasName金鑰庫的別名以及path/to/certificate.cer憑證的位置和名稱。例如：
 
+```bash
 keytool -import -trustcacerts -keystore /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/security/cacerts -storepass mypassword -alias myAlias -file /etc/ssl/certs/my-certificate.cer
-
+```
 
 如果 Java 信任庫中尚不存在 CA 的根證書，請將其匯入：
 
+```bash
 keytool -importcert -keystore path/to/cacerts -storepass truststorepassword -alias aliasName -file path/to/certificate.cer
-
+```
 
 替換path/to/cacerts為信任庫的路徑、truststorepassword信任庫密碼、aliasName金鑰庫的別名以及path/to/certificate.cer憑證的位置和名稱。例如：
 
+```bash
 keytool -importcert -keystore /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/security/cacerts -storepass mypassword -alias myAlias -file /etc/ssl/certs/my-certificate.cer
-
+```
 
 在您的common.runtime.properties檔案中，將以下行新增至 LDAP 設定部分，取代您自己的信任儲存路徑和密碼。請注意，指向信任儲存的屬性是druid.auth.basic.ssl.trustStorePath，而不是druid.client.https.trustStorePath。無論您是對 HTTPS 用戶端和 LDAP 使用相同的信任存儲，還是使用單獨的 LDAP 信任存儲，請確保正確的屬性指向導入 LDAP 憑證的信任存儲。
 
+```bash
 druid.auth.basic.ssl.trustStorePath=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/security/cacerts
 druid.auth.basic.ssl.protocol=TLS
 druid.auth.basic.ssl.trustStorePassword=xxxxxx
-
+```
 
 有關這些屬性的詳細信息，請參閱Druid 基本安全性。
 
