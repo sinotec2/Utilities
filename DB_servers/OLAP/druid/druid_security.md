@@ -259,6 +259,109 @@ curl -u admin:password1 -H'Content-Type: application/json' -XPOST --data-binary 
 ]
 ```
 
+```json
+[
+  {
+    "resource":{
+        "name":".*",
+        "type":"CONFIG"
+      },
+    "action":"READ"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"CONFIG"
+        },
+      "action":"WRITE"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"QUERY_CONTEXT"
+        },
+      "action":"READ"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"QUERY_CONTEXT"
+        },
+      "action":"WRITE"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"SYSTEM_TABLE"
+      },
+      "action":"READ"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"SYSTEM_TABLE"
+        },
+      "action":"WRITE"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"EXTERNAL"
+        },
+      "action":"READ"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"EXTERNAL"
+        },
+      "action":"WRITE"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"DATASOURCE"
+        },
+      "action":"READ"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"DATASOURCE"
+        },
+      "action":"WRITE"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"STATE"
+        },
+      "action":"READ"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"STATE"
+        },
+      "action":"WRITE"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"VIEW"
+        },
+      "action":"READ"
+  },
+  {
+    "resource":{
+        "name":".*",
+        "type":"VIEW"
+        },
+      "action":"WRITE"
+  },
+]
+```
+
 - 資訊
   - 注意：Druid 將資源名稱視為正規表示式（regex）。您可以使用特定資料來源名稱或正規表示式一次授予多個資料來源的權限。
 
