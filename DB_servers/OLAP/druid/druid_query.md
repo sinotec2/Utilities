@@ -28,6 +28,7 @@ tags: DB_servers Druid
 - 伺服器本身同時具有資料庫伺服器、API伺服器、權限伺服器等等功能，適合作為發展平台。
 - 伺服器可以使用到工作站80%的記憶體(240G among 300G)、47個核心(among 99)。
 - 目前範例資料庫一年約有1百30萬筆記錄，未來還會增加中。
+- 瀏覽器界面的詳細說明，詳見[Web console](https://druid.apache.org/docs/latest/operations/web-console)
 
 ## 快速啟動
 
