@@ -3207,8 +3207,9 @@ FreeIPA（Identity, Policy, Audit）是一个用于集中管理身份、策略�
 你可以使用以下命令来检查FreeIPA相关的服务状态：
 
 ```bash
-
 sudo systemctl status ipa.service
+```
+
 如果服务正在运行，表示它已经启动。如果未运行，你可以使用以下命令手动启动：
 
 ```bash
