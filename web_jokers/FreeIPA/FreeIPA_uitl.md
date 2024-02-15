@@ -32,14 +32,23 @@ sudo ipactl status
 sudo systemctl status ipa.service
 ```
 
+### 重啟web UI
+
+- 因同屬Apache家族，啟動httpd就自然會啟動ipa的網路伺服器(其設定檔案都在`/etc/httpd/conf.d/`目錄下)
+
+```bash
+sudo systemctl restart httpd
+```
+
+
 ### 設定檔案
 
 - 舊版中文說明[freeipa（5）文件和日志位置](https://blog.csdn.net/senvenks/article/details/42640165)
 
 |位置名稱|用途|重要選項說明
 -|-|-
-`/etc/httpd/conf.d/`||
-`ipa-pki-proxy.conf`|PKI（Public Key Infrastructure）Proxy 配置|[Dogtag](https://www.freeipa.org/page/V4/Dogtag_GSS-API_Authentication)
+`/etc/httpd/conf.d/`|ipa系統相關代理、網頁安全等設定|
+`ipa-pki-proxy.conf`|PKI（Public Key Infrastructure）代理配置|[Dogtag](https://www.freeipa.org/page/V4/Dogtag_GSS-API_Authentication)
 `nss.conf`|用於配置 Apache HTTP Server 以支援 NSS（Network Security Services）模組，進行 SSL/TLS 加密和安全通信|
 `ipa.conf`|IPA主要設定檔|[33版模板](https://github.com/freeipa/freeipa/blob/master/install/share/ipa.conf.template)
 `ipa-rewrite.conf`|重寫規則用於修改 HTTP 請求的 URI 或其他相關屬性，以適應 FreeIPA 的身份管理和單點登入（SSO）機制|
