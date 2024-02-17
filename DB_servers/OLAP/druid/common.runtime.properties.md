@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  common.properties
+title:  common.runtime.properties
 parent: Apache Druid
 grand_parent: OLAP
 last_modified_date: 2024-01-31 19:49:51
