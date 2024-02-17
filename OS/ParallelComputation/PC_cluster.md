@@ -1,3 +1,24 @@
+---
+layout: default
+title:  PC計算叢集的相應設定
+parent:   Parallel Computation
+grand_parent: Operation Systems
+last_modified_date: 2022-04-25 12:20:36
+---
+# PC計算叢集的相應設定
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+## 背景
 
 ## 使用者設定
 
