@@ -1,4 +1,26 @@
+---
+layout: default
+title:  Google OAuth
+parent: Security And Authentication
+grand_parent: Web Jokers
+last_modified_date: 2023-06-12 08:56:43
+tags: OAuth
+---
 
+# MacOS 環境安裝HTTPS
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 ### macOS set-up
 
