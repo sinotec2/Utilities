@@ -1,4 +1,27 @@
+---
+layout: default
+title:  ArcGIS SDK
+parent: GIS Relatives
 
+last_modified_date: 2023-05-11 16:01:26
+tags: GIS Voronoi Delaunay
+---
+
+# ArcGIS SDK
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
 
 地理信息系統（Geographic Information System，縮寫為GIS）的架構主要包括數據、軟體、硬體、人員和方法五個方面。以下是GIS的一般架構：
 
