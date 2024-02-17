@@ -1,4 +1,24 @@
+---
+layout: default
+title:  Apache Guacamole
+parent:   Parallel Computation
+grand_parent: Operation Systems
+last_modified_date: 2022-04-25 12:20:36
+---
+# Apache Guacamole
+{: .no_toc }
 
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+## 背景
 
 Apache Guacamole 是一個開源的遠端桌面網頁應用程式，它允許用戶透過瀏覽器訪問和控制遠端桌面。以下是有關 Apache Guacamole 的一些更多介紹：
 
