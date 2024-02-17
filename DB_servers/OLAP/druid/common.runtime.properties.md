@@ -1,3 +1,25 @@
+---
+layout: default
+title:  common.properties
+parent: Apache Druid
+grand_parent: OLAP
+last_modified_date: 2024-01-31 19:49:51
+tags: DB_servers Druid
+---
+
+# Apache Druid 主要設定檔
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
 
 ## 背景
 
