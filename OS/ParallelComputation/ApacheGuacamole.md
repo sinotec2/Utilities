@@ -45,5 +45,26 @@ Guacamole支援與Active Directory（AD）整合，這使得用戶可以使用�
 
 整合 AD 的步驟通常包括配置 Guacamole 的 LDAP 身份驗證以連接到 AD 伺服器，並確保 Guacamole 中的用戶帳戶映射到 AD 中的用戶。具體的步驟可能會根據您的環境和需求而有所不同，建議查閱 Guacamole 官方文檔以獲得最新和詳細的整合指南。
 
+### 其他開源方案
+
+在 Windows 環境下，有一些開源（opensource）或免費的遠端控制和遠端桌面軟體，其中一些可能適合您的需求。以下是一些常見的開源或免費遠端控制軟體：
+
+1. **[RealVNC](https://www.realvnc.com/):**
+   - RealVNC 提供了免費版本，允許您在 Windows 系統之間進行遠端控制。它也提供了商業版本，具有更多功能。
+
+2. **[TightVNC](https://www.tightvnc.com/):**
+   - TightVNC 是 VNC（Virtual Network Computing）的一個衍生版本，提供免費的遠端控制功能。它支援 Windows 平台。
+
+3. **[UltraVNC](https://www.uvnc.com/):**
+   - UltraVNC 是 VNC 的另一個分支，提供免費的遠端控制和支援 Windows。它具有快速的更新速度和較低的延遲。
+
+4. **[Apache Guacamole](https://guacamole.apache.org/):**
+   - Apache Guacamole 是一個基於 Web 的遠端桌面網頁應用程式，支援 VNC、RDP 和 SSH。它是開源的，並可以在 Windows 平台上使用。
+
+5. **[AnyDesk](https://anydesk.com/):**
+   - AnyDesk 不是完全開源，但提供免費版本，支援 Windows 平台。它以高性能和低延遲為特點。
+
+請確保在使用這些工具之前仔細閱讀其使用條款，並遵守相關法律法規。選擇一個適合您需求的遠端控制軟體可能會取決於您的使用情境、安全需求和個人喜好。
+
 ## 安裝
 
