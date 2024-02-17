@@ -20,7 +20,7 @@ last_modified_date: 2022-04-25 12:20:36
 ---
 ## 背景
 
-Apache Guacamole 是一個開源的遠端桌面網頁應用程式，它允許用戶透過瀏覽器訪問和控制遠端桌面。以下是有關 Apache Guacamole 的一些更多介紹：
+[Apache Guacamole](https://guacamole.apache.org/)是一個開源的遠端桌面網頁應用程式，它允許用戶透過瀏覽器訪問和控制遠端桌面。以下是有關 Apache Guacamole 的一些更多介紹：
 
 ### 特點：
 
@@ -44,4 +44,6 @@ Apache Guacamole 是一個開源的遠端桌面網頁應用程式，它允許用
 Guacamole支援與Active Directory（AD）整合，這使得用戶可以使用他們在 AD 中的憑據來登入 Guacamole。這提供了單一登入（Single Sign-On，SSO）的能力，使得管理和使用更加方便。
 
 整合 AD 的步驟通常包括配置 Guacamole 的 LDAP 身份驗證以連接到 AD 伺服器，並確保 Guacamole 中的用戶帳戶映射到 AD 中的用戶。具體的步驟可能會根據您的環境和需求而有所不同，建議查閱 Guacamole 官方文檔以獲得最新和詳細的整合指南。
+
+## 安裝
 
