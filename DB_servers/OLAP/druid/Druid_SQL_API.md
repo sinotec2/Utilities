@@ -30,6 +30,7 @@ curl -u admin:password1 -H'Content-Type: application/json' -XPOST --data-binary 
 done
 ```
 
+r=admin
 for i in {0..9};do 
 curl -u admin:password1 -XPOST  http://sinotec24.com:8081/druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/users/user$i/roles/$r
 done

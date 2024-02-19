@@ -144,7 +144,7 @@ druid.server.https.certAlias=druid
 druid.extensions.loadList=["druid-basic-security", "druid-histogram", "druid-datasketches", "druid-kafka-indexing-service"]
 ```
 
-在同一 common.runtime.properties 檔案中設定基本的驗證器、授權器和Escalator設定。 Escalator 定義了 Druid 進程如何相互驗證。
+在同一 `common.runtime.properties` 檔案中設定基本的驗證器、授權器和`Escalator`設定。 `Escalator` 定義了 `Druid` 進程如何相互驗證。
 
 範例配置：
 
@@ -189,12 +189,14 @@ Kerberos用於 Kerberos 驗證。
 使用者認證和授權，以了解權限的詳細資訊。
 SQL 權限用於 SQL 系統表的權限。
 Pythondruidapi庫作為 Druid 教程的一部分提供，用於設定使用者和角色以學習安全性的工作原理。
-啟用
-啟用基本驗證擴充功能後，您可以透過 Druid Coordinator 端點新增使用者、角色和權限user。請注意，您不能直接向單一使用者指派權限。他們必須透過角色來分配。
+
+## 啟用使用者角色權限
+
+啟用基本驗證擴充功能後，您可以透過 `Druid Coordinator` 端點(8081、8281)新增使用者、角色和權限user。請注意，您不能直接向單一使用者指派權限。他們必須透過該使用者所歸屬的角色來分配權限。
 
 下圖描述了授權模型以及使用者、角色、權限和資源之間的關係。
 
-德魯伊安全模型
+### 德魯伊安全模型
 
 以下步驟示範了範例設定流程：
 
@@ -238,7 +240,7 @@ curl -u admin:password1 -XPOST https://my-coordinator-ip:8281/druid-ext/basic-se
 curl -u admin:password1 -H'Content-Type: application/json' -XPOST --data-binary @perms.json https://my-coordinator-ip:8281/druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/roles/myrole/permissions
 ```
 
-的有效負載perms.json應採用以下形式：
+的有效負載perms.json應採用以下形式(注意格式)：
 
 ```json
 [
@@ -259,6 +261,8 @@ curl -u admin:password1 -H'Content-Type: application/json' -XPOST --data-binary 
 ]
 ```
 
+- 完整的管理者，有這下列7種讀寫的權限
+  - `CONFIG`、`QUERY_CONTEXT`、`SYSTEM_TABLE`、`EXTERNAL`、`DATASOURCE`、`STATE`、`VIEW`
 ```json
 [
   {
@@ -363,27 +367,27 @@ curl -u admin:password1 -H'Content-Type: application/json' -XPOST --data-binary 
 ```
 
 - 資訊
-  - 注意：Druid 將資源名稱視為正規表示式（regex）。您可以使用特定資料來源名稱或正規表示式一次授予多個資料來源的權限。
+  - 注意：Druid 將資源名稱（`name`）視為正規表示式（regex）。您可以使用特定資料來源名稱或正規表示式一次授予多個資料來源的權限。
 
-配置 LDAP
-作為使用基本元資料驗證器的替代方法，您可以使用 LDAP 對使用者進行身份驗證。有關為 LDAP 和 LDAPS 配置 Druid 的信息，請參閱配置 LDAP 身份驗證。
+### 配置 LDAP
 
-Druid安全信任
+作為使用基本元資料驗證器的替代方法，您可以使用 LDAP 對使用者進行身份驗證。有關為 LDAP 和 LDAPS 配置 Druid 的信息，請參閱配置[LDAP 身份驗證]()。
+
+### Druid安全信任
+
 在 Druid 的信任模型中，使用者可以有不同的授權等級：
 
-具有資源寫入權限的使用者可以執行 druid 進程可以執行的任何操作。
-經過身份驗證的唯讀使用者可以針對他們有權存取的資源執行查詢。
-沒有任何權限的經過身份驗證的使用者可以執行不需要存取資源的查詢。
+- 具有資源寫入權限的使用者可以執行 druid 進程可以執行的任何操作。
+- 經過身份驗證的唯讀使用者可以針對他們**有權存取**的資源執行查詢。
+- 沒有任何權限的經過身份驗證的使用者可以執行**不需要存取資源**的查詢(已經分析好的圖表)。
+
 此外，Druid 按照以下原則運行：
 
-從最內層開始：
-
-Druid 進程對本機檔案具有與執行該進程的指定係統使用者相同的存取權限。
-Druid 攝取系統可以建立新的程序來執行任務。這些任務繼承其父進程的使用者。這意味著任何有權提交攝取任務的使用者都可以使用攝取任務權限來讀取或寫入Druid程序有權存取的任何本機檔案或外部資源。
-資訊
-注意：僅將權限授予DATASOURCE WRITE受信任的用戶，因為他們可以充當 Druid 進程。
-
-集群內：
+- 從最內層開始：
+  - Druid 進程對**本機檔案**具有與執行該進程的啟動使用者，具有相同的存取權限。
+  - Druid 攝取系統可以建立新的程序來執行任務。這些任務繼承其父進程的使用者。這意味著任何有權提交攝取任務的使用者，都可以使用攝取任務權限來讀取或寫入Druid程序有權存取的任何本機檔案或外部資源。
+  - 注意：僅將權限授予`DATASOURCE WRITE`受信任的用戶，因為他們可以控制 Druid 進程。
+- 集群內：
 
 Druid 假設它在一個隔離的、受保護的網路上運行，網路中沒有可存取的 IP 受到對手的控制。當您實施 Druid 時，請注意設定防火牆和其他安全措施以保護入站和出站連線。Druid 假設叢集內的網路流量是加密的，包括 API 呼叫和資料傳輸。預設加密實作使用 TLS。
 Druid 假設元資料儲存和 ZooKeeper 節點等輔助服務不受對手控制。
