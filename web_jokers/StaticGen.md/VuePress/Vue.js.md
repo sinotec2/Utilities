@@ -1,3 +1,25 @@
+---
+layout: default
+title:  Vue.js簡介
+parent: VuePress
+grand_parent: Static Site Generators
+nav_order: 1
+last_modified_date: 2023-06-12 08:56:43
+tags: VuPress
+---
+
+# Vue.js 簡介
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
 
 ## Linux上有Vue方案嗎？
 
