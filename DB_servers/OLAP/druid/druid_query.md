@@ -4,7 +4,7 @@ title:  Druid查詢範例
 parent: Apache Druid
 grand_parent: DB_servers
 grand_parent: OLAP
-last_modified_date: 2024-01-29 12:57:32
+last_modified_date: 2024-02-20 09:39:31
 tags: DB_servers Druid
 ---
 
@@ -40,8 +40,14 @@ tags: DB_servers Druid
 > http://200.200.32.195:8888/
 
 - 如何在url命令列輸入帳號密碼
+  - 先輸入帳號(範例中的user0)
+  - 間隔以冒號隔開(半形):
+  - 密碼
+  - 歸屬碼:@
+  - IP或domain name
+  - 端口：`:8888`
 
-
+![](2024-02-20-09-31-30.png)
 
 - 按下查詢(Query)
 
@@ -130,6 +136,11 @@ ORDER BY sum_申報量 DESC
 ```
 
 - druid沒有外卡(wild card `*`之設定)
+- 從選單中來進行
+  - 先選要分區(group)的變數，一般是類別、字串足以分類之變數。
+  - 再選擇需統計(聚合)的變數。需選擇極大小、總和、平均等等。
+
+![](2024-02-20-09-49-56.png)
 
 ### 3個維度的樞紐分析
 
