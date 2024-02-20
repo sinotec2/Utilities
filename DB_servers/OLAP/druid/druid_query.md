@@ -39,6 +39,10 @@ tags: DB_servers Druid
 
 > http://200.200.32.195:8888/
 
+- 如何在url命令列輸入帳號密碼
+
+
+
 - 按下查詢(Query)
 
 ![](query_png/2024-01-29-13-19-28.png)
