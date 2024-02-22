@@ -171,8 +171,8 @@ ORDER BY 3 DESC
   - JSON Lines(gz壓縮亦可)
   - CSV(逗號或分號)
   - TSV(tab、`\t`分隔)
-  - Parquet(from pache Spark、Apache Hive高效壓縮)
-  - ORC(ptimized Row Columnar)，Apache Hive倉儲
+  - Parquet(from Apache Spark、Apache Hive高效壓縮)
+  - ORC(Optimized Row Columnar)，Apache Hive倉儲
   - Avro(Apache Avro 二進位檔)
   - Any line format that can be parsed with a custom regular expression (regex)
 
