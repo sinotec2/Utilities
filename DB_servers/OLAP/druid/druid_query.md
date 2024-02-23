@@ -171,15 +171,15 @@ ORDER BY 3 DESC
   - JSON Lines(gz壓縮亦可)
   - CSV(逗號或分號)
   - TSV(tab、`\t`分隔)
-  - Parquet(from pache Spark、Apache Hive高效壓縮)
-  - ORC(ptimized Row Columnar)，Apache Hive倉儲
+  - Parquet(from Apache Spark、Apache Hive高效壓縮)
+  - ORC(Optimized Row Columnar)，Apache Hive倉儲
   - Avro(Apache Avro 二進位檔)
   - Any line format that can be parsed with a custom regular expression (regex)
 
 ### 連結外部檔案
 
 - Apache Druid可以接受多種資料的連結，包括雲端及本地、在線或離線，此處集中在以事後分析為主的需求，即**批次式**、**本地磁碟機**為連結對象。
-- 連結可以直接在查詢(Query)**程式碼輸入板**的右方(下圖)、或本地檔案(Local Data)畫面進行。檔案格式及連結方式都是一樣。
+- 連結可以直接在查詢(Query)**程式碼輸入板**的右方Connect external data(下圖)、或本地檔案(Local Data)畫面進行。檔案格式及連結方式都是一樣。
 
 ![](query_png/2024-01-30-11-30-47.png)
 
