@@ -50,9 +50,12 @@ top -b -n 1 | awk 'NR>7 {arr[$2]+=$9;} END {for (i in arr) {print i,arr[i]}}'
 
 ```bash
 c=(); u=()
-for j in $(ps -eo user,%cpu --sort=-%cpu | awk '{arr[$1]+=$2;} END {for (i in arr) {print i,arr[i]}}'|grep -v ' 0'|awk '{print $2}');do c=( ${c[@]} $j);done
-for j in $(ps -eo user,%cpu --sort=-%cpu | awk '{arr[$1]+=$2;} END {for (i in arr) {print i,arr[i]}}'|grep -v ' 0'|awk '{print $1}');do u=( ${u[@]} $j);done
-for ((i=0;i<${#u[@]};i+=1));do echo $(date) ${u[$i]} ${c[$i]};done
+for j in $(ps -eo user,%cpu --sort=-%cpu | awk '{arr[$1]+=$2;} END {for (i in arr) {print i,arr[i]}}'|grep -v ' 0'|awk '{print $2}');do 
+  c=( ${c[@]} $j);done
+for j in $(ps -eo user,%cpu --sort=-%cpu | awk '{arr[$1]+=$2;} END {for (i in arr) {print i,arr[i]}}'|grep -v ' 0'|awk '{print $1}');do 
+  u=( ${u[@]} $j);done
+for ((i=0;i<${#u[@]};i+=1));do 
+  echo $(date) ${u[$i]} ${c[$i]};done
 ```
 
 ### 結果
@@ -75,3 +78,22 @@ Wed Jul 26 09:29:32 CST 2023 root 5.1
 30 17 * * * /home/GFS/fcst_devp.cs >& /home/GFS/fcst_devp.out
 */5 17-23 * * * rm /home/GFS/list_cpu.out;/home/GFS/list_cpu.cs >> /home/GFS/list_cpu.out
 ```
+
+## 腳本說明
+
+這個 Bash 腳本的目的是列出正在運行的進程中 CPU 使用率最高的用戶以及對應的 CPU 使用率百分比。以下是腳本的主要步驟：
+
+1. **創建空陣列：**
+   - 使用 `c=()` 和 `u=()` 分別創建空陣列 `c`（存儲 CPU 使用率百分比）和 `u`（存儲用戶名）。
+
+2. **提取 CPU 使用率資訊：**
+   - 使用 `ps` 命令列出所有進程的用戶名和 CPU 使用率，按 CPU 使用率降序排序。
+   - 使用 `awk` 對用戶名和對應的 CPU 使用率進行統計，並過濾掉 CPU 使用率為零的項目。
+
+3. **填充陣列：**
+   - 將提取到的 CPU 使用率和用戶名分別填充到陣列 `c` 和 `u` 中。
+
+4. **遍歷陣列並打印：**
+   - 使用 `for` 迴圈遍歷 `u` 和 `c` 陣列，並在每次迴圈中使用 `echo` 命令打印時間、用戶名和對應的 CPU 使用率。
+
+總的來說，這個腳本用於監視系統中 CPU 使用率最高的用戶，並在每次運行時打印出時間、用戶名和對應的 CPU 使用率。
