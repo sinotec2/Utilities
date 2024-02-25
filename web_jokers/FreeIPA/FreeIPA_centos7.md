@@ -1,7 +1,7 @@
 ---
 layout: default
-title:  LDAP on centos7
-parent: Security And Authentication
+title:  FreeIPA on centos7
+parent: FreeIPA
 grand_parent: Web Jokers
 last_modified_date: 2024-02-05 11:25:52
 tags: LDAP
