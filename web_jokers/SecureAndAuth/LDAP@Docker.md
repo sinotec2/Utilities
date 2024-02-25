@@ -46,3 +46,7 @@ docker-compose up
 - UN=`cn=admin,dc=example,dc=org`
 - PW=`admin`
 
+## 設定
+
+- [IBM 官網](https://www.ibm.com/docs/zh-tw/rpa/21.0?topic=ldap-installing-configuring-openldap)
+- 
