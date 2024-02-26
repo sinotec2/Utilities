@@ -27,7 +27,7 @@ tags: DB_servers Druid
 - Will Xu (AUG 11, 2023) [Introducing Apache Druid 27.0.0](https://imply.io/blog/introducing-apache-druid-27-0-0/)：文中介紹了很多27版的特色，其中第一項就是**Explore**，可以將簡單的查詢轉成視覺化的彩色圖表。
 - 入口：在上方最右邊的`...`，下拉選單中選擇指北針Explore(experimental)
 
-![](explore_png/2024-01-31-13-29-05.png)
+![](explore_png/2024-02-26-09-49-39.png)
 
 ## Explore的使用介紹
 
