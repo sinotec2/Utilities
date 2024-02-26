@@ -62,6 +62,11 @@ tags: DB_servers Druid
 
 ![](druid_pngs/../explore_png/time_chart.png)
 
+- 2016年以來的申報量時間序列
+  - 在`Metric to show`下拉選單可以選擇要畫的數據項目`
+   
+![](2024-02-26-15-40-57.png)
+
 ### 儲存檔案
 
 - 按下圖面右上方的向下箭頭(Save as Image)，druid會將圖檔下載到本地的`Downloads/echart.png`。
