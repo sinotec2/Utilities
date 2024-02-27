@@ -27,9 +27,9 @@ tags: DB_servers Druid
 - Apache Druid伺服器是個高算力、適合大型資料庫的線上樞紐分析伺服器，已有成熟穩定的介面、使用簡單的SQL語言(自動產生程式碼、可供紀錄)，操作容易。
 - 伺服器本身同時具有資料庫伺服器、API伺服器、權限伺服器等等功能，適合作為發展平台。
 - 伺服器可以使用到工作站80%的記憶體(240G among 300G)、47個核心(among 99)。
-- 目前範例資料庫一年約有1百30萬筆記錄，未來還會增加中。
-- 瀏覽器界面的詳細說明，詳見[Web console](https://druid.apache.org/docs/latest/operations/web-console)
-- 繪圖(explore)部分：詳見另一[筆記說明](./druid_explore.md)
+- 目前範例資料庫一年(2021年)約有130萬筆記錄、2016年迄今有352萬筆，未來還會增加中。
+- 瀏覽器界面的詳細說明，詳見[GUI介紹](https://sinotec2.github.io/Utilities/DB_servers/OLAP/druid/druid_GUI/)或官網[Web console](https://druid.apache.org/docs/latest/operations/web-console)說明。
+- 繪圖(explore)部分：由第三方網友提供，新版都納入頁面，詳見另一[筆記說明](./druid_explore.md)。Apache的BI繪圖方案為[superset](https://superset.apache.org/)
 
 ## 快速啟動
 
@@ -39,6 +39,7 @@ tags: DB_servers Druid
 - 目前尚未完整設定帳密系統。注意不要更動到資料庫(僅執行查詢功能)。
 
 > http://devp.sinotech-eng.com:8888/  (大環二)
+
 > http://dev2.sinotech-eng.com:8888/  (其他部門)
 
 - 由瀏覽器介面登入
