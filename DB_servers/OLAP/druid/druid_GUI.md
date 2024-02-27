@@ -91,7 +91,7 @@ tags: DB_servers Druid
 
 ## 資料載入器分頁
 
-{% include note.html content="您可以使用資料載入器、透過逐步精靈建立攝取的規範。"}
+{% include note.html content="您可以使用資料載入器、透過逐步精靈建立攝取的規範。" %}
 
 ![](https://druid.apache.org/assets/images/web-console-02-data-loader-1-fcc691fda096b9d9fb00f9a5cd30293f.png)
 
