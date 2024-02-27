@@ -26,27 +26,23 @@ tags: DB_servers Druid
 
 - 查找(Lookups)是 Apache Druid 中的一個概念，為將OLAP查詢結果中某個維度值（可選）替換為新值，從而允許類似資料表聯接的功能。
 - 在 Druid 中使用查找功能，類似於連接資料倉儲中的維度表。
-- 有關更多信息，請參閱 [維度規範](https://druid.apache.org/docs/latest/querying/dimensionspecs)。就這些文件而言，「**鍵**」指的是要匹配的維度值，而「**值**」指的是其替換。
+- 有關更多信息，請參閱[維度規範文件](https://druid.apache.org/docs/latest/querying/dimensionspecs)。就這些文件而言，「**鍵**」指的是要匹配的維度值，而「**值**」指的是其替換。
 - 因此，如果您想映射 appid-12345到，Super Mega Awesome App那麼**鍵**將是appid-12345，**值**將是 Super Mega Awesome App。
 - 注意
   - Druid查找不僅支援鍵一對一映射到唯一值（例如國家/地區代碼和國家/地區名稱）的用例，還
   - 支援多個 ID 映射到相同值（例如多個 app-id）的用例映射到單一客戶經理。
   - 當查找是一對一時，Druid 能夠應用額外的查詢來重寫(參閱下面的更多細節)。
+  - 尋找沒有歷史記錄。他們總是使用當前數據。這意味著，如果特定應用程式 ID 的首席客戶經理發生更改，並且您發出包含查找的查詢來儲存應用程式 ID 與客戶經理的關係，則它將返回該應用程式 ID 的當前客戶經理，無論您查詢的時間範圍。
+  - 如果您需要資料時間範圍敏感的查找，則目前在查詢時不會動態支援此類用例，且此類資料屬於在 Druid 中使用的原始非規範化資料。
+  - 查找功能通常預先載入到所有伺服器的記憶體。但是非常小的查找（大約幾十到幾百個條目）也可以使用「map」查找類型在本機查詢時間內內聯傳遞。有關詳細信息，請參閱[維度規範文件](https://druid.apache.org/docs/latest/querying/dimensionspecs)。
 
-尋找沒有歷史記錄。他們總是使用當前數據。這意味著，如果特定應用程式 ID 的首席客戶經理發生更改，並且您發出包含查找的查詢來儲存應用程式 ID 與客戶經理的關係，則它將返回該應用程式 ID 的當前客戶經理，無論您查詢的時間範圍。
-
-如果您需要資料時間範圍敏感的查找，則目前在查詢時不會動態支援此類用例，且此類資料屬於在 Druid 中使用的原始非規範化資料。
-
-尋找通常預先載入到所有伺服器的記憶體。但是非常小的查找（大約幾十到幾百個條目）也可以使用「map」查找類型在本機查詢時間內內聯傳遞。有關詳細信息，請參閱 尺寸規格文件。
-
-其他查找類型可作為擴充使用，包括：
-
-透過lookups-cached-global從本機檔案、遠端 URI 或 JDBC 全域快取尋找。
-透過kafka-extraction-namespace從 Kafka 主題全域快取尋找。
+- 其他類型的查找服務可以外掛型態使用，包括：
+  - 透過`lookups-cached-global`從本機檔案、遠端 URI 或 JDBC 全域快取尋找。
+  - 透過`kafka-extraction-namespace`從 Kafka 主題全域快取尋找。
 
 ## 查詢語法
 
-在Druid SQL中，可以使用LOOKUPfunction來查詢查找，例如：
+在Druid SQL中，可以在程式中使用`LOOKUP`函式來查詢`Lookups`，例如：
 
 ```sql
 SELECT
@@ -56,9 +52,10 @@ FROM sales
 GROUP BY 1
 ```
 
-此LOOKUP函數也接受第三個參數，稱為replaceMissingValueWith常數字串。如果查找不包含所提供鍵的值，則LOOKUP函數將傳回該replaceMissingValueWith值而不是NULL，就像 一樣COALESCE。例如，LOOKUP(store, 'store_to_country', 'NA')相當於 COALESCE(LOOKUP(store, 'store_to_country'), 'NA').
+- 此`LOOKUP`函數也接受第三個參數，稱為`replaceMissingValueWith`常數字串。如果查找不包含所提供鍵的值，則`LOOKUP`函數將傳回該`replaceMissingValueWith`值而不是`NULL`，就像`COALESCE`一樣。
+- 例如，`LOOKUP(store, 'store_to_country', 'NA')`相當於 `COALESCE(LOOKUP(store, 'store_to_country'), 'NA')`.
 
-可以使用JOIN 運算子查詢尋找：
+可以使用`JOIN` 運算子查詢`Lookups`：
 
 ```sql
 SELECT
@@ -76,11 +73,11 @@ GROUP BY 1
 
 ## 查詢重寫
 
-Druid 在使用該功能時可以進行兩種自動查詢重寫LOOKUP：反向查找和 通過 上拉GROUP BY。以下各節描述了這些重寫及其要求。
+Druid 在使用該功能時可以進行兩種自動查詢重寫`LOOKUP`：反向查找和 通過 上拉GROUP BY。以下各節描述了這些重寫及其要求。
 
 ### 反向查找
 
-當LOOKUP函數呼叫出現在WHERE查詢子句中時，Druid 會盡可能反轉它們。例如，如果查找表sku_to_name包含映射'WB00013' => 'WhizBang Sprocket'，那麼Druid會自動重寫此查詢：
+當`LOOKUP`函數呼叫出現在`WHERE`查詢子句中時，Druid 會盡可能反轉它們。例如，如果查找表sku_to_name包含映射'WB00013' => 'WhizBang Sprocket'，那麼Druid會自動重寫此查詢：
 
 ```sql
 SELECT
@@ -102,34 +99,34 @@ WHERE sku = 'WB00013'
 GROUP BY LOOKUP(sku, 'sku_to_name')
 ```
 
-不同的是，在後一種情況下，數據伺服器在過濾時不需要應用該LOOKUP功能，並且可以更有效地利用sku.
+不同的是，在後一種情況下，數據伺服器在過濾時不需要應用該`LOOKUP`功能，並且可以更有效地利用sku.
 
-下表包含在 Druid 預設空處理模式下何時可以反向呼叫「LOOKUP」的範例。範例清單是說明性的，但並不詳盡。
+下表包含在 Druid 預設空處理模式下何時可以反向呼叫「`LOOKUP`」的範例。範例清單是說明性的，但並不詳盡。
 
-SQL|可逆嗎？
+Druid SQL指令|可逆嗎？
 -|-
-LOOKUP(sku, 'sku_to_name') = 'WhizBang Sprocket'|是的
-LOOKUP(sku, 'sku_to_name') IS NOT DISTINCT FROM 'WhizBang Sprocket'|是的，對於非空文字
-LOOKUP(sku, 'sku_to_name') <> 'WhizBang Sprocket'|不，除非sku_to_name是單射
-LOOKUP(sku, 'sku_to_name') IS DISTINCT FROM 'WhizBang Sprocket'|是的，對於非空文字
-LOOKUP(sku, 'sku_to_name') = 'WhizBang Sprocket' IS NOT TRUE|是的
-LOOKUP(sku, 'sku_to_name') IN ('WhizBang Sprocket', 'WhizBang Chain')|是的
-LOOKUP(sku, 'sku_to_name') NOT IN ('WhizBang Sprocket', 'WhizBang Chain')|不，除非sku_to_name是單射
-LOOKUP(sku, 'sku_to_name') IN ('WhizBang Sprocket', 'WhizBang Chain') IS NOT TRUE|是的
-LOOKUP(sku, 'sku_to_name') IS NULL|不
-LOOKUP(sku, 'sku_to_name') IS NOT NULL|不
-LOOKUP(UPPER(sku), 'sku_to_name') = 'WhizBang Sprocket'|是的，到UPPER(sku) = [key for 'WhizBang Sprocket']（UPPER功能仍然存在）
-COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') = 'WhizBang Sprocket'|是的，但請參閱下一項= 'N/A'
-COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') = 'N/A'|不，除非sku_to_name是單射，這允許 Druid 忽略COALESCE
-COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') = 'WhizBang Sprocket' IS NOT TRUE|是的
-COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') <> 'WhizBang Sprocket'|是的，但請參閱下一項<> 'N/A'
-COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') <> 'N/A'|不，除非sku_to_name是單射，這允許 Druid 忽略COALESCE
-COALESCE(LOOKUP(sku, 'sku_to_name'), sku) = 'WhizBang Sprocket'|不，COALESCE只有當第二個參數是常數時才可逆
-LOWER(LOOKUP(sku, 'sku_to_name')) = 'whizbang sprocket'|不，除此之外的功能COALESCE都是不可逆的
-MV_CONTAINS(LOOKUP(sku, 'sku_to_name'), 'WhizBang Sprocket')|是的
-NOT MV_CONTAINS(LOOKUP(sku, 'sku_to_name'), 'WhizBang Sprocket')|不，除非sku_to_name是單射
-MV_OVERLAP(LOOKUP(sku, 'sku_to_name'), ARRAY['WhizBang Sprocket'])|是的
-NOT MV_OVERLAP(LOOKUP(sku, 'sku_to_name'), ARRAY['WhizBang Sprocket'])|不，除非sku_to_name是單射
+`LOOKUP(sku, 'sku_to_name') = 'WhizBang Sprocket'`|是的
+`LOOKUP(sku, 'sku_to_name') IS NOT DISTINCT FROM 'WhizBang Sprocket'`|是的，對於非空文字
+`LOOKUP(sku, 'sku_to_name') <> 'WhizBang Sprocket'`|不，除非`sku_to_name`是單射
+`LOOKUP(sku, 'sku_to_name') IS DISTINCT FROM 'WhizBang Sprocket'`|是的，對於非空文字
+`LOOKUP(sku, 'sku_to_name') = 'WhizBang Sprocket' IS NOT TRUE`|是的
+`LOOKUP(sku, 'sku_to_name') IN ('WhizBang Sprocket', 'WhizBang Chain')`|是的
+`LOOKUP(sku, 'sku_to_name') NOT IN ('WhizBang Sprocket', 'WhizBang Chain')`|不，除非sku_to_name是單射
+`LOOKUP(sku, 'sku_to_name') IN ('WhizBang Sprocket', 'WhizBang Chain') IS NOT TRUE`|是的
+`LOOKUP(sku, 'sku_to_name') IS NULL`|不
+`LOOKUP(sku, 'sku_to_name') IS NOT NULL`|不
+`LOOKUP(UPPER(sku), 'sku_to_name') = 'WhizBang Sprocket'`|是的，到`UPPER(sku) = [key for 'WhizBang Sprocket']`（`UPPER`功能仍然存在）
+`COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') = 'WhizBang Sprocket'`|是的，但請參閱下一項= 'N/A'
+`COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') = 'N/A'`|不，除非sku_to_name是單射，這允許 Druid 忽略`COALESCE`
+`COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') = 'WhizBang Sprocket' IS NOT TRUE`|是的
+`COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') <> 'WhizBang Sprocket'`|是的，但請參閱下一項<> 'N/A'
+`COALESCE(LOOKUP(sku, 'sku_to_name'), 'N/A') <> 'N/A'`|不，除非sku_to_name是單射，這允許 Druid 忽略COALESCE
+`COALESCE(LOOKUP(sku, 'sku_to_name'), sku) = 'WhizBang Sprocket'`|不，COALESCE只有當第二個參數是常數時才可逆
+`LOWER(LOOKUP(sku, 'sku_to_name')) = 'whizbang sprocket'`|不，除此之外的功能COALESCE都是不可逆的
+`MV_CONTAINS(LOOKUP(sku, 'sku_to_name'), 'WhizBang Sprocket')`|是的
+`NOT MV_CONTAINS(LOOKUP(sku, 'sku_to_name'), 'WhizBang Sprocket')`|不，除非sku_to_name是單射
+`MV_OVERLAP(LOOKUP(sku, 'sku_to_name'), ARRAY['WhizBang Sprocket'])`|是的
+`NOT MV_OVERLAP(LOOKUP(sku, 'sku_to_name'), ARRAY['WhizBang Sprocket'])`|不，除非sku_to_name是單射
 
 您可以看到 SQL 規劃期間產生的本機查詢的差異，您可以使用 進行檢索EXPLAIN PLAN FOR。以這種方式反向查找時，該lookup 函數消失並被更簡單的過濾器取代，通常類型為equals或in。
 
@@ -244,12 +241,14 @@ druid.lookup.numLookupLoadingThreads|啟動時並行加載查找的執行緒數�
 druid.lookup.coordinatorFetchRetries|在啟動同步期間重試從協調器取得查找 bean 清單的次數。|3
 druid.lookup.lookupStartRetries|在啟動同步期間或運行時重試啟動每次查找的次數。|3
 druid.lookup.coordinatorRetryDelay|在啟動同步期間重試從協調器取得查找清單之間的延遲時間（以毫秒為單位）。|60_000
-內省查找
-如果查找類型實作了LookupIntrospectHandler.
 
-請求GET將/druid/v1/lookups/introspect/{lookupId}傳回完整值的映射。
+## `Lookups`的內部監管
 
-ex：`GET /druid/v1/lookups/introspect/nato-phonetic`
+如果`Lookups`啟動了`LookupIntrospectHandler`，Brokers伺服器會提供API來查找監管結果。
+
+- 以`GET`指令將/druid/v1/lookups/introspect/{lookupId}傳回完整值的映射：。
+  - ex：`GET /druid/v1/lookups/introspect/nato-phonetic`
+  - 結果範例
 
 ```json
 {
