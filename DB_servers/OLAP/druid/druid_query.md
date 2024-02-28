@@ -195,6 +195,7 @@ ORDER BY 3 DESC
 
 ### 對照表之輸入與連結
 
+- 對照表的產生詳見[code_name.py](./code_name.py)
 - 需在`./conf/druid/auto/_common/common.runtime.properties`的外掛清單中增加` "druid-lookups-cached-global"`
 - 詳見[官網](https://druid.apache.org/docs/latest/development/extensions-core/lookups-cached-global/)的說明
 - json檔案模板
