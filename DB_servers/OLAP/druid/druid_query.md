@@ -172,6 +172,58 @@ ORDER BY 3 DESC
 
 - 注意：不指定排序方式即為正向排序，如`ORDER BY 1`。
 
+### 關聯查找(LOOKUP)
+
+- excel與Druid稱此功能為查找，Access稱之為關聯。在以代碼為主軸的樞紐分析結果中，使用代碼與名稱的對照表，將名稱連到最後的結果表上，取代了代碼。
+- 在Druid SQL中有一個特殊函式`LOOKUP`可以直接使用，不需使用`JOIN`,指令。
+
+```SQL
+SELECT
+  LOOKUP(DF."工業區代碼", 'IndustrialArea') AS 工業區名稱,
+  COUNT(*) AS "Count",
+  ROUND(SUM("申報量"), 2) AS "sum_申報量"
+FROM "df0_clean_112" AS DF
+GROUP BY 1
+ORDER BY 3 DESC
+```
+
+- 範例中`LOOKUP`函式的第一個變數，類似excel的lookup()，指得是實際執行樞紐分析時的維度，及申報量會以其為群組進行加總。
+- 但是不同的是經過了`LOOKUP`的對照轉換，換成以"工業區名稱"為表象。
+- 最後結果中，將不再出現工業區代碼。
+
+![](2024-02-28-17-44-20.png)
+
+### 對照表之輸入與連結
+
+- 需在`./conf/druid/auto/_common/common.runtime.properties`的外掛清單中增加` "druid-lookups-cached-global"`
+- 詳見[官網](https://druid.apache.org/docs/latest/development/extensions-core/lookups-cached-global/)的說明
+- json檔案模板
+  - 避免使用中文檔名及欄位名稱，系統會不穩定。
+
+```json
+{
+  "type": "cachedNamespace",
+  "extractionNamespace": {
+    "type": "uri",
+    "pollPeriod": "PT1M",
+    "uriPrefix": "file:///nas2/sespub/epa_IWRMS/",
+    "fileRegex": "ChineseNameCleaningMethod.csv",
+    "namespaceParseSpec": {
+      "format": "csv",
+      "hasHeaderRow": true,
+      "columns": [
+        "key",
+        "value"
+      ],
+      "keyColumn": "key",
+      "valueColumn": "value"
+    }
+  },
+  "firstCacheTimeout": 5,
+  "injective": true
+}
+```
+
 ## 連結與解除資料表
 
 ### 檔案管理
