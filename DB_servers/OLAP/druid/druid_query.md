@@ -172,10 +172,11 @@ ORDER BY 3 DESC
 
 - 注意：不指定排序方式即為正向排序，如`ORDER BY 1`。
 
-### 關聯查找(LOOKUP)
+### 查找(LOOKUP)
 
-- excel與Druid稱此功能為查找，Access稱之為關聯。在以代碼為主軸的樞紐分析結果中，使用代碼與名稱的對照表，將名稱連到最後的結果表上，取代了代碼。
-- 在Druid SQL中有一個特殊函式`LOOKUP`可以直接使用，不需使用`JOIN`,指令。
+- 這項作業是當我們以代碼為主軸進行樞紐分析，在結果中我們使用代碼與名稱的對照表，將名稱連到最後的結果表上，取代了代碼。
+- excel與Druid稱此功能為查找，Access類似的功能為關聯(JOIN)。這2者的差別只在於前者的功能較強，但數量不能太大。後者則將對照表視為另一個資料表，而執行資料庫之間的串聯(JOIN)。
+- 在Druid SQL中有一個特殊函式`LOOKUP`可以直接使用，對於行數較小、經常改變的資料表進行快速的連結，而不需使用`JOIN`指令重新計算。
 
 ```SQL
 SELECT
@@ -224,6 +225,28 @@ ORDER BY 3 DESC
   "injective": true
 }
 ```
+
+### 資料表的關聯(JOIN)
+
+- 關聯或串聯是資料表計算過程常用的手法，將A表中的某一個欄位，串到B表中，而不必另外定義對照關係。相較於前述的LOOKUP好處是：
+  - 不受限於資料表的行數
+  - 不必另外做對照關係、另存新檔
+- 實務上的問題是：LOOKUP對照表更新時，如果資料表太長，載入的時間太長，過於LOOKUP表的更新頻率，此時，使用LOOKUP就不太切實際，使用JOIN就比較合理。
+- 以下範例，旨在統計各個事業為單位群組的申報量(有46,551個事業)，使用代碼、名稱是一樣的結果。但因資料表(`df0_clean_112`)中並沒有重複儲存名稱，因此，連結到另一個代碼：名稱的對照表(`BusinessOrganizationName`)，程式碼雖不如LOOKUP更簡潔、但因數量龐大，JOIN過程還是比較穩健。
+
+```SQL
+SELECT
+    BusinessOrganizationName."value" AS 事業機構名稱,
+    round(SUM(df0_clean_112.申報量),2) AS 申報量總和
+FROM
+    df0_clean_112
+JOIN
+    BusinessOrganizationName ON df0_clean_112.事業機構管編 = BusinessOrganizationName."key"
+GROUP BY 1 
+ORDER BY 2 DESC
+```
+
+![](2024-02-29-09-52-38.png)
 
 ## 連結與解除資料表
 
