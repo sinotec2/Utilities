@@ -172,6 +172,8 @@ ORDER BY 3 DESC
 
 - 注意：不指定排序方式即為正向排序，如`ORDER BY 1`。
 
+## 查找與關聯
+
 ### 查找(LOOKUP)
 
 - 這項作業是當我們以代碼為主軸進行樞紐分析，在結果中我們使用代碼與名稱的對照表，將名稱連到最後的結果表上，取代了代碼。
@@ -228,7 +230,7 @@ ORDER BY 3 DESC
 
 ### 資料表的關聯(JOIN)
 
-- 關聯或串聯是資料表計算過程常用的手法，將A表中的某一個欄位，串到B表中，應用A表中的關係，建立起新的關係，而不必另外定義對照關係。相較於前述的LOOKUP好處是：
+- 關聯或串聯是資料表計算過程常用的手法，將A表中的某一個欄位，串到B表中，應用AB表中原本既有的關係，建立起新的關係，而不必另外定義對照關係。相較於前述的LOOKUP好處是：
   - 不受限於資料表的行數
   - 不必另外做對照關係、另存新檔
 - 實務上的問題是：LOOKUP對照表更新時，如果資料表太長，載入的時間太長，過於LOOKUP表的更新頻率，此時，使用LOOKUP就不太切實際，使用JOIN就比較合理。
@@ -247,6 +249,88 @@ ORDER BY 2 DESC
 ```
 
 ![](2024-02-29-10-02-19.png)
+
+## 時間標籤
+
+- 時間標籤的處理是Druid強項之一。基本上Duid將資料表按照時間進行分段(Partition to Segments)，來運用平行計算的功能，這是其計算的核心實力。
+
+### 基本查詢
+
+- `TIME_FLOOR`指令將會擷取資料表中的時間標籤。
+  - 第1個引數為資料表中的欄位
+  - 第2個引數為時間的篩取範圍：`PT1H`(時)、`P1D`(日)、`P1M`(月)、`P1Y`(年)
+
+```SQL
+SELECT
+  TIME_FLOOR("__time", 'P1Y') AS "YEAR",
+  COUNT(*) AS "Count",
+  SUM("申報量") AS "sum_申報量"
+FROM "df0_clean_112"
+
+GROUP BY 1
+ORDER BY 1 ASC
+```
+
+### 時間的萃取
+
+- Druid時間標籤的內容到萬分之一秒，如果要萃取特定層級的時間值，可以用`EXTRACT`指令，用法如下。
+
+```SQL
+EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
+```
+
+- `EXTRACT`還有其他的可能用法：YEAR: 年份、QUARTER: 季度、MONTH: 月份、WEEK: 星期、DAY: 天、HOUR: 小时、MINUTE: 分钟、SECOND: 秒等等。
+
+## 重整與轉置
+
+- 基本上SQL並不是一個完整的程式語言，如果要將查詢結果進行重整與轉置(re_indexing)，可能必須分階段、以手工方式來執行。
+  - 雖然Druid SQL可以接受WITH指令，可以將階段處理過的資料表再行呼叫，但過程並不是很順暢，建議還是使用複製、貼上會比較妥當。
+  - GPT有建議將階段結果另存新檔(PC)再讀進Druid記憶體中(Linux)。但因涉及PC/Linux檔案系統的屏障，此途也不是很容易。
+- 以下範例將2維(申報量前5大事業機構之年分布)的查詢結果予以轉置。
+- 先執行所有年份的總申報量，取前5大事業機構。結果為5個事業機構管編。
+
+```SQL
+SELECT
+  事業機構管編
+FROM 
+  "df0_clean_112" 
+GROUP BY 1 
+ORDER BY SUM("申報量") DESC
+LIMIT 5 
+```
+
+- 將管編做為篩選條件，列出各年分的加總量
+
+```SQL
+SELECT
+  TIME_FLOOR("__time", 'P1Y') AS "year",
+  SUM("申報量") AS "sum_申報量"
+FROM "df0_clean_112"
+WHERE 事業機構管編 = 'L02**473'
+GROUP BY 1
+ORDER BY 1 ASC
+```
+
+- SQL不會執行迴圈，因此需要將管編填入程式碼的篩選條件以及欄位名稱位置。
+- 最後的程式碼
+
+```SQL
+SELECT
+  EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
+  round(SUM(CASE WHEN a.事業機構管編 = 'L02**473' THEN a."申報量" ELSE 0 END),2) AS L02**473,
+  round(SUM(CASE WHEN a.事業機構管編 = 'P58**421' THEN a."申報量" ELSE 0 END),2) AS P58**2421,
+  round(SUM(CASE WHEN a.事業機構管編 = 'P58**719' THEN a."申報量" ELSE 0 END),2) AS P58**719,
+  round(SUM(CASE WHEN a.事業機構管編 = 'F17**736' THEN a."申報量" ELSE 0 END),2) AS F17**736,
+  round(SUM(CASE WHEN a.事業機構管編 = 'E56**841' THEN a."申報量" ELSE 0 END),2) AS E56**841
+
+FROM
+  "df0_clean_112" AS a
+
+GROUP BY 1
+ORDER BY 1 ASC
+```
+
+![](2024-02-29-16-34-44.png)
 
 ## 連結與解除資料表
 
