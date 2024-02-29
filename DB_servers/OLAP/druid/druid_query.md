@@ -180,7 +180,7 @@ tags: DB_servers Druid
 - excel與Druid稱此功能為查找，Access類似的功能為關聯(JOIN)。這2者的差別只在於前者的功能較強，但數量不能太大。後者則將對照表視為另一個資料表，而執行資料庫之間的串聯(JOIN)。
 - 在Druid SQL中有一個特殊函式`LOOKUP`可以直接使用，對於行數較小、經常改變的資料表進行快速的連結，而不需使用`JOIN`指令重新計算。
 
-  ```SQL
+  ```sql
   SELECT
     LOOKUP(DF."工業區代碼", 'IndustrialArea') AS 工業區名稱,
     COUNT(*) AS "Count",
@@ -236,7 +236,7 @@ tags: DB_servers Druid
 - 實務上的問題是：LOOKUP對照表更新時，如果資料表太長，載入的時間太長，過於LOOKUP表的更新頻率，此時，使用LOOKUP就不太切實際，使用JOIN就比較合理。
 - 以下範例，旨在統計各個事業為單位群組的申報量(有46,551個事業)，使用代碼、名稱是一樣的結果。但因資料表(`df0_clean_112`)中並沒有重複儲存名稱，因此，連結到另一個代碼：名稱的對照表(`BusinessOrganizationName`)，程式碼雖不如LOOKUP更簡潔、但因數量龐大，JOIN過程還是比較穩健。
 
-  ```SQL
+  ```sql
   SELECT
       BusinessOrganizationName."value" AS 事業機構名稱,
       round(SUM(df0_clean_112.申報量),2) AS 申報量總和
@@ -260,7 +260,7 @@ tags: DB_servers Druid
   - 第1個引數為資料表中的欄位
   - 第2個引數為時間的篩取範圍：`PT1H`(時)、`P1D`(日)、`P1M`(月)、`P1Y`(年)
 
-  ```SQL
+  ```sql
   SELECT
     TIME_FLOOR("__time", 'P1Y') AS "YEAR",
     COUNT(*) AS "Count",
@@ -309,7 +309,7 @@ tags: DB_servers Druid
 
 - Druid時間標籤的內容到萬分之一秒，如果要萃取特定層級的時間值，可以用`EXTRACT`指令，用法如下。
 
-```SQL
+```sql
 EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
 ```
 
@@ -323,7 +323,7 @@ EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
 - 以下範例將2維(申報量前5大事業機構之年分布)的查詢結果予以轉置。
 - 先執行所有年份的總申報量，取前5大事業機構。結果為5個事業機構管編。
 
-  ```SQL
+  ```sql
   SELECT
     事業機構管編
   FROM 
@@ -335,7 +335,7 @@ EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
 
 - 將管編做為篩選條件，列出各年分的加總量
 
-  ```SQL
+  ```sql
   SELECT
     TIME_FLOOR("__time", 'P1Y') AS "year",
     SUM("申報量") AS "sum_申報量"
@@ -348,7 +348,7 @@ EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
 - SQL不會執行迴圈，因此需要將管編填入程式碼的篩選條件以及欄位名稱位置。
 - 最後的程式碼
 
-  ```SQL
+  ```sql
   SELECT
     EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
     round(SUM(CASE WHEN a.事業機構管編 = 'L02**473' THEN a."申報量" ELSE 0 END),2) AS L02**473,
@@ -421,7 +421,7 @@ EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
   - 除了確認欄位是否都要載入，也要確認是否每一欄都要能做區分(PARTITIONED、可分群組)。
   - 如果不需要，直接刪除就不會執行載入，可減省記憶體。
 
-  ```SQL
+  ```sql
   REPLACE INTO "BusinessOrganization" OVERWRITE ALL
   WITH "ext" AS (
     SELECT *
