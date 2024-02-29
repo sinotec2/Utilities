@@ -96,14 +96,14 @@ tags: DB_servers Druid
 3. 點擊顯示(Show)：會在**程式碼輸入板**出現程式碼
 4. 程式碼中的 `1`、`2`即為`SELECT`被選項目之順位、以1起算。
 
-```sql
-SELECT
-  "事業機構管編",
-  COUNT(*) AS "Count"
-FROM "df0_clean"
-GROUP BY 1
-ORDER BY 2 DESC
-```
+  ```sql
+  SELECT
+    "事業機構管編",
+    COUNT(*) AS "Count"
+  FROM "df0_clean"
+  GROUP BY 1
+  ORDER BY 2 DESC
+  ```
 
 ![](query_png/2024-01-30-09-41-35.png)
 
@@ -119,17 +119,17 @@ ORDER BY 2 DESC
 
 > 加總資料表df0_clean中"申報途徑"各種樣態的"申報量"，加總結果取到小數點以下2位，按照加總結果大小反向排序
 
-```sql
-SELECT
-  "申報途徑",
-  ROUND(SUM("申報量"), 2) AS "總申報量"
-FROM
-  "df0_clean"
-GROUP BY
-  "申報途徑"
-ORDER BY
-  "總申報量" DESC
-```
+  ```sql
+  SELECT
+    "申報途徑",
+    ROUND(SUM("申報量"), 2) AS "總申報量"
+  FROM
+    "df0_clean"
+  GROUP BY
+    "申報途徑"
+  ORDER BY
+    "總申報量" DESC
+  ```
 
 - 注意：druid不接受一般SQL語言之結尾標示(分號`;`)。
 
@@ -137,15 +137,15 @@ ORDER BY
 
 > 我想了解資料表df0_clean中、"事業機構管編"為'L02**473'、各項"廢棄物代碼"的"申報量"加總結果，加總結果取到小數點以下2位，按照加總結果大小反向排序
 
-```sql
-SELECT
-  廢棄物代碼,
-  SUM(申報量) AS sum_申報量
-FROM df0_clean
-WHERE 事業機構管編 = 'L02**473'
-GROUP BY 廢棄物代碼
-ORDER BY sum_申報量 DESC
-```
+  ```sql
+  SELECT
+    廢棄物代碼,
+    SUM(申報量) AS sum_申報量
+  FROM df0_clean
+  WHERE 事業機構管編 = 'L02**473'
+  GROUP BY 廢棄物代碼
+  ORDER BY sum_申報量 DESC
+  ```
 
 - druid沒有外卡(wild card `*`之設定)
 - 從選單中來進行
@@ -161,14 +161,14 @@ ORDER BY sum_申報量 DESC
   2. `申報途徑`：維度2
   3. `sum_申報量`：維度3
 
-```sql
-SELECT
-  "事業機構管編", "申報途徑",
-  round(SUM("申報量"),2) AS "sum_申報量"
-FROM "df0_clean"
-GROUP BY 1,2
-ORDER BY 3 DESC
-```
+  ```sql
+  SELECT
+    "事業機構管編", "申報途徑",
+    round(SUM("申報量"),2) AS "sum_申報量"
+  FROM "df0_clean"
+  GROUP BY 1,2
+  ORDER BY 3 DESC
+  ```
 
 - 注意：不指定排序方式即為正向排序，如`ORDER BY 1`。
 
@@ -180,15 +180,15 @@ ORDER BY 3 DESC
 - excel與Druid稱此功能為查找，Access類似的功能為關聯(JOIN)。這2者的差別只在於前者的功能較強，但數量不能太大。後者則將對照表視為另一個資料表，而執行資料庫之間的串聯(JOIN)。
 - 在Druid SQL中有一個特殊函式`LOOKUP`可以直接使用，對於行數較小、經常改變的資料表進行快速的連結，而不需使用`JOIN`指令重新計算。
 
-```SQL
-SELECT
-  LOOKUP(DF."工業區代碼", 'IndustrialArea') AS 工業區名稱,
-  COUNT(*) AS "Count",
-  ROUND(SUM("申報量"), 2) AS "sum_申報量"
-FROM "df0_clean_112" AS DF
-GROUP BY 1
-ORDER BY 3 DESC
-```
+  ```SQL
+  SELECT
+    LOOKUP(DF."工業區代碼", 'IndustrialArea') AS 工業區名稱,
+    COUNT(*) AS "Count",
+    ROUND(SUM("申報量"), 2) AS "sum_申報量"
+  FROM "df0_clean_112" AS DF
+  GROUP BY 1
+  ORDER BY 3 DESC
+  ```
 
 - 範例中`LOOKUP`函式的第一個變數，類似excel的lookup()，指得是實際執行樞紐分析時的維度，及申報量會以其為群組進行加總。
 - 但是不同的是經過了`LOOKUP`的對照轉換，換成以"工業區名稱"為表象。
@@ -236,17 +236,17 @@ ORDER BY 3 DESC
 - 實務上的問題是：LOOKUP對照表更新時，如果資料表太長，載入的時間太長，過於LOOKUP表的更新頻率，此時，使用LOOKUP就不太切實際，使用JOIN就比較合理。
 - 以下範例，旨在統計各個事業為單位群組的申報量(有46,551個事業)，使用代碼、名稱是一樣的結果。但因資料表(`df0_clean_112`)中並沒有重複儲存名稱，因此，連結到另一個代碼：名稱的對照表(`BusinessOrganizationName`)，程式碼雖不如LOOKUP更簡潔、但因數量龐大，JOIN過程還是比較穩健。
 
-```SQL
-SELECT
-    BusinessOrganizationName."value" AS 事業機構名稱,
-    round(SUM(df0_clean_112.申報量),2) AS 申報量總和
-FROM
-    df0_clean_112
-JOIN
-    BusinessOrganizationName ON df0_clean_112.事業機構管編 = BusinessOrganizationName."key"
-GROUP BY 1 
-ORDER BY 2 DESC
-```
+  ```SQL
+  SELECT
+      BusinessOrganizationName."value" AS 事業機構名稱,
+      round(SUM(df0_clean_112.申報量),2) AS 申報量總和
+  FROM
+      df0_clean_112
+  JOIN
+      BusinessOrganizationName ON df0_clean_112.事業機構管編 = BusinessOrganizationName."key"
+  GROUP BY 1 
+  ORDER BY 2 DESC
+  ```
 
 ![](2024-02-29-10-02-19.png)
 
@@ -260,16 +260,16 @@ ORDER BY 2 DESC
   - 第1個引數為資料表中的欄位
   - 第2個引數為時間的篩取範圍：`PT1H`(時)、`P1D`(日)、`P1M`(月)、`P1Y`(年)
 
-```SQL
-SELECT
-  TIME_FLOOR("__time", 'P1Y') AS "YEAR",
-  COUNT(*) AS "Count",
-  SUM("申報量") AS "sum_申報量"
-FROM "df0_clean_112"
+  ```SQL
+  SELECT
+    TIME_FLOOR("__time", 'P1Y') AS "YEAR",
+    COUNT(*) AS "Count",
+    SUM("申報量") AS "sum_申報量"
+  FROM "df0_clean_112"
 
-GROUP BY 1
-ORDER BY 1 ASC
-```
+  GROUP BY 1
+  ORDER BY 1 ASC
+  ```
 
 ### 時間的篩選
 
@@ -323,46 +323,46 @@ EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
 - 以下範例將2維(申報量前5大事業機構之年分布)的查詢結果予以轉置。
 - 先執行所有年份的總申報量，取前5大事業機構。結果為5個事業機構管編。
 
-```SQL
-SELECT
-  事業機構管編
-FROM 
-  "df0_clean_112" 
-GROUP BY 1 
-ORDER BY SUM("申報量") DESC
-LIMIT 5 
-```
+  ```SQL
+  SELECT
+    事業機構管編
+  FROM 
+    "df0_clean_112" 
+  GROUP BY 1 
+  ORDER BY SUM("申報量") DESC
+  LIMIT 5 
+  ```
 
 - 將管編做為篩選條件，列出各年分的加總量
 
-```SQL
-SELECT
-  TIME_FLOOR("__time", 'P1Y') AS "year",
-  SUM("申報量") AS "sum_申報量"
-FROM "df0_clean_112"
-WHERE 事業機構管編 = 'L02**473'
-GROUP BY 1
-ORDER BY 1 ASC
-```
+  ```SQL
+  SELECT
+    TIME_FLOOR("__time", 'P1Y') AS "year",
+    SUM("申報量") AS "sum_申報量"
+  FROM "df0_clean_112"
+  WHERE 事業機構管編 = 'L02**473'
+  GROUP BY 1
+  ORDER BY 1 ASC
+  ```
 
 - SQL不會執行迴圈，因此需要將管編填入程式碼的篩選條件以及欄位名稱位置。
 - 最後的程式碼
 
-```SQL
-SELECT
-  EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
-  round(SUM(CASE WHEN a.事業機構管編 = 'L02**473' THEN a."申報量" ELSE 0 END),2) AS L02**473,
-  round(SUM(CASE WHEN a.事業機構管編 = 'P58**421' THEN a."申報量" ELSE 0 END),2) AS P58**2421,
-  round(SUM(CASE WHEN a.事業機構管編 = 'P58**719' THEN a."申報量" ELSE 0 END),2) AS P58**719,
-  round(SUM(CASE WHEN a.事業機構管編 = 'F17**736' THEN a."申報量" ELSE 0 END),2) AS F17**736,
-  round(SUM(CASE WHEN a.事業機構管編 = 'E56**841' THEN a."申報量" ELSE 0 END),2) AS E56**841
+  ```SQL
+  SELECT
+    EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
+    round(SUM(CASE WHEN a.事業機構管編 = 'L02**473' THEN a."申報量" ELSE 0 END),2) AS L02**473,
+    round(SUM(CASE WHEN a.事業機構管編 = 'P58**421' THEN a."申報量" ELSE 0 END),2) AS P58**2421,
+    round(SUM(CASE WHEN a.事業機構管編 = 'P58**719' THEN a."申報量" ELSE 0 END),2) AS P58**719,
+    round(SUM(CASE WHEN a.事業機構管編 = 'F17**736' THEN a."申報量" ELSE 0 END),2) AS F17**736,
+    round(SUM(CASE WHEN a.事業機構管編 = 'E56**841' THEN a."申報量" ELSE 0 END),2) AS E56**841
 
-FROM
-  "df0_clean_112" AS a
+  FROM
+    "df0_clean_112" AS a
 
-GROUP BY 1
-ORDER BY 1 ASC
-```
+  GROUP BY 1
+  ORDER BY 1 ASC
+  ```
 
 ![](2024-02-29-16-34-44.png)
 
@@ -421,23 +421,23 @@ ORDER BY 1 ASC
   - 除了確認欄位是否都要載入，也要確認是否每一欄都要能做區分(PARTITIONED、可分群組)。
   - 如果不需要，直接刪除就不會執行載入，可減省記憶體。
 
-```SQL
-REPLACE INTO "BusinessOrganization" OVERWRITE ALL
-WITH "ext" AS (
-  SELECT *
-  FROM TABLE(
-    EXTERN(
-      '{"type":"local","baseDir":"/nas2/sespub/epa_IWRMS","filter":"BusinessOrganization.csv"}',
-      '{"type":"csv","findColumnsFromHeader":true}'
-    )
-  ) EXTEND ("事業機構管編" VARCHAR, "事業機構名稱" VARCHAR)
-)
-SELECT
-  "事業機構管編",
-  "事業機構名稱"
-FROM "ext"
-PARTITIONED BY ALL
-```
+  ```SQL
+  REPLACE INTO "BusinessOrganization" OVERWRITE ALL
+  WITH "ext" AS (
+    SELECT *
+    FROM TABLE(
+      EXTERN(
+        '{"type":"local","baseDir":"/nas2/sespub/epa_IWRMS","filter":"BusinessOrganization.csv"}',
+        '{"type":"csv","findColumnsFromHeader":true}'
+      )
+    ) EXTEND ("事業機構管編" VARCHAR, "事業機構名稱" VARCHAR)
+  )
+  SELECT
+    "事業機構管編",
+    "事業機構名稱"
+  FROM "ext"
+  PARTITIONED BY ALL
+  ```
 
 - 確認使用計算資源(Max tasks)
   - 如果沒有指定，系統會自行規畫最大上限。以devp工作站而言，會規畫一半的核心給這個資料表。這將會造成使用容量的限制及競爭。
