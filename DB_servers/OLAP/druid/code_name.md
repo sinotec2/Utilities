@@ -25,7 +25,7 @@ tags: DB_servers Druid
 ## 背景
 
 - 環境部事業廢棄物資料庫為microsoft SQL檔案，經[轉檔成為 CSV檔案]()後，此處進一步加工。
-- [code_name.py](./code_name.py)這支程式的主要功能包括找到代碼與名稱的對照表、調整列名、修正代碼、校正中文編碼，並將處理後的資料，經修剪存留代碼與數值重新寫入 CSV 檔案、並儲存各個對照表。 以下是程式碼中各部分的詳細解釋：
+- [code_name.py](./code_name.py)這支程式的主要功能包括找到代碼與名稱的對照表、調整列名、修正代碼、校正中文編碼，並將處理後的資料，經修剪、存留代碼與名稱、重新寫入 CSV 檔案、並儲存各個對照表。 以下是程式碼中各部分的詳細解釋：
 
 ## 程序輸入、輸出
 
@@ -58,8 +58,11 @@ tags: DB_servers Druid
 **中文碼校正**:
 
 - 對特定列進行中文編碼的校正。
-- 偵測中文編碼，如果不是 'latin1' 編碼，則跳過。
+- 偵測中文編碼，如果不是 'latin1' 編碼，則跳過。`if chardet.detect(a[0].encode())['encoding'] != 'latin1':continue`
 - 使用 'latin1' 編碼將中文編碼轉換成 'big5'，並忽略錯誤。
+- 校正範圍
+  - `code_name` 字典中的值，「...名稱」
+  - 沒有代碼的變數：`['縣市別','申報途徑','廢棄物種類(一般&有害)']`
 
 ### 一一輸出各組對照表
 
@@ -67,11 +70,28 @@ tags: DB_servers Druid
 
 - 將處理後的 DataFrame (`df0`) 覆蓋原始檔案。
 
-
 2. **產生對照表**:
+
 - 產生 `fnames` 列表，其中包含需要產生對照表的列名。
+  - `fnames`來源：將`code_name` 字典中的值，「...名稱」貼到google translate所得之英文翻譯。
+
+項次|中文|英文
+-|-|-
+1||BusinessOrganizationName
+2||RecyclingOrganizationName
+3||IndustrialAreaName
+4||WasteName
+5||FinalDisposalAgencyName
+6||ChineseNameCleaningMethod
+7||ClearOrganizationName
+8||ProcessingOrganizationName
+9||IndustryChineseName
+10||ProcessChineseName
+
 - 對每個列進行如下處理：
-   - 選取指定列和對應的名稱列。
-   - 移除缺失值，排序，移除重複值。
-   - 將列名改為 `['key', 'value']`。
-   - 寫出對照表到以列名為名稱的 CSV 檔案中。
+  - 選取指定列和對應的名稱列。
+  - 移除缺失值，排序，移除重複值。
+  - 將列名改為 `['key', 'value']`。
+  - 寫出對照表到以列名為名稱的 CSV 檔案中。
+
+1. 英文檔名、英文欄位名稱的理由：druid雖然可以解析，但不穩定。不利系統更新緩存。
