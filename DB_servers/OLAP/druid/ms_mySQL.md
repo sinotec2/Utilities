@@ -24,11 +24,15 @@ tags: DB_servers Druid
 
 ## 背景
 
-[ms_mySQL.py](./ms_mySQL.py)使用 `pymssql` 连接到 MSSQL 数据库伺服器，执行查询并将结果存储到一个 Pandas DataFrame 中，最后将 DataFrame 写入 CSV 文件。
+- [ms_mySQL.py](./ms_mySQL.py)使用 `pymssql` 连接到 MSSQL 数据库伺服器，执行查询并将结果存储到一个 Pandas DataFrame 中，最后将 DataFrame 写入 CSV 文件。
+- 由於實數欄位只有一個，整數或字串又大多為重複，並沒有太過複雜，可以適度再縮減（詳[code_name.py](./code_name.md)）。
+
+## 程式說明
 
 以下是代码中主要部分的解释：
 
 ### 程式輸入
+
 - `server`: 資料庫伺服器地址。
 - `user`: 資料庫使用者名稱。
 - `password`: 資料庫密碼。
@@ -36,8 +40,10 @@ tags: DB_servers Druid
 - `fname`: 輸出的 CSV 檔案名稱。
 
 ### 程式處理邏輯
+
 1. **連接到 MSSQL 資料庫**:
     - 使用 `pymssql` 模組建立與 MSSQL 資料庫的連接。
+    - 雖然有網友提議使用microsoft提供的`pyjdbc`，可以直接讀取中文碼，但嘗試了centos 7、ubuntu、16~19版，都沒有成功。
 
 2. **執行 SQL 查詢**:
     - 使用 `cursor.execute` 執行 SQL 查詢語句，這裡執行了 `SELECT * FROM dbo.Dlist`。
@@ -58,6 +64,9 @@ tags: DB_servers Druid
     - 使用 `to_csv` 方法將 DataFrame 寫入 CSV 檔案。
 
 ### 程式輸出
-- CSV 檔案 (`df0_111.csv`) 包含查詢結果。
 
-總體而言，這段程式的目的是將 MSSQL 資料庫中表格 `Dlist` 的內容讀取並寫入 CSV 檔案。
+- CSV 檔案 (`df0_111.csv`) 包含查詢結果。
+- 大檔的問題：雖然轉存CSV檔並沒有縮小檔案的規模，但由於實數欄位只有一個，整數或字串又大多為重複，並沒有太過複雜，可以適度再縮減（詳[code_name.py](./code_name.md)）。
+
+
+總體而言，這段程式([ms_mySQL.py](./ms_mySQL.py))的目的是將 MSSQL 資料庫中表格 `Dlist` 的內容讀取並寫入 CSV 檔案。
