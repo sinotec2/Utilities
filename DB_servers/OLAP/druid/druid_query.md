@@ -271,7 +271,41 @@ GROUP BY 1
 ORDER BY 1 ASC
 ```
 
-### 時間的萃取
+### 時間的篩選
+
+在Druid SQL中，可以使用`WHERE`子句來進行時間範圍的篩選。 你可以透過比較`__time`欄位來實現時間過濾。 以下是一些範例：
+
+1. **特定日期的過濾：**
+   
+    ```sql
+    SELECT * FROM your_table
+    WHERE __time = TIMESTAMP '2022-02-14T12:34:56'
+    ```
+
+2. **在特定日期之後的過濾：**
+
+    ```sql
+    SELECT * FROM your_table
+    WHERE __time > TIMESTAMP '2022-02-14T00:00:00'
+    ```
+
+3. **在特定日期之前的過濾：**
+
+    ```sql
+    SELECT * FROM your_table
+    WHERE __time < TIMESTAMP '2022-02-14T00:00:00'
+    ```
+
+4. **在特定日期範圍內的過濾：**
+
+    ```sql
+    SELECT * FROM your_table
+    WHERE __time >= TIMESTAMP '2022-02-14T00:00:00' AND __time < TIMESTAMP '2022-02-15T00:00:00'
+    ```
+
+確保在查詢中使用正確的時間戳記格式，並根據你的需求調整時間範圍。
+
+### 時間標籤的萃取
 
 - Druid時間標籤的內容到萬分之一秒，如果要萃取特定層級的時間值，可以用`EXTRACT`指令，用法如下。
 
@@ -279,7 +313,7 @@ ORDER BY 1 ASC
 EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
 ```
 
-- `EXTRACT`還有其他的可能用法：YEAR: 年份、QUARTER: 季度、MONTH: 月份、WEEK: 星期、DAY: 天、HOUR: 小时、MINUTE: 分钟、SECOND: 秒等等。
+- `EXTRACT`還有其他的可能用法： `YEAR`: 年份、 `QUARTER`: 季度、 `MONTH`: 月份、 `WEEK`: 星期、 `DAY`: 天、 `HOUR`: 小时、 `MINUTE`: 分钟、 `SECOND`: 秒等等。
 
 ## 重整與轉置
 
