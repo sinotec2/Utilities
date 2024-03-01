@@ -24,8 +24,8 @@ tags: DB_servers Druid
 
 ## 背景
 
-- [ms_mySQL.py](./ms_mySQL.py)使用 `pymssql` 连接到 MSSQL 数据库伺服器，执行查询并将结果存储到一个 Pandas DataFrame 中，最后将 DataFrame 写入 CSV 文件。
-- 由於實數欄位只有一個，整數或字串又大多為重複，並沒有太過複雜，可以適度再縮減（詳[code_name.py](./code_name.md)）。
+- [ms_mySQL.py](druid_service/ms_mySQL.py)使用 `pymssql` 连接到 MSSQL 数据库伺服器，执行查询并将结果存储到一个 Pandas DataFrame 中，最后将 DataFrame 写入 CSV 文件。
+- 由於實數欄位只有一個，整數或字串又大多為重複，並沒有太過複雜，可以適度再縮減（詳[code_name.py](druid_service/code_name.md)）。
 
 ## 程式說明
 
@@ -66,7 +66,7 @@ tags: DB_servers Druid
 ### 程式輸出
 
 - CSV 檔案 (`df0_111.csv`) 包含查詢結果。
-- 大檔的問題：雖然轉存CSV檔並沒有縮小檔案的規模，但由於實數欄位只有一個，整數或字串又大多為重複，並沒有太過複雜，可以適度再縮減（詳[code_name.py](./code_name.md)）。
+- 大檔的問題：雖然轉存CSV檔並沒有縮小檔案的規模，但由於實數欄位只有一個，整數或字串又大多為重複，並沒有太過複雜，可以適度再縮減（詳[code_name.py](druid_service/code_name.md)）。
 
 
-總體而言，這段程式([ms_mySQL.py](./ms_mySQL.py))的目的是將 MSSQL 資料庫中表格 `Dlist` 的內容讀取並寫入 CSV 檔案。
+總體而言，這段程式([ms_mySQL.py](druid_service/ms_mySQL.py))的目的是將 MSSQL 資料庫中表格 `Dlist` 的內容讀取並寫入 CSV 檔案。
