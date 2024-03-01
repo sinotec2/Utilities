@@ -172,6 +172,53 @@ tags: DB_servers Druid
 
 - 注意：不指定排序方式即為正向排序，如`ORDER BY 1`。
 
+### 龐大矩陣之樞紐
+
+- 雖然這個題目本身是有問題的，但它同時也是挑戰各個資料庫軟體界面的容量與能力。
+- 一般樞紐分析的目的，就在簡化資料表。如果一個800萬筆的資料表，如果縮減到30萬筆，這也是有縮減，但畢竟30萬筆的資料，仍然超過一般使用者可以理解的程度，還需要進一步再精簡。
+- 實務面上，當pandas的欄數超過6個以上，不論資料的長短，就無法運作。
+- Druid雖然可以運作以下SQL程式碼，結果也算正確，但因輸出超過1001筆，1002行以外的內容，系統界面將無法提供下載。
+
+```sql
+SELECT
+  EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
+  "工業區代碼", "事業機構管編", "行業別代碼", "清除機構管編", 
+  "處理機構管編", "再利用機構管編", "最終處置機構管編","製程代碼", 
+  "廢棄物代碼", "清理方式代碼", "縣市別", "申報途徑", 
+  "廢棄物種類(一般&有害)", 
+  round(SUM("申報量"),2) AS "sum_申報量"
+FROM "df0_clean_112"
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+ORDER BY 15 DESC
+```
+
+- 以下以API方式呼叫Druid Query，其結果可以包括整個樞紐表。呼叫方式：
+  - 使用者帳密：按照Druid的約定
+  - ${port}：執行Query的端口，一般為8888。
+  - `--data-binary`：將會由檔案讀取API呼叫的內容設定
+  - 可以指定` -o output2.json`或將std output導向檔案，效果是一樣的。
+
+```bash
+curl -u admin:password1 -H 'Content-Type: application/json' -X POST http://${ip}:${port}/druid/v2/sql --data-binary @api2.json > output2.json
+```
+
+- json檔案名稱：api2.json，內容如下。注意：
+  - SQL指令中的雙引號，須加上反斜線，以避免混淆。
+  - 一般SQL可以不必特別指定雙引號，但使用API呼叫Druid似乎無法避免。
+  - json形式的SQL指令，不接受跳行指令，必須寫在同一行。
+
+```json
+{
+  "query": "SELECT
+  EXTRACT(YEAR FROM TIME_FLOOR(\"__time\", 'P1Y')) AS \"year\",
+  \"工業區代碼\", \"事業機構管編\", \"行業別代碼\", \"清除機構管編\", \"處理機構管編\", \"再利用機構管編\", \"最終處置機構管編\",\"製程代碼\", \"廢棄物代碼\", \"清理方式代碼\", \"縣市別\", \"申報途徑\", \"廢棄物種類(一般&有害)\", round(SUM(\"申報量\"),2) AS \"sum_申報量\" FROM \"df0_clean_112\" GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14 ORDER BY 15 DESC",
+    "context" : {"sqlQueryId" : "request01"},
+    "header" : true,
+    "typesHeader" : true,
+    "sqlTypesHeader" : true
+}
+```
+
 ## 查找與關聯
 
 ### 查找(LOOKUP)
