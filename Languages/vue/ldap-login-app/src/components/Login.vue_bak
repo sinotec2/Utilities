@@ -1,0 +1,109 @@
+<template>
+  <div>
+    <h2>LDAP Login</h2>
+    <form @submit.prevent="login" v-if="!passwordReset">
+      <label for="username">Username:</label>
+      <input type="text" id="username" v-model="username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" v-model="password" :disabled="!username" required>
+      <button type="submit" :disabled="!username || !password">Login</button>
+      <p><a @click="showPasswordReset">Forgot Password?</a></p>
+    </form>
+    <form @submit.prevent="resetPassword" v-if="passwordReset">
+      <label for="resetEmail">Enter your email:</label>
+      <input type="email" id="resetEmail" v-model="resetEmail" required>
+      <button type="submit" :disabled="!resetEmail">Reset Password</button>
+      <p><a @click="cancelPasswordReset">Cancel</a></p>
+    </form>
+    <p v-if="error" style="color: red;">{{ error }}</p>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+      resetEmail: '',
+      error: '',
+      passwordReset: false,
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await this.$axios.post('http://200.200.32.195:3000/api/login', {
+          username: this.username,
+          password: this.password
+        }, { withCredentials: true});
+        console.log(response.data.message);
+      } catch (error) {
+        this.error = 'Login failed. Please check your credentials.';
+        console.log(this.username,this.password);
+      }
+    },
+    showPasswordReset() {
+      this.passwordReset = true;
+      this.error = '';
+    },
+    cancelPasswordReset() {
+      this.passwordReset = false;
+      this.resetEmail = '';
+      this.error = '';
+    },
+    async resetPassword() {
+      try {
+        const response = await this.$axios.post('/api/reset-password', {
+          email: this.resetEmail
+        });
+
+        // 处理后端响应，可能需要显示成功消息或执行其他操作
+        console.log(response.data.message);
+
+        this.passwordReset = false;
+        this.resetEmail = '';
+      } catch (error) {
+        this.error = 'Password reset failed. Please try again.';
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* 样式可以根据需要进行自定义 */
+h2 {
+  text-align: center;
+}
+
+form {
+  max-width: 300px;
+  margin: 100px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+</style>
+
