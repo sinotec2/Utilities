@@ -420,7 +420,14 @@ EXTRACT(YEAR FROM TIME_FLOOR("__time", 'P1Y')) AS "year",
 - 果要加(連結)資料，要先copy到/nas1或/nas2，window上的檔案系統工作站是看不懂得。
   - 會需要設定SAMBA(洽linux管理員群組)
   - 設定目錄與檔案的群組為：`SESAir`
-- 可接受檔案格式
+  - 可以使用cgi-python程式(見[網址](https://200.200.31.47/druid_upload.html))，上載檔案到`/nas2/druid_csv`目錄下。
+    - 這個網頁只處理csv檔案
+    - 請自行備份檔案
+    - 網頁連結到dev2的Druid實例(2023年之28版)
+
+![](2024-03-04-13-04-19.png)
+
+- Druid可接受檔案格式
   - JSON Lines(gz壓縮亦可)
   - CSV(逗號或分號)
   - TSV(tab、`\t`分隔)
