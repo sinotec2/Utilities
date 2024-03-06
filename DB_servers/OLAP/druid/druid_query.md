@@ -4,7 +4,7 @@ title:  Druid查詢範例
 parent: Apache Druid
 grand_parent: DB_servers
 grand_parent: OLAP
-last_modified_date: 2024-02-29 16:52:58
+last_modified_date: 2024-03-06 09:48:28
 tags: DB_servers Druid
 ---
 
@@ -248,15 +248,17 @@ curl -u admin:password1 -H 'Content-Type: application/json' -X POST http://${ip}
 - 對照表的產生詳見[code_name.py](druid_service/code_name.py)
 - 需在`./conf/druid/auto/_common/common.runtime.properties`的外掛清單中增加` "druid-lookups-cached-global"`
 - 詳見[官網](https://druid.apache.org/docs/latest/development/extensions-core/lookups-cached-global/)的說明
-- json檔案模板
+- json檔案模板與設定說明
   - 避免使用中文檔名及欄位名稱，系統會不穩定。
+  - `"pollPeriod": "P1D",`如果過度頻繁會造成系統不必要的負荷。
+  - `"firstCacheTimeout": 500,`單位是毫秒，因此如果檔案較大，須給足夠的時間上載數據。過大的對照表如數以萬計的「事業名稱表」，延長`firstCacheTimeout`似乎不會有幫助(還是需要使用`JOIN`，見[資料表的關聯](#資料表的關聯join))。
 
 ```json
 {
   "type": "cachedNamespace",
   "extractionNamespace": {
     "type": "uri",
-    "pollPeriod": "PT1M",
+    "pollPeriod": "P1D",
     "uriPrefix": "file:///nas2/sespub/epa_IWRMS/",
     "fileRegex": "ChineseNameCleaningMethod.csv",
     "namespaceParseSpec": {
@@ -270,7 +272,7 @@ curl -u admin:password1 -H 'Content-Type: application/json' -X POST http://${ip}
       "valueColumn": "value"
     }
   },
-  "firstCacheTimeout": 5,
+  "firstCacheTimeout": 500,
   "injective": true
 }
 ```
