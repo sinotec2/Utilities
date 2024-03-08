@@ -84,9 +84,9 @@ jobs:
             EOF
       - name: scp dist
         run: |
-          export host=${{ secrets.SERVER_HOST }}
-          export user=${{ secrets.SERVER_USER }}
-          export pass=${{ secrets.SERVER_PASS }}
+          export host=$\{\{ secrets.SERVER_HOST \}\}
+          export user=$\{\{ secrets.SERVER_USER \}\}
+          export pass=$\{\{ secrets.SERVER_PASS \}\}
           export local_path='/workspace/GiteaTeam/VuePress/src/.vuepress/dist/*'
           export target='/nas2/VuePressDist'
           apt-get update
