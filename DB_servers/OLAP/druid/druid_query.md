@@ -301,7 +301,7 @@ curl -u admin:password1 -H 'Content-Type: application/json' -X POST http://${ip}
 
 ## 時間標籤
 
-- [[2024-03-08]](Partition to Segments)，來運用平行計算的功能，這是其計算的核心實力。
+- 時間標籤的處理是Druid強項之一。基本上Duid將資料表按照時間進行分段(Partition to Segments)，來運用平行計算的功能，這是其計算的核心實力。
 
 ### 基本查詢
 
