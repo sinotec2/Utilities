@@ -24,5 +24,7 @@ tags: LDAP gitea
 
 - [Apache with LDAP authentication by Oriol Tauleria(2020)](https://medium.com/@uri.tau/apache-and-ldap-cc7bff1f629d)
 - [官網](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html）
+- [Enterprise Linux 實戰講座:利用 LDAP 整合 Apache 網頁驗證林彥明2006](https://linux.vbird.org/somepaper/20060111-ldap_and_apach_auth.pdf)
+
 
 
