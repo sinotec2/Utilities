@@ -1,14 +1,14 @@
 ---
 layout: default
-title: act_runner
+title: gitea actions
 parent: VuePress
 grand_parent: Static Site Generators
 nav_order: 1
-last_modified_date: 2024-03-08 17:02:20
+last_modified_date: 2024-03-09 07:02:20
 tags: VuPress
 ---
 
-# act_runner settings
+# gitea actions CI/CD
 {: .no_toc }
 
 <details open markdown="block">
@@ -83,10 +83,16 @@ services:
 - 除非另有指定，github/gitea會執行repo `.github/workflows`目錄下所有的`.yml`檔案，只要收到使用者`git push`指令。
 - `runs-on`：與前述runner(docker)連結之標籤，可以在gitea的使用者(組織)設定中檢視。
 - `uses`：從marketplace拉取image
-- `run`：實際執行編譯及複製等等程序
-- 要在docker與實體間存取檔案或什麼修改，需使用`ssh`、`scp`這類的指令。
+- `run`：實際執行安裝、編譯及複製等等程序
+  - 有關`lockfile`的問題：可能是checkout後所有權的問題、或版本的差異，`pnpm install`時遭遇到困難，GPT建議加一個`--no-frozen-lockfile`設定。
+- 要在docker與實體間存取檔案或什麼修改，需使用`ssh`、`scp`、`sftp`等等這類的指令。
+  - 登入實體機的密鑰：建議寫在gitea/github設定裏，而不是寫在`yml`檔案，因後者通常是會公開。
   - 因為`scp`內設會嚴格檢查沒有登入過的主機，這會造成屏蔽，需要關閉這項功能。`ssh`似乎沒有這麼嚴格。
   - docker是否可以執行`mount`指令，還需要測試。
+- `sshpass`這支程式是自行下載安裝、還是拉取marketlace的image？
+  - 後者的功能似乎集中在`ssh`，所謂的`with script`指得是登入遠端主機（實體機）後執行的指令，而不是在虛擬機命令列中執行`sshpass`。
+  - 自行安裝也遭遇找不到套件的問題，需要`apt-get update`
+- `target`目錄需要和實體apache2的設定結合(`/etc/apache2/site-available/vuepress.conf`)，並且將目錄檔案的權限設定成其他人可閱讀。
 
 ```yml
 name: CI
