@@ -1,6 +1,6 @@
 ---
 layout: default
-title: gitea actions
+title: gitea CI/CD actions
 parent: VuePress
 grand_parent: Static Site Generators
 nav_order: 1
@@ -8,7 +8,7 @@ last_modified_date: 2024-03-09 07:02:20
 tags: VuPress
 ---
 
-# gitea actions CI/CD
+# gitea CI/CD actions
 {: .no_toc }
 
 <details open markdown="block">
