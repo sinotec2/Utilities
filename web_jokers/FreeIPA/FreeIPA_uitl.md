@@ -53,3 +53,35 @@ sudo systemctl restart httpd
 `ipa.conf`|IPA主要設定檔|[33版模板](https://github.com/freeipa/freeipa/blob/master/install/share/ipa.conf.template)
 `ipa-rewrite.conf`|重寫規則用於修改 HTTP 請求的 URI 或其他相關屬性，以適應 FreeIPA 的身份管理和單點登入（SSO）機制|
 `ipa-kdc-proxy.conf`|kerberos伺服器代理設定|
+
+## 批次新增
+
+是的，FreeIPA提供了批量添加使用者的功能。您可以使用`ipa`命令行工具的`user-add`子命令，通过提供用户信息的CSV文件批量添加用户。
+
+以下是一般的步骤：
+
+1. **创建用户CSV文件：**
+   创建一个包含新用户信息的CSV文件，例如`users.csv`。该文件的内容可能如下所示：
+
+   ```csv
+   username,firstname,lastname,email
+   user1,John,Doe,john.doe@example.com
+   user2,Jane,Smith,jane.smith@example.com
+   ```
+
+2. **使用`ipa user-add`命令：**
+   运行以下命令，通过指定CSV文件来批量添加用户：
+
+   ```bash
+   ipa user-add --first=firstname --last=lastname --email=email username
+   ```
+
+   使用`--csv`选项指定CSV文件：
+
+   ```bash
+   ipa user-add --csv=users.csv
+   ```
+
+   这将使用CSV文件中的用户信息批量添加用户。
+
+请确保在执行此操作之前，已经连接到FreeIPA服务器并具有适当的权限。有关更多详细信息，您可以查阅FreeIPA的相关文档或运行`man ipa`命令以获取`ipa`命令的手册页。
