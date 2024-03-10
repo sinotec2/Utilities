@@ -86,5 +86,7 @@ sudo systemctl restart httpd
 
 请确保在执行此操作之前，已经连接到FreeIPA服务器并具有适当的权限。有关更多详细信息，您可以查阅FreeIPA的相关文档或运行`man ipa`命令以获取`ipa`命令的手册页。
 
+## 從 FreeIPA 上簽發憑證的流程
+
 - [如何從 NSSDB (certutil) 中取出 pem 格式的 key](https://blog.davy.tw/posts/how-to-extract-pem-format-key-from-nssdb-certutil/)
 
