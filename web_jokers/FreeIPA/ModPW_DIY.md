@@ -1,13 +1,13 @@
 ---
 layout: default
-title:  MacOS 環境安裝HTTPS
+title:  FreeIPA自助重置密码
 parent: Security And Authentication
 grand_parent: Web Jokers
-last_modified_date: 2023-06-12 08:56:43
+last_modified_date: 2024-03-11 11:11:54
 tags: OAuth
 ---
 
-# MacOS 環境安裝HTTPS
+# FreeIPA自助重置密码
 {: .no_toc }
 
 <details open markdown="block">
