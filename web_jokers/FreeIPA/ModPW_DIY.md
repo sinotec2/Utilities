@@ -86,15 +86,15 @@ if __name__ == '__main__':
 </head>
 <body>
     <h1>Change Password</h1>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
+    \{% with messages = get_flashed_messages() %}
+        \{% if messages %}
             <ul>
-                {% for message in messages %}
+                \{% for message in messages %}
                     <li>{{ message }}</li>
-                {% endfor %}
+                \{% endfor %}
             </ul>
-        {% endif %}
-    {% endwith %}
+        \{% endif %}
+    \{% endwith %}
     <form action="{{ url_for('change_password') }}" method="post">
         <label for="username">Username:</label>
         <input type="text" name="username" required><br>
@@ -193,9 +193,9 @@ if __name__ == '__main__':
 </head>
 <body>
     <h1>更改密碼</h1>
-    {% if error %}
+    \{% if error %}
         <p style="color: red;">{{ error }}</p>
-    {% endif %}
+    \{% endif %}
     <form method="post" action="{{ url_for('change_password') }}">
         <label for="username">使用者名稱:</label>
         <input type="text" id="username" name="username" required><br>
