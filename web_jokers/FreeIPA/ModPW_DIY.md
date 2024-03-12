@@ -1,4 +1,3 @@
-
 ---
 layout: default
 title:  FreeIPA自助重置密码
@@ -34,53 +33,70 @@ tags: OAuth
 
 - pip install 三個名稱，結果都是一樣：python-freeipa(官網)、ipapython、python-ipa(GPT's)
 
-## GPT solution
+### python-freeipa測試
 
-若你想使用 Python 來實現一個讓使用者自行修改密碼的網頁程式，你可以使用 Flask 框架與相應的 Python IPA 模組。以下是一個簡單的範例：
-
-首先，確保你已經安裝了 Flask 和 python-ipa 模組。你可以使用以下指令安裝它們：
+- python-freeipa與新版FreeIPA的CA管理並未銜接得很好，因此需要在ipython中逐一詳細測試，確定可以連接、登入、並執行密碼修改。
+- 有關url的設定：不需要前綴(http或https)、domain name與ip的效果式一樣。
+- 有關CA認證與SSL設定
+  - FreeIPA需使用https才能連接。目前公司並未開放個人電腦自己新增證書。
+  - 傳統apache是用`/etc/httpd/alias/httpd.crt`及`/etc/httpd/alias/httpd.key`，
+  - 但是新版的FreeIPA的alias(設定如下)是使用db形式來授權，因此須關閉SSL的驗證，這在python-freeipa默認是True，需要在python中更改：`verify_ssl=False`。
 
 ```bash
-pip install Flask python-ipa
+sudo ls /etc/httpd/alias
+lrwxrwxrwx. 1 root root     24 Feb  5 14:20 libnssckbi.so -> /usr/lib64/libnssckbi.so*
+-rw-------. 1 root root   5.2K Feb  5 14:20 install.log
+-rw-------. 1 root root     32 Feb  5 17:56 ipasession.key
+-rw-------. 1 root apache   41 Feb  8 15:38 pwdfile.txt
+-rw-r-----. 1 root apache  16K Feb  8 15:38 secmod.db
+-rw-r-----. 1 root apache  16K Feb  8 15:38 key3.db
+-rw-r-----. 1 root apache  64K Feb  8 15:38 cert8.db
 ```
 
-然後，創建一個 Python 檔案，比如 `app.py`，並使用以下程式碼：
+- 是否需先登入：
+  - 傳統GPT與claude都建議先以admin或使用者自己舊的帳密先登入，確認無誤再開放密碼的修改。前者沒有必要、且有帳密暴露之虞。
+  - 事實上，`client.change_password()`函式的錯誤訊息包括了登入錯誤，因此似乎不需要先登入、確認後再接受密碼修改。
+- 如何呈現錯誤訊息
+  - 因為錯誤可能有很多種(使用者不存在、舊密碼不對、)
+
+## Flask python
 
 ```python
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_ipa import IPAAPI
+from flask import Flask, request, render_template, redirect, url_for
+from python_freeipa import ClientMeta
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
-
-ipa = IPAAPI(
-    server='https://your-ipa-server/ipa',
-    username='admin',  # 請更換為你的 FreeIPA 管理員帳號
-    password='your-password',  # 請更換為你的 FreeIPA 管理員密碼
-)
+url='node03.sinotech-eng.com'
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/change_password', methods=['POST'])
+@app.route("/change_password", methods=["GET","POST"])
 def change_password():
     if request.method == 'POST':
+        client = ClientMeta(url,verify_ssl=False)
         username = request.form['username']
         old_password = request.form['old_password']
         new_password = request.form['new_password']
-
         try:
-            # 使用 python-ipa 模組修改密碼
-            ipa.user_mod_password(username, old_password, new_password)
-            flash('密碼修改成功！', 'success')
+            client.change_password(username, new_password, old_password)
+            return redirect(url_for('success'))
         except Exception as e:
-            flash(f'密碼修改失敗：{e}', 'error')
+            with open('templates/error.html','w') as f:
+                f.write(str(e))
+            return render_template('error.html', error=str(e))
+    return render_template("index.html")
 
-    return redirect(url_for('index'))
+# 密碼更改成功路由
+@app.route('/success')
+def success():
+    return render_template('success.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+if __name__ == "__main__":
+    app.run(debug=True, host=url, port=5000)
+
 ```
 
 接著，創建一個 `templates` 資料夾，其中包含一個 `index.html` 檔案：
