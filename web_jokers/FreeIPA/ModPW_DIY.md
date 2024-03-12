@@ -1,3 +1,4 @@
+
 ---
 layout: default
 title:  FreeIPA自助重置密码
@@ -22,7 +23,16 @@ tags: OAuth
 
 ## 背景
 
+- ref: 
+  - [Python FreeIPA client](https://python-freeipa.readthedocs.io/en/latest/)
+  - [API documentation]( https://ipa.demo1.freeipa.org/ipa/ui/#/p/apibrowser/)
 - source:[FreeIPA自助重置密码](https://www.volcengine.com/theme/3968715-F-7-1)
+- GPT's
+    > 試用python-ipa 與Flask模組，寫一個讓使用者登入FreeIPA自行修改密碼的網頁程式。
+
+### 安裝
+
+- pip install 三個名稱，結果都是一樣：python-freeipa(官網)、ipapython、python-ipa(GPT's)
 
 ## GPT solution
 
@@ -233,3 +243,59 @@ if __name__ == '__main__':
 
 請注意,這只是一個簡單的示例,在生產環境中,您應該採取額外的安全措施,如散列密碼、使用安全的會話管理等。
 
+## 綜合版本
+
+### template 
+
+- `change_password.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更改密碼</title>
+</head>
+<body>
+    <h1>更改密碼</h1>
+    \{\% if error \%\}
+        <p style="color: red;">{{ error }}</p>
+    \{\% endif \%\}
+    \{\% with messages = get_flashed_messages() \%\}
+        \{\% if messages \%\}
+            <ul>
+                \{\% for message in messages \%\}
+                    <li>{{ message }}</li>
+                \{\% endfor \%\}
+            </ul>
+        \{\% endif \%\}
+    \{\% endwith \%\}
+    <form action="{{ url_for('change_password') }}" method="post">
+        <label for="username">使用者名稱:</label>
+        <input type="text" name="username" required><br>
+        <label for="old_password">舊密碼:</label>
+        <input type="password" name="old_password" required><br>
+        <label for="new_password">新密碼:</label>
+        <input type="password" name="new_password" required><br>
+        <button type="submit">Change Password</button>
+    </form>
+</body>
+</html>
+```
+
+`success.html`:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>密碼更改成功</title>
+</head>
+<body>
+    <h1>密碼更改成功!</h1>
+    <a href="{{ url_for('index') }}">返回首頁</a>
+</body>
+</html>
+```
