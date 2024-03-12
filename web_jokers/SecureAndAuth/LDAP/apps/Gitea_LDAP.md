@@ -1,8 +1,8 @@
 ---
 layout: default
 title:  LDAP 登入 Gitea
-parent: Security And Authentication
-grand_parent: Web Jokers
+parent: LDAP
+grand_parent: Security And Authentication
 last_modified_date: 2024-02-15 14:52:16
 tags: LDAP gitea
 ---
