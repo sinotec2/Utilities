@@ -1,8 +1,8 @@
 ---
 layout: default
 title:  LDAP in Docker image
-parent: Security And Authentication
-grand_parent: Web Jokers
+parent: LDAP
+grand_parent: Security And Authentication
 last_modified_date: 2024-02-24 20:20:45
 tags: LDAP
 ---

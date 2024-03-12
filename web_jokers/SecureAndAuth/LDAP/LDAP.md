@@ -1,13 +1,13 @@
 ---
 layout: default
-title:  LDAP
-parent: Security And Authentication
-grand_parent: Web Jokers
+title:  LDAP background
+parent: LDAP
+grand_parent: Security And Authentication
 last_modified_date: 2024-01-19 13:47:15
 tags: SecAndAuth 
 ---
 
-# LDAP
+# LDAP background
 {: .no_toc }
 
 <details open markdown="block">
