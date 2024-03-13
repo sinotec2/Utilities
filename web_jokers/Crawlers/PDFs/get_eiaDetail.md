@@ -47,7 +47,7 @@ tags: Crawlers pdf
                         <span id="lbDOCTYP" tabindex="700" Name="lbDOCTY" class="form-control input-sm" style="width: 150px;">說明書</span>
                     </td>
                     <th id="l" style="width: 15%;">
-                        <label for="[[2023-12-21]]">基地行政區</label>
+                        <label for="lbADMIN">基地行政區</label>
                     </th>
                     <td headers="l">
                         <input name="ctl00$txDST" type="text" value="高雄市" readonly="readonly" id="txDST" tabindex="711" Name="txDST" class="form-control input-sm" />
