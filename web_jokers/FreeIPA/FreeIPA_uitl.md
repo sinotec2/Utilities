@@ -56,9 +56,14 @@ sudo systemctl restart httpd
 
 ## 批次新增
 
-是的，FreeIPA提供了批量添加使用者的功能。您可以使用`ipa`命令行工具的`user-add`子命令，通过提供用户信息的CSV文件批量添加用户。
+- FreeIPA提供了批量添加使用者的功能。您可以使用`ipa`命令行工具的`user-add`子命令，通过提供用户信息的CSV文件批量添加用户。以下是一般的步骤：
+- 注意：需要先通過kerberos驗證
 
-以下是一般的步骤：
+```bash
+# kinit admin@SINOTECH-ENG.COM
+Password for admin@SINOTECH-ENG.COM:
+
+```
 
 1. **创建用户CSV文件：**
    创建一个包含新用户信息的CSV文件，例如`users.csv`。该文件的内容可能如下所示：
