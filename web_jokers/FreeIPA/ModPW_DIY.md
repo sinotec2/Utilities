@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  FreeIPA自助重置密码
-parent: Security And Authentication
+parent: FreeIPA
 grand_parent: Web Jokers
 last_modified_date: 2024-03-11 11:11:54
 tags: OAuth
