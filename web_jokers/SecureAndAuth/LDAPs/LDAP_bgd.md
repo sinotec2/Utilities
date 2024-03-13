@@ -22,6 +22,9 @@ tags: SecAndAuth
 
 ## 背景
 
+- 崑山團隊的說明[LDAP架設](https://hackmd.io/@efknice/r1QfDUMLL)
+  - 鳥哥[份識別伺服器與內部檔案系統伺服器](https://dic.vbird.tw/linux_server/unit07.php)
+
 ### AD vs LDAP
 
 活動目錄Active Directory (AD) 和輕量級目錄訪問協定LDAP (Lightweight Directory Access Protocol) 是兩個用於身份驗證和帳戶管理的不同概念。以下是對比它們的一些主要特點：
