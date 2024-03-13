@@ -74,7 +74,7 @@ for fname in s:
         if len(cha)<2:
             b.append(cha)
             continue
-        ss=lazy_pinyin(cha.decode('utf8'))
+        ss=lazy_pinyin(cha.[[2024-03-13]])
         sss=''
         for j in ss:
             if j.isalnum():sss=sss+j
