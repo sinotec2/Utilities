@@ -147,3 +147,47 @@ SSSD不需要任何特殊配置，但是如果`ipa-getcert list`顯示任何錯�
 
 **結論：**
 如果按照上述步驟進行配置，並且一切正常運行，那麼服務器應該已經配置好，可以輕鬆添加新的虛擬主機，每個主機都有自己的SSL證書（通過Certmonger跟踪和更新），並且在標準RHEL6安裝中，除了標準RHEL存儲庫之外，IPA基礎結構用於所有身份驗證。
+
+### mod_authnz_external
+
+- mod_authnz_external算是第3方提供的模組，這個方向也是GPT提出的建議之一。
+- 分支一：mod_authnz_external + pwauth
+  - 但畢竟驗證方式是使用pwauth，需要每個工作站都建立使用者登入帳密，如果修改呢？少量還可以忍受，量大了，這途徑就很不實際。
+  - 老薯條(2011)[直接抓取系統使用者帳號 驗證Apache網頁權限](https://www.netadmin.com.tw/netadmin/zh-tw/technology/38A51DF3318F423CACCEEE7331F45214)，這一篇的內容似曾相識，算是講解的很完整，很多網友也或多或少會引用其中的內容。
+  - ATI的軟體&網管技術誌(2013)[使用 PAM 作為 Apache Basic 驗證](https://atifans.net/articles/apache-basic-authentication-with-pam/)，提供了編譯過程的經驗。
+- 分支二：mod_authnz_external + LDAP
+- Gerald Schneider(2017)[authentication using openldap with apache 2.4](https://serverfault.com/questions/847733/authentication-using-openldap-with-apache-2-4)這題的範例似乎使用external在外層，後面又補了LDAP，實際上應該會被問2次帳密吧？
+
+```bash
+Directory entry from apache site configuration
+
+<Directory /var/www/html>
+  AuthName "Restricted - Kattronics Users Only"
+  AuthType Basic
+  #Satisfy any
+  AuthBasicProvider ldap
+  AuthLDAPUrl "ldaps://dc2-ldap001:636/ou=Users,dc=ldap,dc=kattronics,dc=com?uid"
+  AuthLDAPBindDN "ou=Users,dc=ldap,dc=kattronics,dc=com"
+  AuthLDAPBindAuthoritative off
+  AuthLDAPGroupAttribute memberUid
+  AuthLDAPGroupAttributeIsDN off
+  #Require valid-user
+  Require ldap-user # Gives error AH01618
+</Directory>
+
+Workaround below
+
+ <IfModule mod_authnz_external.c>
+  AddExternalAuth pwauth /usr/sbin/pwauth
+  SetExternalAuthMethod pwauth pipe
+ </IfModule>
+
+<Directory /var/www/html>
+                         AuthType Basic
+                         AuthName "Login"
+                         AuthBasicProvider external
+                         AuthExternal pwauth
+                         Require valid-user
+
+</Directory>
+```
