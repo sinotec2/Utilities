@@ -191,3 +191,10 @@ If you are getting errors like `llama:streaming - could not stream chat. Error: 
 ### Still not working?
 
 [Ask for help on Discord](https://discord.gg/6UyHPeGZAC)
+
+
+## Eng06 instance
+
+- user:group $\rightarrow$ 1000:1000
+- cmd `$ export STORAGE_LOCATION=$HOME/anythingllm && mkdir -p $STORAGE_LOCATION && touch "$STORAGE_LOCATION/.env" && docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v ${STORAGE_LOCATION}:/app/server/storage -v ${STORAGE_LOCATION}/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" --ip eng06.sinotech-eng.com mintplexlabs/anythingllm
+`
