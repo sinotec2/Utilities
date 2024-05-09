@@ -1,7 +1,8 @@
 ---
 layout: default
 title:  python解析GML檔
-parent: GIS Relatives
+parent: KML and GML
+grand_parent: GIS Relatives
 
 date: 2021-12-21
 last_modified_date: 2023-09-13 10:01:39

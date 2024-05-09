@@ -81,7 +81,7 @@ begin
   - 刪除煙流模式中有關其他網格系統、離散點的設定、重新執行煙流模式。
   - 另在python程式內做regrid，輸出等間距網格的結果。
   - 修改NCL程式、重新進行regrid
-- PLT檔案內容範例與說明，詳見[PLOTFILE to KML#plotfile範例](../../../PlumeModels/OU_pathways/PLT2kml.md#plotfile範例)
+- PLT檔案內容範例與說明，詳見[PLOTFILE to KML#plotfile範例](https://sinotec2.github.io/Focus-on-Air-Quality/PlumeModels/OU_pathways/PLT2kml.md#plotfile範例)
 
 ### 繪製等值線圖
 

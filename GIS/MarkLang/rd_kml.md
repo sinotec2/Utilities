@@ -1,7 +1,8 @@
 ---
 layout: default
 title:  python解析KML檔
-parent: GIS Relatives
+parent: KML and GML
+grand_parent: GIS Relatives
 
 last_modified_date:   2021-12-17 14:44:41
 tags: GIS KML CMAQ ISAM gdal

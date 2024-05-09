@@ -1,7 +1,8 @@
 ---
 layout: default
 title:  點狀資訊KML檔之撰寫
-parent: GIS Relatives
+parent: KML and GML
+grand_parent: GIS Relatives
 
 last_modified_date: 2023-01-11 15:06:42
 tags: KML GIS
@@ -23,7 +24,7 @@ tags: KML GIS
 ## 背景
 
 - 點狀資訊在KML架構中是最單純的。KML提供了點狀性質(feature)的設定方式，因此使得單調的點，因著背景地圖的參考而變得豐富。
-- [csv2kml.py]的應用有很多，繪製軌跡圖、將點狀(與鏈結)資訊輸出到[uMAP](https://sinotec2.github.io/Focus-on-Air-Quality/PlumeModels/REnTG_pathwaysways/twnTERR/)展現、貼在openTopo底圖([NCLonOTM](../Graphics/NCL/NCLonOTM.md))、ISC/AERMOD[地理資訊的解讀展示](https://sinotec2.github.io/Focus-on-Air-Quality/PlumeModels/SO_pathways/iscParser/#csv2kmlpy修正)等等。
+- [csv2kml.py](./csv2kml.md)的應用有很多，繪製軌跡圖、將點狀(與鏈結)資訊輸出到[uMAP](https://sinotec2.github.io/Focus-on-Air-Quality/PlumeModels/REnTG_pathwaysways/twnTERR/)展現、貼在openTopo底圖([NCLonOTM](../../Graphics/NCL/NCLonOTM.md))、ISC/AERMOD[地理資訊的解讀展示](https://sinotec2.github.io/Focus-on-Air-Quality/PlumeModels/SO_pathways/iscParser/#csv2kmlpy修正)等等。
 - 如果要建立更複雜的KML，由熟悉點狀資訊的輸出，會是一個好的開始。
 
 
@@ -41,20 +42,28 @@ csv是常見的資料表格式，[KML](https://zh.wikipedia.org/wiki/KML)則是g
 - 處理計算部分google map用的是經緯度系統，台灣地區常用的是TWD97系統，如果使用後者，需要進行座標轉換。此處使用twd97模組。
 
 ## KML格式及內涵
+
 - KML的內容可以參考其[教學網站](https://developers.google.com/kml/documentation/kml_tut)。如果只需要輸出單一分開的功能，可以考慮[simplekml](http://fredgibbs.net/tutorials/create-kml-file-python.html)模組。
 範例圖檔(紅色部分)為如下共276行之kml檔案，kml並不需要跳行，純粹是為了閱讀解釋方便才加上跳行指令('\n')，其內容說明如下：
-#### 起始
+
+### 起始
+
 在此說明整個檔案會用到的宣告，包括
+
 1. 開啟kml 及Document之宣告
 2. 名稱name(會出現在google map的圖名標籤)(line 1)
 3. 敘述說明descri(line 1)
 4. 可能會用到的圖像定義Icon(line2~6)，是用style id 來定義並呼叫，範例呼叫了紅點reddotPlacemark。
+
 - icon選擇的考量：
   - 大小：icon當點數增加的時候，icon會重疊在一起，點數太少或icon太小，icon會太分散不明顯。
   - 顏色：具有鑑別能力意義：讓人一目瞭然其代表的意思
-#### 點位段落
-  - 這一段(line7~184)繪圖範例圖檔中的「點」(Point)。
-  - 由於每一個點呼叫的style id可以不一樣，因此設計成每筆呼叫。
+
+### 點位段落
+
+- 這一段(line7~184)繪圖範例圖檔中的「點」(Point)。
+- 由於每一個點呼叫的style id可以不一樣，因此設計成每筆呼叫。
+
 1. 每個點有獨立的座標coordinates，先給經度、再給緯度、高度(範例為0)
 2. 各點的順序沒有特別的意義
 3. 各點上可以有名稱(name)及敘述(desc)，範例為距離原點的小時數(hour=0 )、以及當時的年月日時標籤(ymd=2019062315 )
@@ -92,12 +101,17 @@ $ cat -n trjguanshan2019062315.csv.kml
    275  </coordinates></LineString></Placemark>
    276  </Document></kml>
 ```
-#### 直線段落
+
+### 直線段落
+
 第3段(line185~275)為範例圖檔中的「線」(LineString)。「線」指令會將給定座標的第1點開始，按照順序連接所有的座標點，直到最後1點。
+
 1. 座標coordinates，先給經度、再給緯度、高度(範例為0)
 2. 各線段座標之間沒有分隔符號，空格或'\n'皆可，此處為'\n'
 3. 線段不能加註名稱或敘述
-#### 結尾
+
+### 結尾
+
 完成Document及kml之宣告。
 
 ```python
@@ -114,17 +128,21 @@ $ cat -n trjguanshan2019062315.csv.kml
 ```
 
 ## 座標轉換計算
+
 - [twd97](https://github.com/yychen/twd97)
   - 網友公開的twd97模組，其計算結果與學術單位網站服務所差小於1M
   - 在119~121範圍內有效，其外結果則不保證。
 
 ## 多邊形的應用
+
 ### 基本
+
 - 同樣2點以上的數據，可以用點(Point)或線(Line)形式來繪製KML的地標(Placemark)
 - 4點以上，如果最後點與第一點重疊，則可以選擇以多邊形來展現地標，多邊形的特性就是除了線條之外，也可以針對填滿的顏色、透明度等進行設定。
-- [等值圖KML檔之撰寫](https://sinotec2.github.io/Focus-on-Air-Quality/utilities/GIS/wr_kml/)就是以具有順序的多邊形、來層疊出等值圖的特性。
+- [等值圖KML檔之撰寫](./wr_kml.md)就是以具有順序的多邊形、來層疊出等值圖的特性。
 
 ### 多邊形的特殊約定
+
 - 由於多邊形物件不限定點數，因此必須（至少）約定物件的開始點。
 - 此處在df.desc內容中約定含有'p0'字串者，為該物件的第一筆，如此就可以正確切割csv檔案成為所要的多邊形群組，同時保有原來csv檔的單純性。
 
@@ -157,7 +175,9 @@ else: #Polygon case
 ```
 
 ## 程式說明
+
 ### csv2kml.py 程式碼 
+
 - [github.com/sinotec2](https://github.com/sinotec2/rd_cwbDay/blob/master/csv2kml.py)
 
 ### 調用模組與引數之讀取
@@ -165,6 +185,7 @@ else: #Polygon case
 在命令列鍵入引數， python常用的讀取方式有2種，一者為簡易的sys.argv指令，另外最常使用的則是其內設的引數解析argparse模組。前者沒有help、不會解析引數的型態，一律為字串。相對而言，後者的功能就較為完整、足供應用了。使用argparser讓引數的種類可以多元化
 
 本程式所需的引數有3個，分別為：
+
 - -f(csv檔案名稱)、
 - -n(點線型態的選擇、有N白色地點、H紅色地點、D細線圓點、R紅色圓點、B黑色暈點，再加L繪線、G則告訴程式csv的內容為多邊形 )
 - -g座標系統有TWD97及LL 等2個選項
@@ -172,6 +193,7 @@ else: #Polygon case
   - TWD97為台灣地區2度分帶97年基準座標
 
 程式語法以add_argument()來接收命令列訊息。
+
 - 必要的選項有2，選項代碼(短名)、選項長名、
 - 其他補充的選項包括是否必須(required)、引數的類型、以及說明內容。
 - 在呼叫時以3個元素的tuple來承接(line 16)，其順序即為檔名、點線特性、以及座標系統種類。
@@ -194,7 +216,9 @@ $ cat -n ~/bin/csv2kml.py
     14      return args['fname'],args['NorH'],args['GEOG']
     15
 ```
+
 ### 定義座標種類
+
 - 標示方式可以是
   - H：Hightlight Baloon
   - N：Normal Baloon
@@ -223,6 +247,7 @@ $ cat -n ~/bin/csv2kml.py
 ```
 
 ### pandas之應用
+
 - python讀取ASCII資料一般也有2種方式，一者開啟檔案後直接讀取(with open(fname,'r') as file:;data=[l for l in file])，讀出來的內容一律是字串(含跳行指令'\n')，還必須另外分段、解析、給予型態定義。
 - 另一方式則以pandas來讀取。在解析上方便太多。以一般具有表頭(header)、逗點分隔(delimitor)的csv檔而言，讀取指令最簡單如line 33所示。如果不是，也可以在一行內解決設定。
 - python 3必須指定coding，python 2 則不需要
@@ -230,12 +255,13 @@ $ cat -n ~/bin/csv2kml.py
 - df.columns：讀取表頭成為一序列
 - df.loc[i,j]：讀取資料表中i列(i為數字), j欄的內容(前述表頭欄位名稱之一)。
 
-
 ```python
     33  df=read_csv(fname)#,encoding='big5')
     34  TITLE=fname
 ```    
+
 ### KML檔頭與標點
+
 - 檔頭除了標示kml版本之外，也宣告了標點、線條的樣式
 
 ```python    
@@ -251,8 +277,10 @@ $ cat -n ~/bin/csv2kml.py
     44    exec('styl'+s+"='"+stl_url+"'")
     45    exec('line.append(styl'+s+')')
     46
-```    
+```
+
 ### 計算經緯度
+
 - 使用twd97模組
 - 輸出時經緯度及高度間以逗點隔開
 
@@ -275,7 +303,9 @@ $ cat -n ~/bin/csv2kml.py
     62    lonlat.append(slonlat)
     63
 ```
+
 ### 附加軌跡線數據及檔尾
+
 - 關鍵詞為<LineString>
 - 順序是軌跡線的經度、緯度、高度(0)，跳行指令不一定需要。
 
@@ -287,8 +317,10 @@ $ cat -n ~/bin/csv2kml.py
     68      line.append(lonlat[i]+'\n')
     69    line.append('</coordinates></LineString></Placemark>')
     70  line.append('</Document></kml>')
-```    
+```
+
 ### 輸出KML檔案
+
 - 基本上KML是一個文字檔，因此使用open.write指令即可將其寫出
 
 ```python
@@ -297,6 +329,7 @@ $ cat -n ~/bin/csv2kml.py
 ```
 
 ## Reference
+
 1. 名詞解釋
   - ASCII(American Standard Code for Information Interchange，美国信息交换标准代码)  https://zh.wikipedia.org/wiki/ASCII
   - KML(Keyhole Markup Language Keyhole公司標記語言),[wiki](https://zh.wikipedia.org/wiki/KML)

@@ -87,10 +87,10 @@ new_dataset.close() #關閉檔案
 - 高解析度作物檔案轉到解析度較低(1~10Km)之[應用](https://sinotec2.github.io/Focus-on-Air-Quality/GridModels/LAND/Crops/#tif2nc)，採**加總**方式進行合併。
 - 高解析度(500m)船隻密度tiff檔案為基底，作為[重新分配排放量](https://github.com/sinotec2/Focus-on-Air-Quality/Global_Regional_Emission/EDGARv5/ShipDensity/)的依據。
 
-### [tif2kml.py](https://github.com/sinotec2/Focus-on-Air-Quality/blob/main/utilities/GIS/tif2kml.py)
+### [tif2kml.py](./MarkLang/tif2kml.py)
 
 - 顧名思義，此程式將tiff檔轉成kml檔案，便於檢視等值圖。
-- 呼叫[cntr_kml.py](https://github.com/sinotec2/Focus-on-Air-Quality/blob/main/utilities/GIS/cntr_kml.py)，詳見[等值線之KML檔](https://sinotec2.github.io/Focus-on-Air-Quality/utilities/GIS/wr_kml/)
+- 呼叫[cntr_kml.py](./MarkLang/cntr_kml.py)，詳見[等值線之KML檔](./MarkLang/wr_kml.md)
 - 引數：tiff檔的名稱(TIF)
 - 結果：TIF.kml
 - 如果邊界的平均值正好是中心點的經緯度，判定座標系統是經緯度系統，否則設定是twd系統

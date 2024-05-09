@@ -2,7 +2,7 @@
 import numpy as np
 import twd97
 import sys
-from cntr_kml import cntr_kml
+from GIS.MarkLang.cntr_kml import cntr_kml
 from pyproj import Proj
 import rasterio
 

@@ -53,7 +53,7 @@ nc = netCDF4.Dataset('20160101.ncT','r')
 
 ### 多邊形csv檔
 
-- 可以由gml檔案整理而得。詳見[python解析GML檔](rd_gml.md)。
+- 可以由gml檔案整理而得。詳見[python解析GML檔](./MarkLang/rd_gml.md)。
 - 先去掉不成形的離散點
 - 解開經緯度值
 - 取各個多邊形的極大值，便於篩選時可以取用(要小心離島可能會差異很大如旗津區含有東沙島)。

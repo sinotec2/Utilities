@@ -23,7 +23,7 @@ tags: graphics CGI_Pythons KML plume_model OpenTopoMap
 ## 背景
 
 - 此一包裝程式提供了切割底圖與貼圖的服務
-- 本項作業取代傳統SURFER、NCL、或[dat2kml](../../GIS/wr_kml.md)等繪圖方式，以cgi-python程式直接進行NCL與OTM地圖進行疊加，並以CaaS形式對外提供計算服務。
+- 本項作業取代傳統SURFER、NCL、或[dat2kml](../../GIS/MarkLang/wr_kml.md)等繪圖方式，以cgi-python程式直接進行NCL與OTM地圖進行疊加，並以CaaS形式對外提供計算服務。
 - 或參：[集合OTM圖磚並修剪成tiff檔](../CaaS/tiles_to_tiffFit.md)、[煙流模式結果繪製等值線圖](../NCL/PLT_cn.md)
 
 ### 整體策略檢討
@@ -57,7 +57,7 @@ tags: graphics CGI_Pythons KML plume_model OpenTopoMap
   - 高品質、可貼在地形圖(另一等值圖)上、作業可程式化、自動化
   - 有網友提到[NCL貼中文字][6]的作法。但也有網友提問[無法正確顯示][7]的問題，即使能順利顯示還是得一個個貼。
   - 最大缺點就是不能貼raster底圖，對於目前已有的google map、OSM、OTM資源而言，為非常可惜之限制。
-- [dat2kml.py](../../GIS/wr_kml.md)
+- [dat2kml.py](../../GIS/MarkLang/wr_kml.md)
   - 具有regrid功能：不論非等間距網格、離散點、程式會依據數據範圍重新進行內插、並輸出等間距的網格結果(.grd)檔
   - 雖然在命令列、在CaaS方面，都能提供圖檔的計算，與OSM/OTM/google map搭配顯示(如[數位版](../../GIS/digitizer.md))，也有動態縮放平移的功能，在偵錯階段提供檢核的能力。
   - 然而無法提供報告品質之圖檔，解析度不足以列印。

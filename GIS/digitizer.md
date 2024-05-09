@@ -32,7 +32,7 @@ tags: GIS KML OpenTopoMap
 - 沒有DTM情況下描繪等高線圖以取得高程數據，這在離島、軍事地區、或者在CTDM的前處理過程，是非常必要的。
 - 點取污染源位置
 - 沒有工程平面圖情況下讀取廠房、計畫範圍、海岸線等
-- 數位板也可用於檢查KML檔案之轉換結果，see [[csv2kml]]、[[dat2kmlCGI]]、[[wr_kml]]
+- 數位板也可用於檢查KML檔案之轉換結果，see [csv2kml](./MarkLang/csv2kml.md)、[dat2kmlCGI](../Graphics/CaaS/dat2kmlCGI.md)、[wr_kml](./MarkLang/wr_kml)
 
 ### 執行方案比較
 
