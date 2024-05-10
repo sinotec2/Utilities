@@ -30,7 +30,7 @@ tags: html
 - 編輯FOCUS-ON-AIR_QUALITY/_includes/header_custom.html
 
 ```html
-<script src="https://busuanzi.ibruce.info/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://[[2024-05-10]].ibruce.info/jquery/1.11.2/jquery.min.js"></script>
 <!--<script src="//busuanzi.ibruce.info/jquery/2.1.3/jquery.min.js"></script>-->
 
 <script src="https://busuanzi.ibruce.info/pintuer/1.0/pintuer.mini.js"></script>
