@@ -1,4 +1,24 @@
+---
+layout: default
+title:  celery eg
+parent:   Parallel Computation
+grand_parent: Operation Systems
+last_modified_date: 2022-04-25 12:20:36
+---
+# celery eg
+{: .no_toc }
 
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+## 背景
 
 
 > 如果是一個flask或是Django 網頁的專案，使用者如果啟動需要計算資源的程序步驟，他們還是會需要等待在畫面上呢？還是會怎麼處理？
