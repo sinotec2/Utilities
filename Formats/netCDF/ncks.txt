@@ -1,0 +1,139 @@
+Name： ncks - netCDF Kitchen Sink
+Syntax
+ncks [-3] [-4] [-6] [-A] [-a] [-C] [-c] [--cnk_dmn nm,sz] [--cnk_map map] [--cnk_plc plc] [--cnk_scl sz] [-D] [-d dim,[ min][,[ max]][,[ stride]]] [-F] [-H] [-h] [-L dfl_lvl] [-l path] [-M] [-m] [-O] [-p path] [-q] [-R] [-r] [-s format] [-u] [-v var[,...]] [-X box] [-x] input-file [ output-file]
+Description
+
+ncks combines selected features of ncdump, ncextr, and the nccut and ncpaste specifications into one versatile utility. ncks extracts a subset of the data from input-file and either prints it as ASCII text to stdout, or writes (or pastes) it to output-file, or both.
+
+ncks will print netCDF data in ASCII format to stdout, like ncdump, but with these differences: ncks prints data in a tabular format intended to be easy to search for the data you want, one datum per screen line, with all dimension subscripts and coordinate values (if any) preceding the datum. Option -s allows the user the format the data using C-style format strings.
+
+Options -a, -F, -H, -M, -m, -q, -s, and -u control the formatted appearance of the data.
+
+ncks will extract (and optionally create a new netCDF file comprised of) only selected variable from the input file, like ncextr but with these differences: Only variables and coordinates may be specifically included or excluded---all global attributes and any attribute associated with an extracted variable will be copied to the screen and/or output netCDF file. Options -c, -C, -v, and -x control which variables are extracted.
+
+ncks will extract hyperslabs from the specified variables. In fact ncks implements the nccut specification exactly. Option -d controls the hyperslab specification.
+
+Input dimensions that are not associated with any output variable will not appear in the output netCDF. This feature removes superfluous dimensions from a netCDF file.
+
+ncks will append variables and attributes from the input-file to output-file if output-file is a pre-existing netCDF file whose relevant dimensions conform to dimension sizes of input-file. The append features of ncks are intended to provide a rudimentary means of adding data from one netCDF file to another, conforming, netCDF file. When naming conflicts exists between the two files, data in output-file is usually overwritten by the corresponding data from input-file. Thus it is recommended that the user backup output-file in case valuable data is accidentally overwritten.
+
+If output-file exists, the user will be queried whether to overwrite, append, or exit the ncks call completely. Choosing overwrite destroys the existing output-file and create an entirely new one from the output of the ncks call. Append has differing effects depending on the uniqueness of the variables and attributes output by ncks: If a variable or attribute extracted from input-file does not have a name conflict with the members of output-file then it will be added to output-file without overwriting any of the existing contents of output-file. In this case the relevant dimensions must agree (conform) between the two files; new dimensions are created in output-file as required. When a name conflict occurs, a global attribute from input-file will overwrite the corresponding global attribute from output-file. If the name conflict occurs for a non-record variable, then the dimensions and type of the variable (and of its coordinate dimensions, if any) must agree (conform) in both files. Then the variable values (and any coordinate dimension values) from input-file will overwrite the corresponding variable values (and coordinate dimension values, if any) in output-file
+
+Since there can only be one record dimension in a file, the record dimension must have the same name (but not necessarily the same size) in both files if a record dimension variable is to be appended. If the record dimensions are of differing sizes, the record dimension of output-file will become the greater of the two record dimension sizes, the record variable from input-file will overwrite any counterpart in output-file and fill values will be written to any gaps left in the rest of the record variables (I think). In all cases variable attributes in output-file are superseded by attributes of the same name from input-file, and left alone if there is no name conflict.
+
+Some users may wish to avoid interactive ncks queries about whether to overwrite existing data. For example, batch scripts will fail if ncks does not receive responses to its queries. Options -O and -A are available to force overwriting existing files and variables, respectively.
+
+Options specific to ncks
+
+The following list provides a short summary of the features unique to ncks.
+
+-a
+Do not alphabetize extracted fields. By default, the specified output variables are extracted, printed, and written to disk in alphabetical order. This tends to make long output lists easier to search for particular variables. Specifying -a results in the variables being extracted, printed, and written to disk in the order in which they were saved in the input file. Thus -a retains the original ordering of the variables.
+-d
+dim,[ min][,[ max]][,[ stride]] Add stride argument to hyperslabber.
+-H
+Print data to screen. The default behavior is to print data to screen if no netCDF output file is specified. Use -H to print data to screen if a netCDF output is specified (the same behavior applies to -m ). Unless otherwise specified (with -s), each element of the data hyperslab is printed on a separate line containing the names, indices, and, values, if any, of all of the variables dimensions. The dimension and variable indices refer to the location of the corresponding data element with respect to the variable as stored on disk (i.e., not the hyperslab).
+% ncks -H -C -v three_dmn_var in.nc
+lat[0]=-90 lev[0]=100 lon[0]=0 three_dmn_var[0]=0
+lat[0]=-90 lev[0]=100 lon[1]=90 three_dmn_var[1]=1
+lat[0]=-90 lev[0]=100 lon[2]=180 three_dmn_var[2]=2
+...
+lat[1]=90 lev[2]=1000 lon[1]=90 three_dmn_var[21]=21
+lat[1]=90 lev[2]=1000 lon[2]=180 three_dmn_var[22]=22
+lat[1]=90 lev[2]=1000 lon[3]=270 three_dmn_var[23]=23
+Printing the same variable with the -F option shows the same variable indexed with Fortran conventions
+% ncks -F -H -C -v three_dmn_var in.nc
+lon(1)=0 lev(1)=100 lat(1)=-90 three_dmn_var(1)=0
+lon(2)=90 lev(1)=100 lat(1)=-90 three_dmn_var(2)=1
+lon(3)=180 lev(1)=100 lat(1)=-90 three_dmn_var(3)=2
+...
+Printing a hyperslab does not affect the variable or dimension indices since these indices are relative to the full variable (as stored in the input file), and the input file has not changed. However, if the hypserslab is saved to an output file and those values are printed, the indices will change:
+% ncks -H -d lat,90.0 -d lev,1000.0 -v three_dmn_var in.nc out.nc
+lat[1]=90 lev[2]=1000 lon[0]=0 three_dmn_var[20]=20
+lat[1]=90 lev[2]=1000 lon[1]=90 three_dmn_var[21]=21
+lat[1]=90 lev[2]=1000 lon[2]=180 three_dmn_var[22]=22
+lat[1]=90 lev[2]=1000 lon[3]=270 three_dmn_var[23]=23
+% ncks -H out.nc
+lat[0]=90 lev[0]=1000 lon[0]=0 three_dmn_var[0]=20
+lat[0]=90 lev[0]=1000 lon[1]=90 three_dmn_var[1]=21
+lat[0]=90 lev[0]=1000 lon[2]=180 three_dmn_var[2]=22
+lat[0]=90 lev[0]=1000 lon[3]=270 three_dmn_var[3]=23
+-M
+Print to screen the global metadata describing the file. This includes file summary information and global attributes.
+-m
+Print variable metadata to screen (similar to ncdump -h). This displays all metadata pertaining to each variable, one variable at a time.
+-q
+Toggle printing of dimension indices and coordinate values when printing arrays. The name of each variable will appear flush left in the output. This is useful when trying to locate specific variables when displaying many variables with different dimensions. The mnemonic for this option is "quiet".
+-s
+format String format for text output. Accepts C language escape sequences and printf() formats.
+-u
+Accompany the printing of a variable's values with its units attribute, if it exists.
+Examples
+View all data in netCDF in.nc, printed with Fortran indexing conventions:
+
+ncks -H -F in.nc
+Copy the netCDF file in.nc to file out.nc.
+
+ncks -O in.nc out.nc
+Now the file out.nc contains all the data from in.nc. There are, however, two differences between in.nc and out.nc. First, the history global attribute will contain the command used to create out.nc. Second, the variables in out.nc will be defined in alphabetical order. Of course the internal storage of variable in a netCDF file should be transparent to the user, but there are cases when alphabetizing a file is useful (see description of -a switch).
+Print variable three_dmn_var from file in.nc with default notations. Next print three_dmn_var as an un-annotated text column. Then print three_dmn_var signed with very high precision. Finally, print three_dmn_var as a comma-separated list.
+
+% ncks -H -C -v three_dmn_var in.nc
+lat[0]=-90 lev[0]=100 lon[0]=0 three_dmn_var[0]=0
+lat[0]=-90 lev[0]=100 lon[1]=90 three_dmn_var[1]=1
+...
+lat[1]=90 lev[2]=1000 lon[3]=270 three_dmn_var[23]=23
+% ncks -s "%f\n" -H -C -v three_dmn_var in.nc
+0.000000
+1.000000
+...
+23.000000
+% ncks -s "%+16.10f\n" -H -C -v three_dmn_var in.nc
++0.0000000000
++1.0000000000
+
+...
++23.0000000000
+
+% ncks -s "%f, " -H -C -v three_dmn_var in.nc
+0.000000, 1.000000, ... , 23.000000,
+
+The second and third options are useful when pasting data into text files like reports or papers.
+One dimensional arrays of characters stored as netCDF variables are automatically printed as strings, whether or not they are NUL-terminated, e.g.,
+
+ncks -v fl_nm in.nc
+The %c formatting code is useful for printing multidimensional arrays of characters representing fixed length strings
+ncks -H -s "%c" -v fl_nm_arr in.nc
+Using the %s format code on strings which are not NUL-terminated (and thus not technically strings) is likely to result in a core dump.
+Create netCDF out.nc containing all variables, and any associated coordinates, except variable time, from netCDF in.nc:
+
+ncks -x -v time in.nc out.nc
+Extract variables time and pressure from netCDF in.nc. If out.nc does not exist it will be created. Otherwise the you will be prompted whether to append to or to overwrite out.nc:
+
+ncks -v time,pressure in.nc out.nc
+ncks -C -v time,pressure in.nc out.nc
+The first version of the command creates an out.nc which contains time, pressure, and any coordinate variables associated with pressure. The out.nc from the second version is guaranteed to contain only two variables time and pressure.
+Create netCDF out.nc containing all variables from file in.nc. Restrict the dimensions of these variables to a hyperslab. Print (with -H) the hyperslabs to the screen for good measure. The specified hyperslab is: the sixth value in dimension time; the half-open range lat <= 0.0 in coordinate lat; the half-open range lon >= 330.0 in coordinate lon; the closed interval 0.3 <= band <= 0.5 in coordinate band; and cross-section closest to 1000.0 in coordinate lev. Note that limits applied to coordinate values are specified with a decimal point, and limits applied to dimension indices do not have a decimal point.
+
+ncks -H -d time,5 -d lat,,0. -d lon,330., -d band,.3,.5 -d lev,1000. in.nc out.nc
+Assume the domain of the monotonically increasing longitude coordinate lon is 0 < lon < 360. Here, lon is an example of a wrapped coordinate. ncks will extract a hyperslab which crosses the Greenwich meridian simply by specifying the westernmost longitude as min and the easternmost longitude as max, as follows:
+
+ncks -d lon,260.,45. in.nc out.nc
+Author
+NCO manual pages written by Charlie Zender and Brian Mays.
+Reporting Bugs
+Report bugs to <http://sf.net/bugs/?group_id=3331>.
+Copyright
+Copyright 穢 1995-2010 Charlie Zender
+This is free software; see the source for copying conditions. There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See Also
+The full documentation for NCO is maintained as a Texinfo manual called the NCO User's Guide. Because NCO is mathematical in nature, the documentation includes TeX-intensive portions not viewable on character-based displays. Hence the only complete and authoritative versions of the NCO User's Guide are the PDF (recommended), DVI, and Postscript versions at <http://nco.sf.net/nco.pdf>, <http://nco.sf.net/nco.dvi>, and <http://nco.sf.net/nco.ps>, respectively. HTML and XML versions are available at <http://nco.sf.net/nco.html> and <http://nco.sf.net/nco.xml>, respectively.
+If the info and NCO programs are properly installed at your site, the command
+
+info nco
+should give you access to the complete manual, except for the TeX-intensive portions.
+
+Homepage
+The NCO homepage at <http://nco.sf.net> contains more information.
+Referenced By
+nco(1)
