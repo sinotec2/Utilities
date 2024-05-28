@@ -4,7 +4,8 @@ title: gitea CI/CD actions
 parent: VuePress
 grand_parent: Static Site Generators
 nav_order: 1
-last_modified_date: 2024-03-09 07:02:20
+date: 2024-03-09
+last_modified_date: 2024-05-28 09:06:47
 tags: VuPress
 ---
 
@@ -24,7 +25,7 @@ tags: VuPress
 ## 背景
 
 - Gitea Actions是自動發布的技術核心，是仿照Github Action發展的內部CI/CD工具。有了Actions，外部的CI/CD包括Drone、Jenkins等等都不再需要了。
-- Gitea在這個主題發展了很久，直到第19版（目前最新也只21版）才發展這個功能，原因不明，可能也是在觀望大家對Github Page的接受度、技術的穩定度等等因素吧，想來一般人會直覺使用git系統作為後台主軸的必要性並不是很高。
+- Gitea在這個主題發展了很久，直到第19版（[目前最新](https://docs.gitea.com/category/installation)）才發展這個功能，原因不明，可能也是在觀望大家對Github Page的接受度、技術的穩定度等等因素吧，想來一般人會直覺使用git系統作為後台主軸的必要性並不是很高。
 - 總體而言，公司內部倉儲管理的網誌系統的適用性及必要性考量：
   - 更新頻率很快
   - 多人同時協作
@@ -36,11 +37,13 @@ tags: VuPress
   - Actions使用[YAML](https://zh.wikipedia.org/zh-tw/YAML)語法。
 - Actions整體的工作流程圖，可以參考[dev.to這一篇](https://dev.to/efkumah/implementing-cicd-pipeline-with-github-actions-and-github-pages-in-a-react-app-ij9)。
 
-![](https://res.cloudinary.com/practicaldev/image/fetch/s--a16bXH-z--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9k8vq8yoo4b9uqur4idq.png)
+|![](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*ICOIFVTu5IlAZGGijYezkg.jpeg)|
+|-|
+|這個示意圖來自於[Pablo García Fernández(2022)](https://medium.com/empathyco/applying-ci-cd-using-github-actions-for-android-1231e40cc52f)@medium.com，目標是在Google Play上更新發布APP，可以先就功能與程序面有個印象，細節的設定說明如下。|
 
-  - 這個示意圖只能就功能面有個印象，細節的設定可以參考[AppleBoy2023][AppleBoy2023]
-
-- 雖然說這個課題已有許多支援與經驗，但因為太新，GPT與Claude都幫不上太多忙，還是得自己爬文測試。以下就重點說明設計的理念。
+- 此外，有關Gitea與runner的安裝設定，也可以參考[AppleBoy2023][AppleBoy2023]
+- act_runner的[官網](https://about.gitea.com/products/runner/)有概要、特色的簡短介紹。
+- 雖然說這個課題已有許多支援與經驗，但因為太新，GPT與Claude等AI都幫不上太多忙，還是得自己爬文測試。以下就重點說明設計的理念。
 
 ## docker-compose.yml
 
@@ -56,7 +59,7 @@ tags: VuPress
 - `docker-compose.yml`存放與docker起始的目錄，因為docker不會存取任何檔案，這個位置不會有任何差別。此處放在repo的根目錄，就只是為了將`docker-compose.yml`保存起來
 
 ```yml
-kuang@eng06 /nas2/VuePress
+git@eng06 /var/lib/gitea/runner_GiteaTeam
 $ cat docker-compose.yml
 version: "3"
 
