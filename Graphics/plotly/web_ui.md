@@ -1,3 +1,26 @@
+---
+layout: default
+title:  web UI
+parent: plotly程式庫
+grand_parent: Graphics
+last_modified_date: I2024-02-20 14:48:38
+tags: plotly graphics
+---
+
+#  web UI
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 Streamlit 是一個專為 Python 設計的函式庫，但在 .NET 和 JavaScript 生態系統中，也有類似 Streamlit 的工具和框架，可以用於快速建立資料驅動的 Web 應用。
 
