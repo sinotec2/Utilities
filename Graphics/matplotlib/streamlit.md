@@ -52,6 +52,10 @@ Streamlit 是一個用於快速建立資料應用的開源Python函式庫。它�
 
 ## 範例程式碼
 
+-  這個範例呈現隨機數據的折線圖。`streamlit.multiselect`用以選擇要顯示的欄位名稱。
+
+### 程式碼
+
 以下是一個簡單的Streamlit應用程式範例，展示如何建立一個互動式資料視覺化工具：
 
 ```python
@@ -88,4 +92,9 @@ else:
 
 以上程式碼建立了一個簡單的資料視覺化工具，使用者可以選擇顯示的資料列，並產生對應的圖表。透過這種方式，開發者可以快速建立和分享互動式資料應用，提高工作效率和資料處理能力。
 
+### 標題與內文
 
+- 標題：`st.title(body, anchor=None, *, help=None)`
+- 表頭：`st.header(body, anchor=None, *, help=None, divider=False)`
+
+![](pngs/2024-05-30-20-22-56.png)
