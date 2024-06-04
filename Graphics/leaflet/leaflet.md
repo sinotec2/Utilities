@@ -77,3 +77,4 @@ tags: graphics leaflet
 
 - [folium](https://python-visualization.github.io/folium/latest/index.html)，可以在jupyter-nb上展示
 - [streamlit-folium@github](https://github.com/randyzwitch/streamlit-folium)-可以在streamlit server上展示
+- [Using Leaflet and Folium to make interactive maps in Python, by Matt Oakley](https://www.earthdatascience.org/tutorials/introduction-to-leaflet-animated-maps/)
