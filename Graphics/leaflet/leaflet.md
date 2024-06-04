@@ -5,7 +5,7 @@ parent: Graphics
 has_children: true
 permalink: /Graphics/leaflet
 last_modified_date: 2024-01-06 21:10:03
-tags: NCL graphics
+tags: graphics leaflet
 ---
 
 # leaflet
@@ -72,3 +72,8 @@ tags: NCL graphics
 ## Leaflet with Panels
 
 - [Leaflet Panel Layers](https://opengeo.tech/maps/leaflet-panel-layers/)
+
+## python 版本的Leaflet
+
+- [folium](https://python-visualization.github.io/folium/latest/index.html)，可以在jupyter-nb上展示
+- [streamlit-folium@github](https://github.com/randyzwitch/streamlit-folium)-可以在streamlit server上展示
