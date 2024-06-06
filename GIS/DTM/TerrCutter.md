@@ -61,7 +61,7 @@ tags: dtm GIS
   - 如果要移動地圖，需要按`esc`鍵、或點選垃圾桶`clear all`
 - 畫面如下，說明如後。
 
-![](./pngs/2024-06-06-17-50-49.png)
+![](https://github.com/sinotec2/Utilities/blob/main/GIS/DTM/pngs/2024-06-06-17-50-49.png?raw=true)
 
 ### 功能鍵說明
 
@@ -82,12 +82,12 @@ tags: dtm GIS
 
 - mapbox切割範圍
 
-  ![](./pngs/2024-06-06-10-27-25.png)
+  ![](https://github.com/sinotec2/Utilities/blob/main/GIS/DTM/pngs/2024-06-06-10-27-25.png?raw=true)
 
 - matplotlib等高線圖
 
-![](./pngs/2024-06-06-12-01-09.png)
+![](https://github.com/sinotec2/Utilities/blob/main/GIS/DTM/pngs/2024-06-06-12-01-09.png?raw=true)
 
 - dxf檔案
 
-![](./pngs/2024-06-06-16-06-34.png)
+![](https://github.com/sinotec2/Utilities/blob/main/GIS/DTM/pngs/2024-06-06-16-06-34.png?raw=true)
