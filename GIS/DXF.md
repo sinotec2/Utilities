@@ -23,16 +23,10 @@ tags: GIS DXF
 
 ## 背景
 
-- D
-  - F 是什麼檔案？(Adobe)
- ：D
- - XF 是Dra
-  - ing Exchange Format 或Drawing Interchange Format
-  - (意
-  - 譯皆為繪圖交換格式) 的縮寫，屬於向量檔案類型。
-        ----  ：許多工程師、設計師和建築師都會在產品設計階段，使用  -DXF 檔案格式
-  - 作2D 及3D 繪圖。
-      - - - DXF是AutoCAD DXF（Drawing Interchange Format或者    - - Drawing Exchange Format）的簡稱，它是Autodesk公司開發的用於AutoCAD與其它軟體之間進行CAD數據交換的CAD數據文件格式。
+- DXF 是什麼檔案？(Adobe)
+ - DXF 是Drawing Exchange Format 或Drawing Interchange Format(意譯皆為繪圖交換格式) 的縮寫，屬於向量檔案類型。
+ - 許多工程師、設計師和建築師都會在產品設計階段，使用DXF 檔案格式作2D 及3D 繪圖。
+ - DXF是AutoCAD DXF（Drawing Interchange Format或者Drawing Exchange Format）的簡稱，它是Autodesk公司開發的用於AutoCAD與其它軟體之間進行CAD數據交換的CAD數據文件格式。
 
 ### 緣起(wiki)
 
