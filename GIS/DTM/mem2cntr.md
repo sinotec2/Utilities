@@ -146,6 +146,6 @@ def cntr(swLL, neLL):
 
 ## 圖檔結果比較
 
-![](https://github.com/sinotec2/Utilities/blob/main/GIS/DTM/pngs/2024-06-06-10-27-25.png?raw=true)|![](https://github.com/sinotec2/Utilities/blob/main/GIS/DTM/pngs/2024-06-06-12-01-09.png?raw=true)
-|:-:|:-:
+|![](https://github.com/sinotec2/Utilities/blob/main/GIS/DTM/pngs/2024-06-06-10-27-25.png?raw=true)|![](https://github.com/sinotec2/Utilities/blob/main/GIS/DTM/pngs/2024-06-06-12-01-09.png?raw=true)|
+|:-:|:-:|
 |mapbox切割範圍|matplotlib等高線圖|
