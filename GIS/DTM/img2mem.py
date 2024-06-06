@@ -2,7 +2,7 @@ import rasterio
 import numpy as np
 from pyproj import Proj
 
-fname='taiwan2020.tif'
+fname='taiwan2018.tif'
 img = rasterio.open(fname)
 nx,ny,nz=img.width,img.height,img.count
 data=np.flipud(img.read()[0,:,:])
@@ -17,7 +17,7 @@ x-=xcent
 y-=ycent
 xg, yg = np.meshgrid(x, y)
 Longitude_Pole,Latitude_Pole=img.lnglat()
-pnyc = Proj(proj='lcc', datum='NAD83', lat_1=10, lat_2=40,
+pnyc = Proj(proj='lcc', datum='NAD83', lat_1=21.8, lat_2=25.4,
         lat_0=Latitude_Pole, lon_0=Longitude_Pole, x_0=0, y_0=0.0)
 lon,lat=pnyc(xg, yg, inverse=True)
 shape=(ny, nx)
