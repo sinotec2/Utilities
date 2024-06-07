@@ -176,7 +176,7 @@ def dxf(swLL, neLL):
     ran = tf.NamedTemporaryFile().name.replace('/', '').replace('tmp', '')
     fname = 'terr_' + ran + '.dxf'
     output = BytesIO()
-    doc.saveas(output)
+    doc.write(output, fmt='bin')
     output.seek(0)  # 重置指針位置
     doc.saveas('./dxfs/' + fname)
     

@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+terrain cutter
+</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <style type="text/css">
+    .style1
+    {
+        width: 100%;
+        border-collapse: collapse;
+        margin-left:10px;
+        font-size:15px;
+    }
+</style>
+
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+ <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+ <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.with-background {
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+</style >
+</head>
+<body style="margin-top:0;margin-left:0;margin-right:0;background-color:rgb(247,252,255)">
+
+<div id="map" style="width: 1600px; height: 800px;"></div>
+
+ <script>
+ var map = L.map('map',{ zoomControl: false }).setView([23.5, 121.],8);
+ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoieWNrdWFuZyIsImEiOiJjbHd6dTV3d24wMHI5MmlzY2xrOWthbDZkIn0.1ylBvXKdivGsaLXbE80MrA', {
+   attribution: '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> contributors',
+           tileSize: 512,
+            zoomOffset: -1
+ }).addTo(map);
+
+
+ var drawnItems = new L.FeatureGroup();
+ map.addLayer(drawnItems);
+
+        var saveButtonP = L.Control.extend({
+            options: {
+                position: 'topleft'
+            },
+            onAdd: function(map) {
+               var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+                container.innerHTML = '<i class="fa fa-globe fa-2x with-background" title="儲存PNG檔案"></i>';
+                L.DomEvent.on(container, 'click', this._save, this);
+                return container;
+            },
+            _save: function(e) {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                if (currentRectangle) {
+                    var bounds = currentRectangle.getBounds();
+                    var result = {
+                        northEast: bounds.getNorthEast(),
+                        southWest: bounds.getSouthWest()
+                    };
+                    console.log("Saved bounds:", result);
+                    //alert("Bounds saved! Check the console for details.");
+                    // 在此處添加將結果保存到後端或本地存儲的代碼
+
+                    fetch('/api/v1/get_cntr', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            sw_lat: result.southWest.lat,
+                            sw_lon: result.southWest.lng,
+                            ne_lat: result.northEast.lat,
+                            ne_lon: result.northEast.lng
+                        })
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    var contentDisposition = response.headers.get('content-disposition');
+                    var filename = contentDisposition.split('filename=')[1].trim();
+                    return response.blob().then(blob => {
+                        // 创建一个链接，下载返回的文件
+                        var url = window.URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+
+                        // 设置下载的文件名
+                        a.download = filename || 'download'; // 使用 API 返回的文件名，如果没有则使用默认值
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url); // 释放 URL 对象
+                        //a.remove();
+                    });
+                }).catch(error => console.error('Error:', error));
+          }
+        }
+        });
+
+        var saveButtonX = L.Control.extend({
+            options: {
+                position: 'topleft'
+            },
+            onAdd: function(map) {
+               var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+                container.innerHTML = '<i class="fa fa-save fa-2x with-background" title="儲存DXF檔案"></i>';
+                L.DomEvent.on(container, 'click', this._save, this);
+                return container;
+            },
+            _save: function(e) {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                if (currentRectangle) {
+                    var bounds = currentRectangle.getBounds();
+                    var result = {
+                        northEast: bounds.getNorthEast(),
+                        southWest: bounds.getSouthWest()
+                    };
+                    console.log("Saved bounds:", result);
+                    //alert("Bounds saved! Check the console for details.");
+                    // 在此處添加將結果保存到後端或本地存儲的代碼
+
+                    fetch('/api/v1/get_dxf', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            sw_lat: result.southWest.lat,
+                            sw_lon: result.southWest.lng,
+                            ne_lat: result.northEast.lat,
+                            ne_lon: result.northEast.lng
+                        })
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    var contentDisposition = response.headers.get('content-disposition');
+                    var filename = contentDisposition.split('filename=')[1].trim();
+                    return response.blob().then(blob => {
+                        // 创建一个链接，下载返回的文件
+                        var url = window.URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+
+                        // 设置下载的文件名
+                        a.download = filename || 'download'; // 使用 API 返回的文件名，如果没有则使用默认值
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url); // 释放 URL 对象
+                        //a.remove();
+                    });
+                }).catch(error => console.error('Error:', error));
+          }
+        }
+        });
+
+var manualButton = L.Control.extend({
+    options: {
+        position: 'topleft'
+    },
+    onAdd: function(map) {
+        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+        container.title = "作業手冊";
+        container.innerHTML = '<i class="fa fa-book fa-2x with-background"></i>';
+        L.DomEvent.on(container, 'click', function() {
+            window.open('https://eng06.sinotech-eng.com/v2/search-pro/zh/CADNA_TerrCut.html', '_blank');
+        });
+        return container;
+    }
+});
+
+
+         var drawControl = new L.Control.Draw({
+         edit: {
+         featureGroup: drawnItems
+         },
+            draw: {
+                polyline: false,
+                polygon: false,
+                circle: false,
+                marker: false,
+                circlemarker: false,
+                rectangle: {
+                    shapeOptions: {
+                        color: 'red',
+                        fillOpacity: 0.0     // 填充透明度，0 表示完全透明
+                    }
+                }
+                }
+         });
+         map.addControl(drawControl);
+
+// 创建一个容器来包含所有按钮
+var buttonContainer = L.Control.extend({
+    options: {
+        position: 'topleft'
+    },
+    onAdd: function(map) {
+        var container = L.DomUtil.create('div', 'leaflet-buttons-container');
+
+        // 添加按钮到容器
+        container.appendChild((new saveButtonP()).onAdd(map));
+        container.appendChild((new saveButtonX()).onAdd(map));
+        container.appendChild((new manualButton()).onAdd(map));
+
+        return container;
+    }
+});
+// 添加按钮容器到地图
+map.addControl(new buttonContainer());
+// CSS 样式
+var style = document.createElement('style');
+style.innerHTML = `
+    .leaflet-buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+    .leaflet-buttons-container > div {
+        margin: 0px 0;
+    }
+    .leaflet-bar.leaflet-control {
+        margin: 0;
+    }
+`;
+document.head.appendChild(style);
+
+
+        // 默認啟用矩形選取工具
+        var rectangleDrawer = new L.Draw.Rectangle(map, drawControl.options.draw.rectangle);
+        rectangleDrawer.enable();
+
+        // 變量來存儲當前的選取框圖層
+        var currentRectangle = null;
+
+ map.on(L.Draw.Event.CREATED, function (event) {
+         var layer = event.layer;
+         // 清除所有之前的圖層
+         drawnItems.clearLayers(layer);
+            // 如果有之前的選取框，移除它
+        rectangleDrawer.enable();
+         if (currentRectangle) {
+                map.removeLayer(currentRectangle);
+            }
+         drawnItems.addLayer(layer);
+         var bounds = layer.getBounds();
+         console.log(bounds); // Send bounds to backend
+                // 畫出選取框
+        currentRectangle = L.rectangle(bounds, {color: "red",fillOpacity: 0.0 ,weight: 1}).addTo(map);
+        // 使用 fitBounds 方法來放大地圖並移動到選取框中心
+        map.fitBounds(bounds);
+
+            // 畫出選取框，並保存到變量中
+
+        // 當地圖視圖變更完成後重新啟用矩形選取工具
+        map.on('moveend', function() {
+            rectangleDrawer.enable();
+        });
+
+ });
+ </script>
+
+</body>
+</html>
