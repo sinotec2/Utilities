@@ -1,13 +1,14 @@
 ---
 layout: default
-title:  API伺服器
+title:  API伺服器的設計
 parent: DTM and Relatives
 grand_parent: GIS Relatives
 last_modified_date: 2024-06-07 00:32:27
+nav_order: 7
 tags: dtm GIS
 ---
 
-# API伺服器
+# API伺服器的設計
 {: .no_toc }
 
 <details open markdown="block">
@@ -22,6 +23,45 @@ tags: dtm GIS
 ---
 ## 背景
 
+### 整體流程
+
+- 前台[leaflet](https://leafletjs.com/)、API伺服器、製圖函式([cntr](./mem2cntr.md)及[dxf](./mem2dxf.md))、[資料檔](./dtm_info.md)與[前處理](./img2mem.md)等作業方式，如圖所示。
+
+![](pngs/2024-06-07-09-13-26.png)
+
+- 這支程式([app.py](./app.py))接收前端html leaflet元件的呼叫、傳入`bounds`座標值，引用[cntr](./mem2cntr.md)、[dxf](./mem2dxf.md)2支函式進行檔案切割、製圖，最後將結果檔回傳給前端，儲存在使用者本機的`下載`目錄。
+
+### API選擇策略
+
+- GPT、perplexity各大AI都建議使用Flask，不過此處還是補充一下決策的背景。
+- node.js：在格隔柵資料處理過程過於繁瑣、不予考慮。
+- streamlet
+  - python家族之一
+  - 有2個模組可以做伺服器，Gunicorn：`st.run(app, host="0.0.0.0", port=8080)`，獨立伺服器：`st.streamlit(app, run_url="streamlit")`
+  - 維運html，則使用`st.markdown()`或`st.write()`，列印鑲嵌在程式碼內的html內容。不適用太過複雜的html。
+- Flask、Django、Streamlit三者比較如下
+
+框架|特性與能力|優勢|劣勢
+-|-|-|-
+Flask|輕量、靈活、微框架|易學易用，非常適合中小型應用|只有基本功能，還需要額外的庫和工具
+Django|進階、全端框架|快速開發、健壯、可擴展的架構，非常適合大型、複雜的應用|陡峭的學習曲線，靈活性不如 Flask
+Streamlit|用於建立資料應用程式的開源框架|即時資料視覺化，非常適合創建顯示和操作資料的應用程式|不是專門為建立API而設計的
+
+其他方案也詳列如下
+
+框架|特性與能力|優勢|劣勢
+-|-|-|-
+FastAPI|現代、高效能Web框架|效能快、記憶體佔用小、基於Python類型提示|仍然比較新，不像Flask和Django那樣廣泛使用
+Falcon|輕量級高效能Web框架|快速、有效率、易於使用，非常適合建立RESTful API|微框架，需要額外的程式庫和工具
+Pyramid|靈活的開源Web框架|應用廣泛，基於WSGI標準|全端框架，陡峭的學習曲線
+Tornado|可擴充、非阻塞的網路框架|處理大量並發連接，非常適合高效能API|微框架，需要額外的函式庫和工具
+
+### 兩個圖檔並存服務的考量
+
+- `matplotlib.pyplot.contour`是產生dxf圖檔必經(最有效率)的過程，輸出檔案只是附加產品
+- 原本序列的關係，因地形數據處理的效率提高了，似乎也沒有必要維持序列，
+
+## 程式說明
 
 這段程式碼建立了一個使用 Flask 框架的 API 服務，其中包含兩個端點 `/api/v1/get_dxf` 和 `/api/v1/get_cntr`。這兩個端點分別用於生成 DXF 文件和 PNG 圖像，並將其返回給客戶端。具體的工作流程如下：
 
