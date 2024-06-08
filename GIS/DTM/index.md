@@ -84,7 +84,7 @@ html圖面如下，內容詳[index.html](./index.html)，實例請造訪[devp.si
  var map = L.map('map',{ zoomControl: false }).setView([23.5, 121.],8);
 ```
 
-- 特色組工具
+- 特色組工具（[FeatureGroup](https://leafletjs.com/reference.html#featuregroup)
 
 ```js
  var drawnItems = new L.FeatureGroup();
