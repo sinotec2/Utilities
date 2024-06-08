@@ -62,11 +62,24 @@ html圖面如下，內容詳[index.html](./index.html)，實例請造訪[devp.si
    - 當矩形繪製完成後，自動放大地圖以適應選取框範圍。
 
 ## Leaflet js設計
-
+，
 ### 底圖的考量
 
-- 由於等高線是專案關切主題、而不是其他地面資訊，因此不考慮[內政部圖磚](https://maps.nlsc.gov.tw/T09/mapshow.action?In_type=web)、[openStreetMap]()等，以避免等高線圖被文字遮蔽。
-- 此處選擇[Mapbox](https://www.mapbox.com/)的圖磚，較、[openTopoMap](https://opentopomap.org)等來得清晰簡潔、遮蔽較少，有較高的地圖品質（雖然尚未全面中文化）。
--  
+- 很多leaflet內設圖磚連結開放政策修改，因此底圖的選用還是選用穩定性高的提供者為宜。
+- 由於等高線是專案關切主題、而不是其他地面資訊，因此不考慮[內政部圖磚](https://maps.nlsc.gov.tw/T09/mapshow.action?In_type=web)、[openStreetMap](https://www.openstreetmap.org/#map=7/23.611/120.768)等，以避免等高線被文字遮蔽。
+- 此處選擇[Mapbox](https://www.mapbox.com/)的圖磚，較、[openTopoMap](https://opentopomap.org)等來得清晰簡潔、遮蔽較少，有較/高的地圖品質（雖然尚未全面中文化）。
+- mapbox API token
+   - [登記](https://docs.mapbox.com/api/overview/)
+   - [費用機制](https://docs.mapbox.com/api/overview/)：瀏覽、低量路線計算並不收費、高量路線計算才會收費。
+-  改用其他圖磚
+   - 更改連結及相應的token即可
 
+### 其他地圖設定
+
+-  中心點及初始縮放比例
+
+```js
+ var map = L.map('map',{ zoomControl: false }).setView([23.5, 121.],8);
+```
+      
 ## API程式之觸發
