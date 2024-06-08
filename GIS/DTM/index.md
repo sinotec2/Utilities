@@ -91,6 +91,11 @@ html圖面如下，內容詳[index.html](./index.html)，實例請造訪[devp.si
  map.addLayer(drawnItems);
 ```
 
+- 控制([control](https://leafletjs.com/reference.html#control-layers)
+
+```js
+
+```
 
 ## API程式之觸發
 
