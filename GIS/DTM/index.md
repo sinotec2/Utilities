@@ -91,10 +91,28 @@ html圖面如下，內容詳[index.html](./index.html)，實例請造訪[devp.si
  map.addLayer(drawnItems);
 ```
 
-- 控制([control](https://leafletjs.com/reference.html#control-layers)
+- 繪圖控制([control](https://leafletjs.com/reference.html#control-layers)
 
 ```js
-
+         var drawControl = new L.Control.Draw({
+         edit: {
+         featureGroup: drawnItems
+         },
+            draw: {
+                polyline: false,
+                polygon: false,
+                circle: false,
+                marker: false,
+                circlemarker: false,
+                rectangle: {
+                    shapeOptions: {
+                        color: 'red',
+                        fillOpacity: 0.0     // 填充透明度，0 表示完全透明
+                    }
+                }
+                }
+         });
+         map.addControl(drawControl);
 ```
 
 ## API程式之觸發
