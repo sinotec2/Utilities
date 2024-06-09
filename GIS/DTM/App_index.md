@@ -79,42 +79,177 @@ html圖面如下，內容詳[index.html](./index.html)，實例請造訪[devp.si
 ### 其他地圖設定
 
 -  中心點及初始縮放比例
+- `zoomControl: false`，不顯示左上方默認的縮放控制按鈕("+ - ")。縮放功能都在滾輪上實現，使用按鈕還要移動滑鼠到左上方，又與圖框範圍選擇的功能衝突，因此將其取消。
 
 ```js
  var map = L.map('map',{ zoomControl: false }).setView([23.5, 121.],8);
 ```
 
 - 特色組工具（[FeatureGroup](https://leafletjs.com/reference.html#featuregroup)
-
+   - 這個工具將會一次定義圖層內的物件
+   - 下列指令將會新增`DrawItems`群組，以備後面程式可以批次定義其內容。
 ```js
  var drawnItems = new L.FeatureGroup();
  map.addLayer(drawnItems);
 ```
 
-- 繪圖控制([control](https://leafletjs.com/reference.html#control-layers)
+- 繪圖控制([L.control](https://leafletjs.com/reference.html#control-layers))
+   - 控制物件的新增、編輯與刪除。共有2各項目需定義，`edit`將連到前述特色組圖層，`draw`則規範要新增元件的顏色、圖框及填滿等特性。
+   - 矩形物件是我們唯一所需要的圖形物件，其他先關閉。
+   - 選取範圍之填滿、即使增加透明度，仍會造成視覺上的干擾。因此最後決定取消填滿、改以紅色實現圖框。
 
 ```js
-         var drawControl = new L.Control.Draw({
-         edit: {
-         featureGroup: drawnItems
+var drawControl = new L.Control.Draw({
+   edit: {
+      featureGroup: drawnItems
          },
-            draw: {
-                polyline: false,
-                polygon: false,
-                circle: false,
-                marker: false,
-                circlemarker: false,
-                rectangle: {
-                    shapeOptions: {
-                        color: 'red',
-                        fillOpacity: 0.0     // 填充透明度，0 表示完全透明
-                    }
-                }
-                }
-         });
-         map.addControl(drawControl);
+   draw: {
+         polyline: false,
+         polygon: false,
+         circle: false,
+         marker: false,
+         circlemarker: false,
+         rectangle: {
+            shapeOptions: {
+               color: 'red',
+               fillOpacity: 0.0     // 填充透明度，0 表示完全透明
+               }
+            }
+         }
+});
+map.addControl(drawControl);
 ```
 
 ## API程式之觸發
 
+- saveButtonP/X是2個相似度很高的自訂 Leaflet 控制項，目的在儲存`png`、`dxf`2種格式的等高線圖檔，
+- 因為相似度很高，此處只須說明一項即可。
+- 傳送數據檔案等功能，以一個變數型態實現，這個變數也會生成圖面上的按鈕。
+- 首先釐清按鈕的設定，再定義點擊之後觸發的事件(啟動API程式)
 
+### 按鈕的位置、外觀與觸發
+
+這段程式碼定義了一個自訂的 Leaflet 控制項，這個控制項的設計是在地圖的左上角添加一個按鈕，當按下時，會將地圖儲存為 PNG 圖像。
+
+```js
+var saveButtonP = L.Control.extend({
+   options: {
+         position: 'topleft'
+   },
+   onAdd: function(map) {
+      var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+         container.innerHTML = '<i class="fa fa-globe fa-2x with-background" title="儲存PNG檔案"></i>';
+         L.DomEvent.on(container, 'click', this._save, this);
+         return container;
+   },
+```
+
+以下是程式碼的分解：
+
+1. `var saveButtonP = L.Control.extend({ ... });`:
+   - 這一行定義了一個新的控制項類別 `saveButtonP`，它繼承自 Leaflet 提供的 `L.Control` 類別。
+   - `extend` 方法允許您創建一個新類別，該類別繼承自父類別的屬性和方法。
+
+2. `options: { position: 'topleft' }`:
+   - 這定義了控制項的預設選項。在這種情況下，控制項將被放置在地圖的左上角。
+
+3. `onAdd: function(map) { ... }`:
+   - 當控制項被添加到地圖時，會調用這個方法。它負責創建控制項的 UI 元素。
+   - `map` 參數是控制項被添加到的 Leaflet 地圖對象。
+
+4. `var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');`:
+   - 這一行創建了一個新的 HTML `div` 元素，它將作為控制項 UI 的容器。
+   - 使用 `L.DomUtil.create` 方法創建元素，並將類名 `leaflet-bar`、`leaflet-control` 和 `leaflet-control-custom` 添加到元素中以對其進行樣式設置。
+
+5. `container.innerHTML = '<i class="fa fa-globe fa-2x with-background" title="儲存PNG檔案"></i>';`:
+   - 這一行將容器的內部 HTML 設置為一個 HTML 元素，其中包括一個 Font Awesome 圖標 (fa-globe) 和一個標題，翻譯為"儲存 PNG 檔案"。
+
+6. `L.DomEvent.on(container, 'click', this._save, this);`:
+   - 這一行為容器添加了一個事件監聽器，監聽點擊事件。當容器被點擊時，將調用 `_save` 方法。
+   - `this` 關鍵字指的是 `saveButtonP` 控制項對象。
+
+7. `return container;`:
+   - 這一行返回容器元素，這是將被添加到地圖的 UI 元素。
+
+總之，這段程式碼定義了一個自訂的控制項，在 Leaflet 地圖的左上角添加一個按鈕。當按鈕被點擊時，它會將地圖儲存為 PNG 圖像。
+
+### _save方法
+
+```js
+   _save: function(e) {
+         L.DomEvent.stopPropagation(e);
+         L.DomEvent.preventDefault(e);
+         if (currentRectangle) {
+            var bounds = currentRectangle.getBounds();
+            var result = {
+               northEast: bounds.getNorthEast(),
+               southWest: bounds.getSouthWest()
+            };
+            console.log("Saved bounds:", result);
+            //alert("Bounds saved! Check the console for details.");
+            // 在此處添加將結果保存到後端或本地存儲的代碼
+
+            fetch('/api/v1/get_cntr', {
+               method: 'POST',
+               headers: {
+                     'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({
+                     sw_lat: result.southWest.lat,
+                     sw_lon: result.southWest.lng,
+                     ne_lat: result.northEast.lat,
+                     ne_lon: result.northEast.lng
+               })
+         }).then(response => {
+            if (!response.ok) {
+               throw new Error('Network response was not ok');
+            }
+            var contentDisposition = response.headers.get('content-disposition');
+            var filename = contentDisposition.split('filename=')[1].trim();
+            return response.blob().then(blob => {
+               // 创建一个链接，下载返回的文件
+               var url = window.URL.createObjectURL(blob);
+               var a = document.createElement('a');
+               a.href = url;
+
+               // 设置下载的文件名
+               a.download = filename || 'download'; // 使用 API 返回的文件名，如果没有则使用默认值
+               document.body.appendChild(a);
+               a.click();
+               window.URL.revokeObjectURL(url); // 释放 URL 对象
+               //a.remove();
+            });
+         }).catch(error => console.error('Error:', error));
+   }
+}
+```
+
+這段程式碼定義了一個名為 `_save` 的方法，它是 `saveButtonP` 控制項的一部分。這個方法在點擊控制項按鈕時被調用，並將地圖的範圍信息儲存到後端或本地存儲中。
+
+以下是方法的內容：
+
+1. `L.DomEvent.stopPropagation(e);` 和 `L.DomEvent.preventDefault(e);`:
+   - 這兩個方法用於防止事件冒泡和預防預設行為，以確保點擊控制項按鈕時不會觸發其他事件。
+
+2. `if (currentRectangle) { ... }`:
+   - 這個條件判斷是否已經選擇了地圖的範圍（`currentRectangle`）。如果已經選擇了範圍，則執行以下代碼。
+
+3. `var bounds = currentRectangle.getBounds();`:
+   - 這行獲取選擇的範圍的緯度和經度。
+
+4. `var result = { ... };`:
+   - 這個變數將儲存選擇的範圍的緯度和經度。
+
+5. `fetch('/api/v1/get_cntr', { ... });`:
+   - 這個方法使用 Fetch API 將範圍信息發送到後端 API `/api/v1/get_cntr`，以儲存範圍信息。
+
+6. `response.blob().then(blob => { ... });`:
+   - 這個方法將後端返回的資料轉換為 Blob 物件，然後使用這個 Blob 物件創建一個 URL 連結，讓用戶可以下載儲存的範圍信息。
+
+7. `document.body.appendChild(a); a.click(); window.URL.revokeObjectURL(url);`:
+   - 這些代碼將創建的連結添加到文檔體中，然後點擊連結以下載範圍信息，最後釋放 URL 物件。
+
+8. `catch(error => console.error('Error:', error));`:
+   - 這個 catch  block 會捕捉任何發生的錯誤，並將錯誤信息輸出到控制台。
+
+總之，這個方法將地圖的範圍信息儲存到後端或本地存儲中，並將儲存的資料下載到用戶的電腦上。
