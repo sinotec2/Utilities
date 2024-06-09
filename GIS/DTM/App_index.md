@@ -160,6 +160,7 @@ var saveButtonP = L.Control.extend({
 4. `var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');`:
    - 這一行創建了一個新的 HTML `div` 元素，它將作為控制項 UI 的容器。
    - 使用 `L.DomUtil.create` 方法創建元素，並將類名 `leaflet-bar`、`leaflet-control` 和 `leaflet-control-custom` 添加到元素中以對其進行樣式設置。
+   - 樣式`leaflet-control-custom`是新增元件之集結，會在[下面]()進一步設定。
 
 5. `container.innerHTML = '<i class="fa fa-globe fa-2x with-background" title="儲存PNG檔案"></i>';`:
    - 這一行將容器的內部 HTML 設置為一個 HTML 元素，其中包括一個 Font Awesome 圖標 (fa-globe) 和一個標題，翻譯為"儲存 PNG 檔案"。
@@ -229,19 +230,23 @@ var saveButtonP = L.Control.extend({
 以下是方法的內容：
 
 1. `L.DomEvent.stopPropagation(e);` 和 `L.DomEvent.preventDefault(e);`:
-   - 這兩個方法用於防止事件冒泡和預防預設行為，以確保點擊控制項按鈕時不會觸發其他事件。
+   - 這兩個方法用於防止其他事件繼續發生、和預防預設行為，以確保點擊控制項按鈕時不會觸發其他不預期的事件。
 
 2. `if (currentRectangle) { ... }`:
    - 這個條件判斷是否已經選擇了地圖的範圍（`currentRectangle`）。如果已經選擇了範圍，則執行以下代碼。
+   - 如果沒有這個記憶並且予以消除，每次產生的圖框將會一直累積下去。
 
 3. `var bounds = currentRectangle.getBounds();`:
    - 這行獲取選擇的範圍的緯度和經度。
+   - 這個變數將會被傳送到API程式。
 
 4. `var result = { ... };`:
    - 這個變數將儲存選擇的範圍的緯度和經度。
 
 5. `fetch('/api/v1/get_cntr', { ... });`:
-   - 這個方法使用 Fetch API 將範圍信息發送到後端 API `/api/v1/get_cntr`，以儲存範圍信息。
+   - 這個方法使用 Fetch API 將範圍信息發送到後端 API `/api/v1/get_cntr`，
+   - [cntr]()接收儲存範圍信息之後，將會切割出售範圍內的DTM數據、製作等高線圖，再將其回傳。
+
 
 6. `response.blob().then(blob => { ... });`:
    - 這個方法將後端返回的資料轉換為 Blob 物件，然後使用這個 Blob 物件創建一個 URL 連結，讓用戶可以下載儲存的範圍信息。
