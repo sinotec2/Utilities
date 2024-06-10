@@ -44,6 +44,13 @@ Linux上有多種開源的行事曆替代方案，以下是一些常見的選擇
 
 這些選擇都可以在Linux上運行，並且提供了相似的功能於Google Calendar。
 
+## Github/Gitea
+
+- [GitHub calendar](.  )
+- [Gitea calindar](https://juejin.cn/post/6922879855059009549)
+- [Gitea and Google Calendar integration](https://n8n.io/integrations/gitea/and/google-calendar/)
+
+
 Citations:
 
 [^1]: https://zh.wikipedia.org/zh-tw/Android
