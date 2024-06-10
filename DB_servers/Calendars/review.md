@@ -49,7 +49,7 @@ Linux上有多種開源的行事曆替代方案，以下是一些常見的選擇
 - [GitHub calendar](.  )
 - [Gitea calindar](https://juejin.cn/post/6922879855059009549)
 - [Gitea and Google Calendar integration](https://n8n.io/integrations/gitea/and/google-calendar/)
-
+- [ical viewer ](https://gitea.it/fianne/rs-calendar)
 
 Citations:
 
