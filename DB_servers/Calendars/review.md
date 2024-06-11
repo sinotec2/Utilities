@@ -51,6 +51,10 @@ Linux上有多種開源的行事曆替代方案，以下是一些常見的選擇
 - [Gitea and Google Calendar integration](https://n8n.io/integrations/gitea/and/google-calendar/)
 - [ical viewer ](https://gitea.it/fianne/rs-calendar)
 
+## Market place
+
+- bing chat 推薦這一篇[my best2023](https://tw.my-best.com/114882)
+
 Citations:
 
 [^1]: https://zh.wikipedia.org/zh-tw/Android
