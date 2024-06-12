@@ -98,6 +98,18 @@ tags: dtm GIS
 - ip及端口在此設定
 - 啟動偵錯模型
 
+## 呼叫方式
+
+- API程式可以直接使用curl指令從後端主機呼叫，可以不需要前端程式，在測試階段可以用`curl`來得到api程式的結果。
+- 如以下呼叫`cntr`程式的指令
+
+```bash
+url=http://devp.sinotech-eng.com:5000/api/v1/get_file
+curl -X POST $url -H "Content-Type: application/json" -d '{"sw_lat": 22.507545744146224, "sw_lon": 120.61295698396863, "ne_lat": 22.535073497331727, "ne_lon": 120.64468000957278}' --output a.png
+```
+
+- 為串連前端程式，一般使用js指令`fetch`來連接API伺服器，詳見[前端網頁的設計#_save方法](./App_index.md#_save方法)
+
 ## 代碼說明
 
 以下是完整的代碼：
