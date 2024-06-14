@@ -17,6 +17,7 @@ Windows中的dir命令可以用来列出文件和目录，但是它不支持-nam
 
 dir /b /s C:\your\directory\path\*.txt
 这个命令的参数含义如下：
+```
 
 /b：以简洁模式显示，只列出文件/目录名，不显示其他信息。
 /s：递归地在子目录中查找。
@@ -25,8 +26,11 @@ dir /b /s C:\your\directory\path\*.txt
 另外，如果你有兴趣在Windows中使用类似Linux命令的工具，你可以考虑安装 Windows Subsystem for Linux（WSL），它允许你在Windows上运行Linux子系统，并直接使用Linux命令。
 
 ## User
+
 中文字用的是big5、請問日文怎麼解讀?
+
 ### ChatGPT
+
 日文通常使用一种称为Shift JIS（Shift Japanese Industrial Standards）的字符编码，也简称为SJIS。这是一种双字节字符编码，与ASCII兼容，并支持日语中的汉字、平假名和片假名等字符。
 
 Shift JIS 是由日本工业标准化委员会（Japanese Industrial Standards, JIS）制定的一种字符编码。它在 ASCII 的基础上引入了双字节编码，以支持日语中的更多字符。
@@ -96,7 +100,7 @@ for encoding in encodings_to_try:
 
 在 Python 中，你可以使用类似的方法来尝试检测文件名的编码：
 
-python
+```python
 
 import chardet
 
@@ -111,6 +115,8 @@ filename_encoding = detect_encoding(filename)
 
 with open(filename, 'r', encoding=filename_encoding) as f:
     file_content = f.read()
+```
+
 这个例子中，detect_encoding 函数尝试检测文件名的编码，然后使用该编码打开文件读取其内容。请确保替换 'your_filename.txt' 为实际的文件名。
 
 然而，文件名的编码检测可能并不总是准确，因为文件名中可能包含各种字符，而不仅仅是文本。在这种情况下，手动检查文件名并进行修复可能是一个更可靠的方法。
@@ -166,6 +172,8 @@ mscos 也是如此嗎？
 ```bash
 
 copy /Y source_file destination_directory\
+```
+
 这个命令将 source_file 复制到 destination_directory\ 中，如果目标目录中已存在同名文件，将会被覆盖而不询问。注意，在 Windows 中使用反斜杠 \ 作为路径分隔符。
 
 ## User
@@ -178,6 +186,8 @@ macOS也是如此嗎？
 ```bash
 
 cp -f source_file destination_directory/
+```
+
 这个命令将 source_file 复制到 destination_directory/ 中，如果目标目录中已存在同名文件，将会被覆盖而不询问。
 
 所以，无论是在 macOS 还是类Unix系统上，cp 命令都可以通过 -f 选项实现强制复制，覆盖目标文件而不询问。
@@ -192,6 +202,7 @@ cp -f source_file destination_directory/
 ```bash
 
 cp -rf source_directory destination_directory/
+```
 这个命令将 source_directory 中的所有文件和子目录递归地复制到 destination_directory/ 中。如果目标目录中已存在同名文件或目录，它们将被覆盖而不询问。
 
 ## User
