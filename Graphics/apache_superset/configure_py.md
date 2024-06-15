@@ -420,7 +420,7 @@ THUMBNAILS|快取記憶體之縮圖|[docs](https://superset.apache.org/docs/conf
 - [apache/superset](https://hub.docker.com/r/apache/superset)
 
 ```bash
-docker run -d -p "200.200.32.153:8080":8088 -e "SUPERSET_SECRET_KEY=oXbM6bfa1aO6zHyAGSjc7Ajq5tyhjILTmGjXttQnJe4G" --name superset  apache/superset
+docker run -d -p "200.200.32.153:8080":8088 -e "SUPERSET_SECRET_KEY=oXbM6bfa1aO6zHyAGSjc7Ajq5tyhjILTmGjXttQnJe4G" -e "MAPBOX_API_KEY=pk.eyJ1IjoieWNrdWFuZyIsImEiOiJjbHd6dTV3d24wMHI5MmlzY2xrOWthbDZkIn0.1ylBvXKdivGsaLXbE80MrA" --name superset  apache/superset
 docker exec -it superset superset fab create-admin \
               --username admin \
               --firstname Superset \
