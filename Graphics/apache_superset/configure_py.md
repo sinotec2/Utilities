@@ -414,3 +414,22 @@ SQLLAB_BACKEND_PERSISTENCE
 SQL_VALIDATORS_BY_ENGINE|SQL模板|[docs](https://superset.apache.org/docs/configuration/sql-templating)
 THUMBNAILS|快取記憶體之縮圖|[docs](https://superset.apache.org/docs/configuration/cache)
 
+
+## docker image startup
+
+- [apache/superset](https://hub.docker.com/r/apache/superset)
+
+```bash
+docker run -d -p "200.200.32.153:8080":8088 -e "SUPERSET_SECRET_KEY=oXbM6bfa1aO6zHyAGSjc7Ajq5tyhjILTmGjXttQnJe4G" --name superset  apache/superset
+docker exec -it superset superset fab create-admin \
+              --username admin \
+              --firstname Superset \
+              --lastname Admin \
+              --email admin@superset.com \
+              --password admin
+docker exec -it superset superset db upgrade
+docker exec -it superset superset load_examples
+docker exec -it superset superset init
+```
+
+-  to stop and remove：`docker stop <id>; docker rm superset`
