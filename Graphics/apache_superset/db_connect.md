@@ -31,7 +31,7 @@ tags: apache_superset graphics
 
 Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和視覺化 Druid 數據源。以下是連接 Apache Superset 到 Apache Druid 的基本步驟：
 
-1. **確保 Druid 服務運行：** 在開始之前，確保您已成功設置並運行了 Apache Druid。您需要知道 Druid Broker 和 Coordinator 的位置。
+1. **確保 Druid 服務運行：** 在開始之前，確保您已成功設置並運行了 Apache Druid。您需要知道主機IP、API端口、具寫入權限的使用者名稱密碼等等。
 
 2. **在 Superset 中添加 Druid 數據源：** 登錄到 Superset，然後轉到「Data」→「Databases」頁面。點擊右上角的「+」按鈕，選擇「Druid」數據庫類型。
 
