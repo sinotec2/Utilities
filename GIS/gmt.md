@@ -1,4 +1,32 @@
+---
+layout: default
+title:  GMT
+parent: GIS Relatives
+last_modified_date: 2024-05-09 10:42:16
+tags: GIS GMT
+---
 
+# GMT（Generic Mapping Tools）
+
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
+
+- [官網](https://www.generic-mapping-tools.org/)
+- [github repo](https://github.com/GenericMappingTools)
+
+## 簡介
 
 GMT（Generic Mapping Tools）是一套功能强大的地理数据处理和可视化软件包，广泛应用于地理信息系统（GIS）、地球科学、海洋学、气候学等领域。GMT 提供了一整套命令行工具，用于生成高质量的地图、图表和其他地理可视化内容。
 
