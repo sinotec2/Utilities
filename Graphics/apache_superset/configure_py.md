@@ -86,11 +86,11 @@ MAPBOX_API_KEY = ''
 ```
 
 > 提示
-> 請注意，通常將[僅]要變更的核心superset/config.py部分以及相關註解複製並貼上到您自己的檔案中。superset_config.py
+> 請注意，通常[僅需]將要變更的核心superset/config.py部分以及相關註解複製並貼上到您自己的`superset_config.py`檔案中即可。
 
-superset/config.py中定義的所有參數和預設值都可以在本機上更改superset_config.py。管理員需要通讀該文件以了解可以在本機上配置的內容以及預設值。
-
-由於superset_config.py充當 Flask 配置模組，它可用於更改 Flask 本身的設置，以及 Superset 捆綁的 Flask 擴展，如flask-wtf、flask-caching、flask-migrate和flask-appbuilder。這些擴充中的每一個都提供了複雜的可配置性。 Superset 使用的 Web 框架 Flask App Builder 也提供了許多設定。請參閱Flask App Builder 文件以取得有關如何配置它的詳細資訊。
+- `superset/config.py`中定義的所有參數和預設值，都可以在本機的`superset_config.py`中更改覆蓋。
+- 管理員需要通讀該文件以了解配置的可能內容及其預設值。
+- 由於`superset_config.py`充當 Flask 配置模組，它可用於更改 Flask 本身的設置，以及 Superset 綁定的 Flask 擴展，如`flask-wtf`、`flask-caching`、flask-migrate和flask-appbuilder。這些擴充中的每一個都提供了複雜的可配置性。 Superset 使用的 Web 框架 Flask App Builder 也提供了許多設定。請參閱Flask App Builder 文件以取得有關如何配置它的詳細資訊。
 
 你會想要改變：
 
@@ -418,6 +418,7 @@ THUMBNAILS|快取記憶體之縮圖|[docs](https://superset.apache.org/docs/conf
 ## docker image startup
 
 - [apache/superset](https://hub.docker.com/r/apache/superset)
+- 一次性測試
 
 ```bash
 docker run -d -p "200.200.32.153:8080":8088 -e "SUPERSET_SECRET_KEY=oXbM6bfa1aO6zHyAGSjc7Ajq5tyhjILTmGjXttQnJe4G" -e "MAPBOX_API_KEY=pk.eyJ1IjoieWNrdWFuZyIsImEiOiJjbHd6dTV3d24wMHI5MmlzY2xrOWthbDZkIn0.1ylBvXKdivGsaLXbE80MrA" --name superset  apache/superset
@@ -433,3 +434,15 @@ docker exec -it superset superset init
 ```
 
 -  to stop and remove：`docker stop <id>; docker rm superset`
+
+## superset 中文化
+
+[](https://blog.csdn.net/jiangnianwangluo/article/details/130379493)
+
+```python
+
+```
+
+### 中文簡介安裝
+
+- [devlive.org](https://docs.devlive.org/read/apache-superset-zh-20240427/Introduction)
