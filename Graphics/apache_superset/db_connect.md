@@ -37,11 +37,14 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
 
 3. **填寫 Druid 數據源的詳細信息：** 提供有關 Druid 數據源的詳細信息，包括數據庫名稱、Druid Broker 和 Coordinator 的地址等。在「Additional Parameters」部分，您可能需要提供一些額外的配置參數，具體取決於您的 Druid 部署。
 
-4. **保存並測試連接：** 點擊「Save」保存 Druid 數據源配置。然後，您可以使用「Test Connection」按鈕測試是否能夠成功連接到 Druid 數據源。
+4. **保存並測試連接：** 點擊「Save」保存 Druid 數據源配置。然後，您可以使用「Test Connection」按鈕測試是否能夠成功連接到 Druid 數據源，如果測試成功，隨即建立連結。
 
-5. **添加 Druid 表：** 成功測試連接後，轉到「Tables」頁面，然後點擊右上角的「+」按鈕，選擇「Druid」數據源。這將使您能夠在 Superset 中查詢 Druid 表。
+5. **添加 Druid 資料集：** 成功測試連接後，轉到「Datasets」頁面，然後點擊右上角的「+」按鈕來產生一個新的資料集，在DATABASE對話框下拉選擇「Druid」數據源、並選擇druid伺服器上的資料框架。這將使您能夠在 Superset 中查詢 Druid 表。
 
-6. **建立 Superset 查詢：** 現在您可以建立 Superset 中的查詢，並使用 Druid 數據源查詢和可視化數據。
+![](2024-06-21-16-33-30.png)
+![](2024-06-21-16-37-46.png)
+
+6. **建立 Superset 查詢：** 按下新創資料集之後，隨即進入新創圖表(Charts)，現在您可以建立 Superset 中的查詢，並使用 Druid 數據源查詢和可視化數據。
 
 請注意，Druid 數據源配置可能因您的 Druid 部署而異。確保您了解您的 Druid 部署的配置細節，以確保正確配置 Superset。
 

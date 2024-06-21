@@ -30,7 +30,7 @@ Codeberg Pages Server 是一個獨立的服務，通過 API 連接到 Gitea，�
 
 部署該服務需要一些系統管理和代碼編輯知識，但軟件本身易於部署。該文本還提供有關環境變量、對服務器開發的貢獻、以及測試和性能分析的信息。
 
-此外，該網頁包含了指向 Codeberg 文檔、社區問題和其他由 Codeberg 提供的服務的[鏈接](https://codeberg.org/Codeberg/pages-server)。
+此外，該網頁包含了指向 Codeberg 文檔、社區問題和其他由 Codeberg 提供的服務的[鏈接]([[2024-06-21]])。
 
 ### Codeberg vs httpd
 
