@@ -101,22 +101,24 @@ mintplexlabs/anythingllm
 - 端口
   - 範例中內外都是3001。[官網案例](https://codeberg.org/Codeberg/pages-server/src/branch/main/examples/haproxy-sni/docker-compose.yml)影像暴露的端口是一般靜態網頁的80/443。
 
+### 環境變數
 
-
-    ACME_ACCEPT_TERMS (default: use self-signed certificate): Set this to "true" to accept the Terms of Service of your ACME provider.
-    ACME_API (default: https://acme-v02.api.letsencrypt.org/directory): set this to https://acme.mock.director to use invalid certificates without any verification (great for debugging). ZeroSSL might be better in the future as it doesn't have rate limits and doesn't clash with the official Codeberg certificates (which are using Let's Encrypt), but I couldn't get it to work yet.
-    ACME_EAB_KID & ACME_EAB_HMAC (default: don't use EAB): EAB credentials, for example for ZeroSSL.
-    ACME_EMAIL (default: noreply@example.email): Set the email sent to the ACME API server to receive, for example, renewal reminders.
-    ACME_USE_RATE_LIMITS (default: true): Set this to false to disable rate limits, e.g. with ZeroSSL.
-    DNS_PROVIDER (default: use self-signed certificate): Code of the ACME DNS provider for the main domain wildcard. See https://go-acme.github.io/lego/dns/ for available values & additional environment variables.
-    ENABLE_HTTP_SERVER (default: false): Set this to true to enable the HTTP-01 challenge and redirect all other HTTP requests to HTTPS. Currently only works with port 80.
-    GITEA_API_TOKEN (default: empty): API token for the Gitea instance to access non-public (e.g. limited) repos.
-    GITEA_ROOT (default: https://codeberg.org): root of the upstream Gitea instance.
-    HOST & PORT (default: [::] & 443): listen address.
-    LOG_LEVEL (default: warn): Set this to specify the level of logging.
-    NO_DNS_01 (default: false): Disable the use of ACME DNS. This means that the wildcard certificate is self-signed and all domains and subdomains will have a distinct certificate. Because this may lead to a rate limit from the ACME provider, this option is not recommended for Gitea/Forgejo instances with open registrations or a great number of users/orgs.
-    PAGES_DOMAIN (default: codeberg.page): main domain for pages.
-    RAW_DOMAIN (default: raw.codeberg.page): domain for raw resources (must be subdomain of PAGES_DOMAIN).
+var|default|settings
+-|-|-
+ACME_ACCEPT_TERMS|use self-signed certificate| Set this to "true" to accept the Terms of Service of your ACME provider.
+ACME_API |https://acme-v02.api.letsencrypt.org/directory|set this to https://acme.mock.director to use invalid certificates without any verification (great for debugging). ZeroSSL might be better in the future as it doesn't have rate limits and doesn't clash with the official Codeberg certificates (which are using Let's Encrypt), but I couldn't get it to work yet.
+ACME_EAB_KID & ACME_EAB_HMAC |don't use EAB|EAB credentials, for example for ZeroSSL.
+ACME_EMAIL |noreply@example.email|Set the email sent to the ACME API server to receive, for example, renewal reminders.
+ACME_USE_RATE_LIMITS |true|Set this to false to disable rate limits, e.g. with ZeroSSL.
+DNS_PROVIDER |use self-signed certificate|Code of the ACME DNS provider for the main domain wildcard. See https://go-acme.github.io/lego/dns/ for available values & additional environment variables.
+ENABLE_HTTP_SERVER |false|Set this to true to enable the HTTP-01 challenge and redirect all other HTTP requests to HTTPS. Currently only works with port 80.
+GITEA_API_TOKEN |empty|API token for the Gitea instance to access non-public (e.g. limited) repos.
+GITEA_ROOT |https://codeberg.org|root of the upstream Gitea instance.
+HOST & PORT |[::] & 443|listen address.
+LOG_LEVEL |warn|Set this to specify the level of logging.
+NO_DNS_01 |false|Disable the use of ACME DNS. This means that the wildcard certificate is self-signed and all domains and subdomains will have a distinct certificate. Because this may lead to a rate limit from the ACME provider, this option is not recommended for Gitea/Forgejo instances with open registrations or a great number of users/orgs.
+PAGES_DOMAIN |codeberg.page|main domain for pages.
+RAW_DOMAIN |raw.codeberg.page|domain for raw resources (must be subdomain of PAGES_DOMAIN).
 
 ## adaptations of haproxy-sni example
 
