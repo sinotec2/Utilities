@@ -1,13 +1,13 @@
 ---
 layout: default
-title:  CPS 簡介與比較
+title:  deployments
 parent: Codeberg
 grand_parent: Static Site Generators
 last_modified_date: 2024-06-22 10:21:24
 tags: Codeberg 
 ---
 
-# Codeberg pages-server簡介與比較
+# deployments
 
 {: .no_toc }
 
