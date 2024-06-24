@@ -156,7 +156,11 @@ services:
       - ./pages.Caddyfile:/etc/caddy/Caddyfile:ro
 ```
 
+### 共用docker的網路
 
+- last glance
+  
+```bash
 $ docker-compose up -d
 WARN[0000] /Users/kuang/GitHub/pages/examples/haproxy-sni/docker-compose.yml: `version` is obsolete 
 WARN[0000] Found orphan containers ([haproxy-sni-pages-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up. 
@@ -174,6 +178,10 @@ $ docker network connect haproxy-network    haproxy-sni-gitea-1
 (base) 21:27@kuang:~/GitHub/pages/examples/haproxy-sni 
 $ docker run -h sinotec24.com -p 8084:80 -e GITEA_ROOT="sinotec24.com" -e PAGES_DOMAIN="sintec24.pages" -e GITEA_ROOT="http://sinotec24.com:3000" -e HOST="sinotec24.com" -e PORT="8084" --network haproxy-network pages-server:latest
 1:28PM ERR A fatal error occurred error="could not create new gitea client: Get \"http://sinotec24.com:3000/api/v1/version\": dial tcp 192.168.32.3:3000: connect: connection refused"
+```
+
+- 似乎抓得到ip:host，但存取被拒，應為TOKEN沒設
+- 在docker-compose內宣告network名稱
 
 ```yml
 version: '3' 
