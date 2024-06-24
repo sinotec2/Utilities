@@ -66,7 +66,18 @@ tags: dtm GIS
 
 ### 功能鍵說明
 
-[[2024-06-20]]
+1. 矩形圖框切割功能：滑鼠雖然內設具有矩形圖框切割功能，但經取消(按`esc`鍵)後，如要繼續選取，可以點選黑色白底四方形鍵再次啟動切割功能。
+2. 編輯圖框與清除選取
+3. 將選取結果送交等高線繪製[API程式](./app.md)，圖檔可直接與地圖等高線定性比較([詳下](#案例比較))。
+   - 點選此鍵前需先按`esc`鍵取消繼續切割。
+   - 點選後系統將會在主機上產生等高線[matplotlib][mtb]圖檔，同時也在客戶端下載目錄儲存一份。檔名為`terr_隨機碼.png`。
+   - 高度值：選取範圍內最低到最高共9個間隔。
+4. 功能與3.幾乎一樣，但為每公尺的等高線`dxf`檔
+   - 檔名為`terr_隨機碼.dxf`
+   - 可以用線上dxf viewer來檢視，如[sharecad.org][cad]
+5. 使用手冊
+   - 公司內[vuepress](https://eng06.sinotech-eng.com/v2/search-pro/zh/Terr_Cut/)
+   - 公司外[github page](https://sinotec2.github.io/Utilities/GIS/DTM/TerrCutter/)
 
 ## 案例比較
 
