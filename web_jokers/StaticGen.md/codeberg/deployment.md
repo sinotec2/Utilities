@@ -215,3 +215,8 @@ services:
     networks:
       - proxy-net
 ```
+
+## cert with wild card
+
+- Updated 4 months ago[ 0x152a/codeberg.org.codeberg.pages-server:v5.1](https://hub.docker.com/r/0x152a/codeberg.org.codeberg.pages-server/tags)
+- [Fix Dockerfile binary location ](https://codeberg.org/Codeberg/pages-server/commit/b54cd38d0be564dad2dce2e25c82dffed7bc4428)
