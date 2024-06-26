@@ -50,7 +50,13 @@ tags: VuPress
   - 命名成自己的Repo(按實際的技術內容、不要再出現VPH云云)
 - 複製Repo的網址(https://domain_names:3000/Repo.git)，到個人桌機的github desktop或VS Code
 
-### 
+### 同步桌機與Gitea
+
+- 開啟github desktop、在Current Repository右側下拉選單中新增(Add)Clone Repository...，選擇URL
+- 貼上前述Repo網址、設定本機目錄（LocalPath）
+  - 注意：如需研資部協助備份，需存在Y槽。
+  - 如為團隊：至少需有1人的作業路徑是在Y槽。
+- 按下複製倉儲(Clone)
 
 ## workflow tasks
 
