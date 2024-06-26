@@ -59,7 +59,7 @@ tags: VuPress
 - 按下複製倉儲(`clone`)
 - 點選`Open Visual Studio Code`開始編輯
 - 編輯完成後，回到Github Desktop執行推送(`push`)，此舉將更新Gitea上的內容，請注意是否會覆蓋別人編輯的檔案。
-- 下次要編輯時，需要先下載倉儲(`pull`)的最新內容，以避免版本不符。
+- 每次編輯完成，都需要執行推送，下次要編輯時，也需要先下載倉儲(`pull`)的最新內容，以避免版本不符，造成衝突。
 
 ## workflow tasks
 
@@ -75,7 +75,6 @@ tags: VuPress
   - future webpage path：https://domain_name/Grp.User.Repo/shared/zh...
 - 在workflow中修改包裹器(wrapper)：v2 must be changed to **User_Repo_name**
 - mkdir and scp to /nas2/VuePressDist/Grp.User.Repo
-
 
 ## apache directory的正則表示
 
