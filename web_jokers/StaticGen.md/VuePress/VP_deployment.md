@@ -26,7 +26,25 @@ tags: VuPress
 - VPH中大量使用了包裹器(wrapper)來保存路徑，經過編譯之後，會形成固定路徑、盤根錯節的html檔案群組，Repo很難更動原有目錄架構。
   - 這項好處讓作者不必擔心路徑丟失的問題、
   - 壞處是更動路徑將造成編譯失敗、即時通過了編譯，很多hyperlink 也會失效，造成閱讀困難。
-- 可喜的是找到了`v2`路徑的包裹器，可以作為Repo的替代標籤。
+- 可喜的是找到了`v2`路徑的包裹器，可以作為Repo的替代標籤。檔案如下：
+
+```bash
+$ findc "*wrap*.ts"|grep -v module
+./docs-shared/lib/theme-wrapper.d.ts
+./docs-shared/lib/config-wrapper.d.ts
+./docs-shared/src/config-wrapper.ts
+./docs-shared/src/theme-wrapper.ts
+```
+
+- rebase相關指令
+
+```bash
+$ grep v2 $(findc "*wrap*.ts"|grep -v module)
+./docs-shared/src/config-wrapper.ts:      ? (`/v2/${base}/` as `/${string}/`)
+./docs-shared/src/config-wrapper.ts:      : "/v2/";
+./docs-shared/src/theme-wrapper.ts:        indexBase: base ? `/v2/${base}/` : "/v2/",
+```
+
 - `v2`：`vuepresshope2/docs/theme/src`
   - 其下可自行開設目錄如：`vuepresshope2/docs/theme/src/zh/kuang`，
   - 將會出現在`https://domain_name/Grp.User.Repo/zh/kuang`（中文版本）
