@@ -81,6 +81,8 @@ $ grep v2 $(findc "*wrap*.ts"|grep -v module)
 
 ## workflow tasks
 
+### 整體說明
+
 - workflow task runner: admin level of Gitea
 - get the User_name(Team_name) and Repo_name
   - Repo must set to **public** to be read by admin
@@ -93,6 +95,13 @@ $ grep v2 $(findc "*wrap*.ts"|grep -v module)
   - future webpage path：https://domain_name/Grp.User.Repo/shared/zh...
 - 在workflow中修改包裹器(wrapper)：v2 must be changed to **User_Repo_name**
 - mkdir and scp to /nas2/VuePressDist/Grp.User.Repo
+
+### runner docker 佈置
+
+- page build and deployment
+  - 偵測任何Depo如有上載活動，隨即檢查，如果確實是VPH的Repo，即開始執行編譯與佈建。
+  - 受理期間，將Repo完全控制，不讓別的Runner使用。
+
 
 ## apache directory的正則表示
 
