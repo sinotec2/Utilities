@@ -36,6 +36,7 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
 2. **在 Superset 中添加 Druid 數據源：** 登錄到 Superset，然後轉到「Data」→「Databases」頁面。點擊右上角的「+」按鈕，選擇「Druid」數據庫類型。
 
 3. **填寫 Druid 數據源的詳細信息：** 提供有關 Druid 數據源的詳細信息，包括數據庫名稱、Druid Broker 和 Coordinator 的地址等。在「Additional Parameters」部分，您可能需要提供一些額外的配置參數，具體取決於您的 Druid 部署。
+> druid://4○○○:y○○○○○○4○○○@${host}:8888/druid/v2/sql
 
 4. **保存並測試連接：** 點擊「Save」保存 Druid 數據源配置。然後，您可以使用「Test Connection」按鈕測試是否能夠成功連接到 Druid 數據源，如果測試成功，隨即建立連結。
 
