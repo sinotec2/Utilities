@@ -153,3 +153,6 @@ jobs:
 ```
 
 [AppleBoy2023]: https://blog.wu-boy.com/2023/09/introduction-to-gitea-devops-platform/ "初探輕量級 DevOps 平台: Gitea - 台北 DevOpsDay"
+
+
+![](2024-07-10-14-37-59.png)
