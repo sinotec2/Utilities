@@ -288,6 +288,9 @@ FAB(Flask-AppBuilder) 支援根據 LDAP 伺服器驗證使用者憑證。要使�
 - 此處討論將 LDAP 或 OAUTH 群組對應到 Superset角色。
 - FAB(Flask-AppBuilder) 中的 `AUTH_ROLES_MAPPING` 是從 LDAP/OAUTH 群組名稱對應到 FAB 角色的字典。
 - 它用於為使用 LDAP 或 OAuth 進行身份驗證的使用者指派角色。
+- 實例在[8082](http://eng06.sinotech-eng.com:8082/login/)(未成功)
+  - `export SUPERSET_CONFIG_PATH=/nas2/kuang/MyPrograms/superset/superset_config_LDAP.py`
+  - 設定詳見[2024-07-11筆記](http://eng06.sinotech-eng.com:3000/kuang/ITnotes/src/branch/main/_posts/2024-07-11.md)
 
 ### 將 OAUTH 群組映射到 Superset角色
 
