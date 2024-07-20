@@ -111,9 +111,10 @@ gitea  | 2024/07/20 16:24:08 cmd/web.go:116:showWebStartupMessage() [I] * Config
 ### 二者之協調
 
 - docker-compose.yml (或docker run -v）中的設定
-  - APP_DATA_PATH的映射。
-  - app.ini
-
+  - APP_DATA_PATH的映射
+  - app.ini位置的映射
+- app.ini內容的設定
+  - APP_DATA_PATH
 
 ## 網路的需求
 
