@@ -114,6 +114,7 @@ gitea  | 2024/07/20 16:24:08 cmd/web.go:116:showWebStartupMessage() [I] * Config
   - APP_DATA_PATH的映射
   - app.ini位置的映射
 - app.ini內容的設定
+  - WORK_PATH = /data/gitea/
   - APP_DATA_PATH
 
 ## 網路的需求
