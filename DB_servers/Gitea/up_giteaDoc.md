@@ -89,6 +89,7 @@ docker 影像提供Gitea服務的好處與必要性如下
 - 如果拿此app.ini提供給docker，目錄將永遠無法對應。
 - app.ini效力範圍，只限定在docker影像之內。
 
+
 ### 影像的APP_DATA_PATH
 
 - [gitea/gitea:latest]()影像中的`APP_DATA_PATH`設定很僵化，因此以主機上來調整會比較容易一些。
@@ -101,6 +102,18 @@ gitea  | 2024/07/20 16:24:08 cmd/web.go:114:showWebStartupMessage() [I] * WorkPa
 gitea  | 2024/07/20 16:24:08 cmd/web.go:115:showWebStartupMessage() [I] * CustomPath: /data/gitea
 gitea  | 2024/07/20 16:24:08 cmd/web.go:116:showWebStartupMessage() [I] * ConfigFile: /data/gitea/conf/app.ini
 ```
+
+- AppPath是內設，與影像檔的內容有關，也不是app.ini所能設定的項目。
+- 影像的app.ini 是ConfigFile路徑所指定。這個路徑，必須和'docker-compose.yml (或docker run -v）內容一致，然後由其中的設定來控制其他的路徑。
+- `WorkPath`、`CustomPath`理論上應該不會一樣，可能是因為後者沒有什麼內容、在app.ini 中也沒有設定、因此還沒有發生衝突。
+- 從後3者來看，影像檔內設的主要路徑都是在/data之下，這個訊息必須在'docker-compose.yml (或docker run -v）中反映。
+
+### 二者之協調
+
+- docker-compose.yml (或docker run -v）中的設定
+  - APP_DATA_PATH的映射。
+  - app.ini
+
 
 ## 網路的需求
 
