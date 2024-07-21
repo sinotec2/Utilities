@@ -33,11 +33,18 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
 
 1. **確保 Druid 服務運行：** 在開始之前，確保您已成功設置並運行了 Apache Druid。您需要知道主機IP、API端口、具寫入權限的使用者名稱密碼等等。
 
-2. **在 Superset 中添加 Druid 數據源：** 登錄到 Superset，然後轉到「Databases」頁面。點擊右上角的「+」按鈕，選擇「Druid」數據庫類型。或由個人設定(Settings)中Data &rightarrow;Database Connections進入。
+2. **在 Superset 中添加 Druid 數據源：** 以管理者權限登錄到 Superset。點擊右上角的「+」按鈕，選擇「Data」及「Connect  database」。
+
+![](2024-07-12-10-50-12.png)
+
+- 或由個人設定(Settings)中Data &rightarrow;Database Connections進入。
 
 ![](2024-07-11-10-13-05.png)
 
-3. **填寫 Druid 數據源的詳細信息：** 提供有關 Druid 數據源的詳細信息，包括數據庫名稱、Druid Broker 和 Coordinator 的地址等。在「Additional Parameters」部分，您可能需要提供一些額外的配置參數，具體取決於您的 Druid 部署。
+3. **填寫 Druid 數據源的詳細信息：** 
+
+- 在「SUPPORTED DATABASES」下拉選單中選擇「Apache Druid」數據庫類型。
+- 在「SQLALCHEMY URI」中提供有關 Druid 數據源的詳細信息，包括數據庫名稱、Druid Broker 和 Coordinator 的地址等。在「Additional Parameters」部分，您可能需要提供一些額外的配置參數，具體取決於您的 Druid 部署。
 
 > druid://4○○○:y○○○○○○4○○○@${host}:8888/druid/v2/sql
 
@@ -48,9 +55,9 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
   - 關機前：要記得先刪除連結，以避免重開後無法重建。
   - 是否可以同時連接2個資料庫伺服器?雖然使用手冊沒說不型，GPT's也說可以，但實際上連上Druid之後，要再連其他伺服器，再也找不到介面，除非刪除原來的連結。
 
-4. **測試並連接：** 您可以使用「Test Connection」按鈕測試是否能夠成功連接到 Druid 數據源，如果測試成功，隨即建立連結。
+1. **測試並連接：** 您可以使用「Test Connection」按鈕測試是否能夠成功連接到 Druid 數據源，如果測試成功，隨即建立連結。
 
-5. **添加 Druid 資料集：** 成功連接後，轉到「Datasets」頁面，然後點擊右上角的「+」按鈕來產生一個新的資料集，在DATABASE對話框下拉選擇「Druid」數據源、並選擇druid伺服器上的資料框架(Schema)。這將使您能夠在 Superset 中查詢 Druid 伺服器上的資料表(如下圖右半邊顯示)與其欄位名稱、數據類別等。最後按下新創資料庫及圖表。
+2. **添加 Druid 資料集：** 成功連接後，轉到「Datasets」頁面，然後點擊右上角的「+」按鈕來產生一個新的資料集，在DATABASE對話框下拉選擇「Druid」數據源、並選擇druid伺服器上的資料框架(Schema)。這將使您能夠在 Superset 中查詢 Druid 伺服器上的資料表(如下圖右半邊顯示)與其欄位名稱、數據類別等。最後按下新創資料庫及圖表。
 
 ![](2024-06-21-16-33-30.png)
 ![](2024-07-11-10-36-09.png)
