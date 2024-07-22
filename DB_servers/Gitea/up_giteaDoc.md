@@ -86,7 +86,7 @@ docker 影像提供Gitea服務的好處與必要性如下
 ## 主機、影像工作目錄的對應
 
 - 在伺服器移轉的過程中，指定正確的目錄是延續伺服器服務的關鍵。
-  - 
+  - 除了
 
 ### 主機APP_DATA_PATH
 
@@ -121,12 +121,20 @@ gitea  | 2024/07/20 16:24:08 cmd/web.go:116:showWebStartupMessage() [I] * Config
 - app.ini內容的設定
   - WORK_PATH = /data/gitea/
   - [server]APP_DATA_PATH = /data
+    - 這個路徑的設定是相對AppPath系統執行檔、宣告系統的資料來源。
   - [repository]ROOT = /data/gitea/gitea-repositories
+    - Gitea把系統和倉儲檔案分開儲存，除了可以規劃最適合的儲存媒體，在資安上也有最高的彈性。
 
 ## 網路的需求
 
+- docker-compose.yml有建議使用網路，但似乎不需要特別開設網路橋接。
+- Gitea影像內設是有開啟網路功能的，會連到指定IP的資料庫。
+- 將docker影像抛接到指定IP，似乎也沒有太大的問題。
+
 ### 影像檔的網路存取
 
+- 這裡的網路使用事實上只有一個，就是MySQL伺服器的連線。
+  - 
 ### 主機的網路存取
 
 
