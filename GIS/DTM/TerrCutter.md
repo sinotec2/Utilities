@@ -76,7 +76,7 @@ tags: dtm GIS
    - 檔名為`terr_隨機碼.dxf`
    - 可以用線上dxf viewer來檢視，如[sharecad.org][cad]
 5. 使用手冊
-   - 公司內[vuepress](https://eng06.sinotech-eng.com/v2/search-pro/zh/Terr_Cut/)
+   - 公司內[vuepress](https://eng06.sinotech-eng.com/v2/search-pro/zh/Terr_Cut.html)
    - 公司外[github page](https://sinotec2.github.io/Utilities/GIS/DTM/TerrCutter/)
 
 ## 案例比較
