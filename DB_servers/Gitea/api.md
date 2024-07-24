@@ -35,7 +35,7 @@ tags: gitea
 密鑰|Create/Update a secret in an organization|/orgs/{org}/actions/secrets/{secretname}
 變數|Create an org-level variable|/orgs/{org}/actions/variables/{variablename}
 掛鉤|Create a hook|/orgs/{org}/hooks
-標籤|Create a label for an organization|/orgs/{org}/labels
+標示|Create a label for an organization|/orgs/{org}/labels
 團隊|Create a team|/orgs/{org}/teams
 
 ### 使用者
@@ -48,6 +48,28 @@ oauth2|creates a new OAuth2 application|/user/applications/oauth2|
 簽章|Create a GPG key|/user/gpg_keys|
 掛鉤|Create a hook|/user/hooks|
 公鑰|Create a public key|/user/keys|
+倉儲|Create a repository|/user/repos|
+令牌|Create an access token|/users/{username}/tokens|
+
+### 倉儲
+
+屬性|功能|路徑|注意事項
+:-:|:-|:-|:-:
+創建倉儲|Create a repository|/user/repos|
+模版|Create a repository using a template|/repos/{template_owner}/{template_repo}/generate
+密鑰|Create or Update a secret value in a repository|/repos/{owner}/{repo}/actions/secrets/{secretname}|
+變數|Create a repo-level variable|/repos/{owner}/{repo}/actions/variables/{variablename}|
+分支保護|Create a branch protections for a repository|/repos/{owner}/{repo}/branch_protections|
+創建分支|Create a branch|/repos/{owner}/{repo}/branches|
+檔案|Update/Create a file in a repository|/repos/{owner}/{repo}/branches|
+掛鉤|Create a hook|/repos/{owner}/{repo}/hooks|
+拉取|Create a pull request|/repos/{owner}/{repo}/pulls|從遠端主線角度
+拉取|create review requests for a pull request|/repos/{owner}/{repo}/pulls/{index}/requested_reviewers|
+版本|Create a release|/repos/{owner}/{repo}/releases|
+資產|Create a release attachment|/repos/{owner}/{repo}/releases/{id}/assets|
+提交|Create a commit status|/repos/{owner}/{repo}/statuses/{sha}||
+標籤|Create a new git tag in a repository|/repos/{owner}/{repo}/tags|
+維基|Create a wiki page|/repos/{owner}/{repo}/wiki/new|
 
 ## API token
 
