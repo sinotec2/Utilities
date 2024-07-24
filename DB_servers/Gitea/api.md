@@ -36,7 +36,14 @@ tags: gitea
 變數|Create an org-level variable|/orgs/{org}/actions/variables/{variablename}
 掛鉤|Create a hook|/orgs/{org}/hooks
 標示|Create a label for an organization|/orgs/{org}/labels
-團隊|Create a team|/orgs/{org}/teams
+
+### 團隊
+
+屬性|功能|路徑|注意事項
+:-:|:-|:-|:-:
+組織內新增團隊|Create a team|/orgs/{org}/teams
+新增成員|Add a team member|/teams/{id}/members/{username}
+新增倉儲|Add a repository to a team|/teams/{id}/repos/{org}/{repo}|
 
 ### 使用者
 
@@ -57,7 +64,8 @@ oauth2|creates a new OAuth2 application|/user/applications/oauth2|
 :-:|:-|:-|:-:
 創建倉儲|Create a repository|/user/repos|
 模版|Create a repository using a template|/repos/{template_owner}/{template_repo}/generate
-密鑰|Create or Update a secret value in a repository|/repos/{owner}/{repo}/actions/secrets/{secretname}|
+密值|Create or Update a secret value in a repository|/repos/{owner}/{repo}/actions/secrets/{secretname}|
+密鑰|Add a key to a repository|/repos/{owner}/{repo}/keys|
 變數|Create a repo-level variable|/repos/{owner}/{repo}/actions/variables/{variablename}|
 分支保護|Create a branch protections for a repository|/repos/{owner}/{repo}/branch_protections|
 創建分支|Create a branch|/repos/{owner}/{repo}/branches|
@@ -68,8 +76,24 @@ oauth2|creates a new OAuth2 application|/user/applications/oauth2|
 版本|Create a release|/repos/{owner}/{repo}/releases|
 資產|Create a release attachment|/repos/{owner}/{repo}/releases/{id}/assets|
 提交|Create a commit status|/repos/{owner}/{repo}/statuses/{sha}||
+推送鏡像|add a push mirror to the repository|/repos/{owner}/{repo}/push_mirrors|
 標籤|Create a new git tag in a repository|/repos/{owner}/{repo}/tags|
 維基|Create a wiki page|/repos/{owner}/{repo}/wiki/new|
+主題|Add a topic to a repository|/repos/{owner}/{repo}/topics/{topic}|
+協作|Add a collaborator to a repository|/repos/{owner}/{repo}/collaborators/{collaborator}|
+團隊|Add a team to a repository|/repos/{owner}/{repo}/teams/{team}|
+
+### 管理
+
+屬性|功能|路徑|注意事項
+:-:|:-|:-|:-:
+開創倉儲|Create a repository on behalf of a user|/admin/users/{username}/repos|
+徽章|Add a badge to a user|/admin/users/{username}/badges|
+掛鉤|Create a hook|/admin/hooks|
+使用者|Create a user|/admin/users|
+組織|Create an organization|/admin/users/{username}/orgs|
+公鑰|Add a public key on behalf of a user|/admin/users/{username}/keys
+
 
 ## API token
 
@@ -200,3 +224,21 @@ oauth2|creates a new OAuth2 application|/user/applications/oauth2|
     >
   </div>
   ```
+
+## TODO's
+
+### 新創組織
+
+### 指定各組織對應的LDAP群組（成員團隊）
+
+### VPH模版 
+
+- README(BBS)畫面
+  - 名稱
+  - 訊息（名稱、短文、完整連結）
+  - 重要連結
+  - 討論區域
+- 將VPH_Clean複製到各個組織之下
+
+### 設定群組下的編輯團隊
+
