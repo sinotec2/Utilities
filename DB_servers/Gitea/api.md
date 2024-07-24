@@ -24,6 +24,31 @@ tags: gitea
 
 ## 背景
 
+## 以API來創建
+
+### 組織
+
+屬性|功能|路徑|注意事項
+:-:|:-|:-|:-:
+組織|Create an organization|/orgs
+倉儲|Create a repository in an organization|/org/{org}/repos|
+密鑰|Create/Update a secret in an organization|/orgs/{org}/actions/secrets/{secretname}
+變數|Create an org-level variable|/orgs/{org}/actions/variables/{variablename}
+掛鉤|Create a hook|/orgs/{org}/hooks
+標籤|Create a label for an organization|/orgs/{org}/labels
+團隊|Create a team|/orgs/{org}/teams
+
+### 使用者
+
+屬性|功能|路徑|注意事項
+:-:|:-|:-|:-:
+密鑰|Create/Update a secretin a user scope|/user/actions/secrets/{secretname}|
+變數|Create a user-level variable|/user/actions/variables/{variablename}|
+oauth2|creates a new OAuth2 application|/user/applications/oauth2|
+簽章|Create a GPG key|/user/gpg_keys|
+掛鉤|Create a hook|/user/hooks|
+公鑰|Create a public key|/user/keys|
+
 ## API token
 
 - 有很多登入方式
