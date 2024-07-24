@@ -20,7 +20,7 @@
 
 ### model
 
-- 創建者的`username`是必要項目（*）
+- 創建者的`username`是必要項目（*）。名稱不能跟現有的其他名稱相同。
 
 ```java
 CreateOrgOption{
@@ -38,6 +38,8 @@ website	[...]
 
 ### 範例
 
+- json檔案內容 
+
 ```json
 {
   "description": "org1",
@@ -45,8 +47,20 @@ website	[...]
   "full_name": "organization number one",
   "location": "same as company",
   "repo_admin_change_team_access": true,
-  "username": "sinotec2",
+  "username": "grp1_admin",
   "visibility": "public",
   "website": "https://sinotech-eng.com"
 }
 ```
+
+- curl指令
+  ```bash
+  curl -X 'POST' \
+  'http://localhost:3000/api/v1/orgs?access_token=***' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  ...
+  }
+  ```
+- 
