@@ -44,7 +44,12 @@ tags: calendar
 
 ## 憑證
 
-為了得到API的存取憑證（`ACCESS_TOKEN`），需要有專案、有OAuth客戶端金鑰，登入OAuth伺服器通過驗證後，才能得到`ACCESS_TOKEN`。以下是官網的步驟，其下注解乃實際執行的經驗。
+- 為了得到API的存取憑證（`ACCESS_TOKEN`），需要有專案、有OAuth客戶端金鑰，登入OAuth伺服器通過驗證後，才能得到`ACCESS_TOKEN`。官網的圖有著很好的示範效果。
+
+|![](https://developers.google.com/static/identity/protocols/oauth2/images/flows/authorization-code.png)|
+|:-:|
+|[使用 OAuth 2.0 訪問 Google API](https://developers.google.com/identity/protocols/oauth2?hl=zh-cn)|
+- 以下是官網的步驟，其下注解乃實際執行的經驗。
 
 1. 為 Google Workspace 應用程式、擴充功能或整合建立 Google Cloud 專案。
    - 專案是計費單元，這可以理解，但是“機構”是什麼？似乎就不是個人帳戶有的層次了。
@@ -66,7 +71,7 @@ tags: calendar
   https://www.googleapis.com/auth/calendar.events
   ```
    - 似乎在程式碼中也可以設定`SCOPES`，此處是否必要還有待確認。
-5. 建立登入憑證，用來驗證應用程式的使用者或服務帳戶。
+1. 建立登入憑證，用來驗證應用程式的使用者或服務帳戶。
    - 似乎不必建立“服務帳戶”，因為測試階段OAuth2是用白名單來進行認證，服務帳戶是機械帳戶，也無法通過OAuth認證。
 
 ## 程式庫安裝
