@@ -1,4 +1,32 @@
+---
+layout: default
+title:  模板的組成及應用
+parent: VuePress
+grand_parent: Static Site Generators
+nav_order: 99
+last_modified_date: 2024-07-31 08:56:43
+tags: VuPress
+---
 
+#  VPH模板的組成及應用
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
+
+- VuePress Hope v2 雖然功能完整，但因為範例軟件包檔案龐雜、相依性綿密，經整理縮減到60mb還是太大，無法作為推廣模板。
+- 此處提出殼層、核心切割處理構想，只需推廣核心模板，大小約6mb，採減法原則。
+- 模板的架構、維護、應用等等細節，在此處說明嗎。
+- VPH程式銜接、Gitea act_runner的設定，則見於其他網頁。
 
 ## 工作原理與架構
 
