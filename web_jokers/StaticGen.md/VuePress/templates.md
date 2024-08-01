@@ -306,6 +306,26 @@ export const zhSidebarConfig = sidebar({
   - 更新時也要特別注意連結的穩定性
 - 圖檔：建議有專用的目錄，也用**相對路徑**來連結，方便整理。
 
+### Footer頁尾
+
+- [/.vuepress/theme.ts](http://eng06.sinotech-eng.com:3000/kuang/VPH_kernel/src/branch/main/.vuepress/theme.ts)
+
+```ts
+footer: '
+<script src="https://busuanzi.ibruce.info/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://busuanzi.ibruce.info/pintuer/1.0/pintuer.mini.js"></script>
+<script src="https://busuanzi.ibruce.info/respond/1.4.2/respond.min.js"></script>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p class="text-small text-grey-dk-100 mb-0">
+    <i class="fa fa-eye"></i> <span id="busuanzi_container_page_pv">  <span id="busuanzi_value_page_pv"> </span>  views &emsp;</span>
+    <i class="fa fa-earth"></i> <span id="busuanzi_container_site_pv"> <span id="busuanzi_value_site_pv"> </span>  site_visits &emsp;</span>
+    <i class="fa fa-user"></i><span id="busuanzi_container_site_uv"> <span id="busuanzi_value_site_uv"></span> visitors</span>
+    <a href="https://eng06.sinotech-eng.com:3018/sinotec2/discuss/issues">  留言板</a>
+</p>',
+```
+
+![不算子及留言板](pngs/2024-07-31-14-43-26.png)
+
 ## shell
 
 - 這個版本的倉儲([kuang/VPH_Shell](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell))只是個背景程式檔案的環境殼層，並不實際執行。
@@ -315,15 +335,57 @@ export const zhSidebarConfig = sidebar({
 
 功能項目|原功能|改成|程式位址
 -|-|-|-
-包裝config檔|固定`v2`目錄|按照User.Repo浮動|[config-wrapper.ts](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/docs-shared/src/config-wrapper.ts)
-包裝theme檔|固定`v2`目錄|按照User.Repo浮動|[theme-wrapper.ts](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/docs-shared/src/theme-wrapper.ts)
-右上方小貓標示|回到github|連到地端gitea User/Repo|[RepoLink.ts](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/packages/theme/src/client/modules/navbar/components/RepoLink.ts)
+包裝config檔|固定`v2`目錄|按照User.Repo浮動|[config-wrapper.ts]
+包裝theme檔|固定`v2`目錄|按照User.Repo浮動|[theme-wrapper.ts][theme-wrapper.ts]
+右上方小貓標示|回到github|連到地端gitea User/Repo|[RepoLink.ts](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/packages/theme/src/client/modules/navbar/components/RepoLink.ts)、[index.ts]()
+編輯此頁|指向作者的Github|指向公司地端gitea|[resolveEditLink.ts](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/packages/theme/src/client/modules/info/utils/resolveEditLink.ts)
 readingTimeLocales|只有簡體|改成繁體|[locales.js](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/docs/shared/src/zh/locales.js)
-編輯此頁|指向作者的Github|指向公司地端gitea|[resolveEditLink.ts](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/packages/theme/src/client/modules/info/utils/resolveEditLink.ts)、[index.ts]()
 [AI小幫手](https://eng06.sinotech-eng.com/v2/shared/zh/EmbChat.html)|(無)|外加功能|[anythingllm-chat-widget.min.js](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/docs/theme/src/anythingllm-chat-widget.min.js)
 [不算子](https://sinotec2.github.io/Utilities/Graphics/HTML/ReadVisitCounts/)|(無)|新增到頁尾|[theme.ts](http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/packages/create/template/docs/config/zh/theme.ts)
 
-### 編輯此頁
+### 包裝 *wrapper.ts
+
+- 這2支程式碼([config-wrapper.ts][config-wrapper.ts]及[theme-wrapper.ts][theme-wrapper.ts])原始的作用在於將dist結果另存目錄，以包裝成v2整體的一個示範網站。
+- 因應模板的需求，這個固定的目錄必須改成浮動。
+- 因為網址要改成User.Repo，這些資訊要在CI/CD [act_runner](./act_runner.md)內才會有，因此只能用`sed`指令來修改。
+
+```yml
+...
+export pth=$(echo $GITHUB_WORKSPACE|cut -d'/' -f3)
+export rpo=$(echo $GITHUB_WORKSPACE|cut -d'/' -f4)
+sed -i "s/ICT/${pth}.${rpo}/g" ./docs-shared/src/config-wrapper.ts
+sed -i "s/ICT/${pth}.${rpo}/g" ./docs-shared/src/theme-wrapper.ts
+sed -i "s#vuepress-theme-hope/vuepress-theme-hope#${pth}/${rpo}#g" ./docs-shared/src/theme-wrapper.ts
+...
+export target='/nas2/VuePressDist/'${pth}.${rpo}
+#sshpass -p ${pass} ssh -F ~/.ssh/config -T ${user}@${host} -p 22 "mkdir -p ${target}"
+```
+
+- 注意：最後一個指令尚未成功
+
+### 回到Repo與編輯此頁
+
+- 這項功能對使用者來說，可以隨看隨改，非常方便也很重要。但原始功能是回到github作者自己的repo。因此必須修改。
+- 修改的重點：
+  1. `edit`  →  `_edit`：因應伺服器路徑命名的差異
+  2. `docsDir` → 取消：kernel將`docs/theme/src`都忽略了，將其提升到根目錄，這個字串在程式碼中正好是`docsDir`
+
+### readingTimeLocales
+
+- VPH的語言選項並不能影響到閱讀時間`readingTimeLocales`，這個錯誤必須手動修改。
+- 在編譯階段、下載插件之後，必須將繁體中文的`locale.js`覆蓋插件中的程式碼，才能正確呈現繁體中文的閱讀時間。
+- 相應的yml程式碼
+
+```yml
+...
+pnpm install --no-frozen-lockfile
+a=$(find . -name locales.js|grep reading-time|grep 'lib/node')
+cp $GITHUB_WORKSPACE/docs/theme/src/zh/locales.js $a
+pnpm run build && pnpm run docs:webpack-build
+...
+```
 
 ## ToDo's
 
+[config-wrapper.ts]: http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/docs-shared/src/config-wrapper.ts "config-wrapper.ts"
+[theme-wrapper.ts]: http://eng06.sinotech-eng.com:3000/kuang/VPH_Shell/src/branch/main/docs-shared/src/theme-wrapper.ts "theme-wrapper.ts"
