@@ -24,7 +24,8 @@ tags: Crawlers pdf
 
 ## 背景
 
-- 這位印度人太強了!把我想做的事做出來了。
+- 一般文件**圖表隨文**的作法，雖然對讀者很方便，對程式卻很干擾，如何將圖、表、文三者區分開來解析，是一大挑戰！
+- 除了**圖表隨文**、還有跳頁、頁首頁尾、2欄、轉置等等問題。
 - [GitHub vikparuchuri/marker](https://github.com/VikParuchuri/marker)
 - 範例在L:\nas2\sespub\epa_reports\B27\1070731A_台中發電廠新建燃氣機組計畫環境影響說明書\outputs\C07 有個範例，
 - 把PDF轉譯成md檔含圖表。真的是大突破!
