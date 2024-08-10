@@ -1,4 +1,28 @@
+---
+layout: default
+title:  pdf2md檔案之AI轉換
+parent: PDF檔案之下載與整理
+grand_parent: Crawlers
+nav_order: 99
+last_modified_date: 2024-01-25 09:22:25
+tags: Crawlers pdf
+---
 
+#  pdf2md檔案之AI轉換
+
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 - 這位印度人太強了!把我想做的事做出來了。
 - [GitHub vikparuchuri/marker](https://github.com/VikParuchuri/marker)
