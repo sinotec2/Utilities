@@ -72,7 +72,7 @@ sudo pandoc a.md -o a.pdf --pdf-engine=xelatex -V mainfont='Noto Sans CJK TC'
   - 分頁
   - 表格
 
-![](2024-07-08-13-16-18.png)
+![](../pngs/2024-07-08-13-16-18.png)
 
 - 尚待修改
   - 左右邊幅不對稱
