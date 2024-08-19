@@ -110,12 +110,98 @@ Refresh Token 的存储需要特别注意安全性，因为它具有长期有效
 
 当访问令牌过期时，应用程序可以使用刷新令牌来获取新的访问令牌，而无需用户再次进行身份验证：
 
-**请求新的 Access Token**：
-```http
-POST /oauth/token
-Host: authorization-server.com
-Content-Type: application/x-www-form-urlencoded
+要在自动化登录流程中使用刷新令牌 (Refresh Token)，可以使用 Python 来编写脚本，定期使用刷新令牌获取新的访问令牌 (Access Token)，然后使用新的访问令牌进行授权请求。以下是具体的实现步骤和示例代码。
 
-grant_type=refresh_token&
-refresh_token=
+### 自动化登录的原理
 
+1. **初次登录**：
+   - 用户通过授权流程登录，获取初始的访问令牌和刷新令牌。
+   - 将刷新令牌存储在安全的地方，以便在访问令牌过期时使用。
+
+2. **自动刷新令牌**：
+   - 当访问令牌过期时，使用刷新令牌自动获取新的访问令牌，而不需要用户再次登录。
+   - 新的访问令牌可以继续用于访问受保护的资源。
+
+3. **自动化脚本**：
+   - 编写一个 Python 脚本，定期检查访问令牌是否过期，如果过期则自动使用刷新令牌获取新的访问令牌。
+   - 使用新的访问令牌继续进行 API 请求。
+
+### 示例代码
+
+以下是一个使用 Python 和 `requests` 库的示例，展示了如何自动化使用刷新令牌来登录并获取新的访问令牌。
+
+```python
+import requests
+import time
+
+# 初始的客户端配置
+CLIENT_ID = 'your_client_id'
+CLIENT_SECRET = 'your_client_secret'
+REFRESH_TOKEN = 'your_refresh_token'
+TOKEN_URL = 'https://authorization-server.com/oauth/token'
+
+# 函数：使用刷新令牌获取新的访问令牌
+def get_access_token(refresh_token):
+    data = {
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token,
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET,
+    }
+
+    response = requests.post(TOKEN_URL, data=data)
+    token_info = response.json()
+    
+    if response.status_code == 200:
+        return token_info['access_token'], token_info.get('refresh_token', refresh_token)
+    else:
+        print(f"Error: {token_info.get('error_description', 'Failed to refresh token')}")
+        return None, None
+
+# 函数：自动化的API请求
+def make_api_request(access_token, api_url):
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
+    
+    response = requests.get(api_url, headers=headers)
+    
+    if response.status_code == 401:  # 访问令牌可能已过期
+        print("Access token expired, refreshing token...")
+        new_access_token, new_refresh_token = get_access_token(REFRESH_TOKEN)
+        if new_access_token:
+            # 更新令牌并重试请求
+            return make_api_request(new_access_token, api_url)
+    elif response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error: {response.status_code}")
+        return None
+
+# 示例：使用自动化脚本访问API
+API_URL = 'https://api-server.com/protected-resource'
+access_token, REFRESH_TOKEN = get_access_token(REFRESH_TOKEN)
+
+if access_token:
+    data = make_api_request(access_token, API_URL)
+    print("Received data:", data)
+```
+
+### 关键点解析
+
+1. **刷新令牌获取新的访问令牌**：
+   - `get_access_token` 函数会使用现有的刷新令牌向授权服务器请求新的访问令牌。
+   - 返回新的访问令牌，并更新刷新令牌（如果服务器返回了新的刷新令牌）。
+
+2. **自动化 API 请求**：
+   - `make_api_request` 函数负责向受保护的 API 发送请求，使用 Bearer 令牌进行授权。
+   - 如果请求返回 401 状态码，表示访问令牌可能已过期，此时会自动使用刷新令牌获取新的访问令牌，并重试请求。
+
+3. **存储刷新令牌**：
+   - 在实际应用中，刷新令牌应存储在安全的地方，如环境变量、加密文件等。
+
+### 自动化登录的好处
+
+使用刷新令牌实现自动化登录，可以让应用程序在无需用户干预的情况下，长期保持授权状态。这种方法尤其适用于需要频繁访问 API 的应用程序或后台服务。
+
+通过使用刷新令牌自动化获取新的访问令牌，你可以确保应用程序在访问令牌过期后仍然能够正常运行，提升了系统的稳定性和用户体验。
