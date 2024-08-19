@@ -24,7 +24,7 @@ tags: calendar
 
 ## 背景
 
-- 這個主題雖有很多的技術文件支援，但因為Google也進步的很快，很多功能日新月異，GPT's來不及更新，反而會提供舊的、錯的訊息，就連官網的說明也不見得是最新，還是找到github上的原始碼、經過測試驗證比較可靠。
+- 這個主題雖有很多的技術文件支援，但因為Google也進步的很快，很多功能日新月異，GPT's來不及更新，反而會提供舊的、錯的訊息，就連官網的說明也不見得是最新，還是找到github上的[原始碼](https://github.com/googleapis/google-api-python-client/blob/main/samples/calendar_api/calendar_sample.py)、經過測試驗證比較可靠。
 - 新版的API似乎不再支援`cRUL`、原因不明，
   - 可能因為需要指定的條件太多，還有`ACCESS_TOKEN`的取得也是層層關卡，到底是GET還是POST搞不清楚，乾脆用程式語言來做比較直接。
   - 但實際作業過程，還是產出或引用到許多json檔案的訊息，只是是用比較完整的語言工具來操作。
@@ -83,6 +83,20 @@ tags: calendar
 pip install google-api-python-client oauth2client
 ```
 
+### 啟動當地的瀏覽器
+
+- 因Oauth2會需要利用瀏覽器來登入google帳號、驗證身分，因此會需要啟動**當地**的瀏覽器。
+- 驗證程式會回到`http://locahost:8080`，要確認本地8080沒有被其他伺服器佔據。
+- 遠端登入者(範例中的`pc556`)需開啟`x window`程式，已接收來自主機的瀏覽器畫面(範例為火狐)。
+
+```bash
+export DISPLAY=pc556:0.0
+firefox &
+```
+
+- 待python程式執行時，會在火狐瀏覽器畫面進行google身分認證。按照提示進行即可。
+- 不要嘗試使用其他遠端瀏覽器。
+
 ## 測試程式
 
 ### 客戶端驗證金鑰
@@ -108,6 +122,12 @@ pip install google-api-python-client oauth2client
   }
 }
 ```
+
+### 刪除失效認證紀錄
+
+- google認證有一定的時效(通常是24小時)，這個紀錄會存在`calendar.dat`，如果重複登入，系統會提示帳密失效。
+- 只要刪除`calendar.dat`重新進行Oauth2認證即可。
+- 不需動到前述`client_secrets.json`或ggc上的設定。
 
 ### 執行程式
 
