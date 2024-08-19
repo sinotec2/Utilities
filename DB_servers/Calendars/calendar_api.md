@@ -27,6 +27,6 @@ tags: calendar
 - 官網：[ref docs](https://googleapis.github.io/google-api-python-client/docs/dyn/calendar_v3.html)
 - [quickstart.py](https://developers.google.com/calendar/api/quickstart/python?hl=zh-tw)
 - [events.insert()](https://developers.google.com/calendar/api/guides/create-events?hl=zh-tw)
-
+- [CalendarList](https://developers.google.com/calendar/api/v3/reference/calendarList?hl=zh-tw#methods)
 
 
