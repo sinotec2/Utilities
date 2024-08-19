@@ -25,4 +25,5 @@ tags: calendar
 ## 背景
 
 - 官網：[ref docs](https://googleapis.github.io/google-api-python-client/docs/dyn/calendar_v3.html)
-
+- [quickstart.py](https://developers.google.com/calendar/api/quickstart/python?hl=zh-tw)
+- 
