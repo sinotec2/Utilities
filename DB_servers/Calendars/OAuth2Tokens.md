@@ -1,6 +1,26 @@
+---
+layout: default
+title:  自動登錄與令牌們的管理
+parent: Calendars
+grand_parent: DB_servers
+last_modified_date: 2024-08-19 18:54:53
+tags: calendar
+---
 
+# 自動登錄與令牌們的管理
 
+{: .no_toc }
 
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
 
 ## 2種令牌與自動登錄
 
