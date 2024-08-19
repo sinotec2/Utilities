@@ -3,7 +3,7 @@ layout: default
 title:  Google Calendar API
 parent: Calendars
 grand_parent: DB_servers
-last_modified_date: 2024-07-29 18:54:53
+last_modified_date: 2024-08-19 18:54:53
 tags: calendar
 ---
 
