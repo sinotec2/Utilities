@@ -27,6 +27,7 @@ tags: calendar
 是的，OAuth 2.0 可以實現自動化登錄，而不必每天輸入密碼。這通常是通過「刷新令牌」機制來實現的。
 
 ### 刷新令牌 (Refresh Token)
+
 OAuth 2.0 提供了一種稱為「刷新令牌」的機制，可以在訪問令牌（Access Token）過期後，無需再次輸入用戶名和密碼來獲取新的訪問令牌。以下是這一過程的工作原理：
 
 1. **初次授權**：
@@ -42,17 +43,18 @@ OAuth 2.0 提供了一種稱為「刷新令牌」的機制，可以在訪問令�
 4. **自動更新**：
    - 當應用檢測到訪問令牌過期時，它會自動使用刷新令牌向 OAuth 伺服器請求一個新的訪問令牌，從而保持用戶的登錄狀態。
 
-### 這種方法的好處：
+### 這種方法的好處
+
 - **用戶體驗**：用戶不需要頻繁地輸入憑證，可以提供更流暢的用戶體驗。
 - **安全性**：即使訪問令牌被竊取，由於其短暫的有效期，攻擊者的使用時間有限。此外，刷新令牌通常只會在安全的後端服務器上使用，進一步減少風險。
 - **自動化**：可以在腳本或應用程序中實現自動化處理，無需人工干預。
 
-### 使用時的注意事項：
+### 使用時的注意事項
+
 - **安全存儲**：刷新令牌應該安全地存儲在應用程序中，避免被未授權的用戶或應用程序訪問。
 - **刷新頻率**：不應該過於頻繁地刷新令牌，這可能會觸發 OAuth 提供者的安全警告或限制。
 
 通過正確設置 OAuth 2.0，你可以讓應用程序自動處理令牌更新，從而實現自動化登錄，而不需要用戶每天輸入密碼。
-
 
 ## 如何获取 Refresh Token
 
@@ -82,126 +84,149 @@ OAuth 2.0 提供了一種稱為「刷新令牌」的機制，可以在訪問令�
    client_secret=CLIENT_SECRET
    ```
 
-   **响应：**
+   **响应**：以[calendar_sample.py](./calendar_sample.md)連線所得的`calendar.dat`內容為例
+
    ```json
    {
-     "access_token": "ACCESS_TOKEN",
-     "refresh_token": "REFRESH_TOKEN",
-     "expires_in": 3600,
-     "token_type": "Bearer"
+   "access_token": ***,
+   "client_id": (same as client_secrets.json:{"installed":{"client_id":***}}),
+   "client_secret": (same as client_secrets.json:{"installed":{"client_secret":***}}),
+   "refresh_token": ***,
+   "token_expiry": "2024-08-19T10:30:57Z",
+   "token_uri": "https://oauth2.googleapis.com/token",
+   "user_agent": null,
+   "revoke_uri": "https://oauth2.googleapis.com/revoke",
+   "id_token": null,
+   "id_token_jwt": null,
+   "token_response": {
+         "access_token": (same as above),
+         "expires_in": 3599,
+         "refresh_token": (same as above),
+         "scope": "https://www.googleapis.com/auth/calendar.readonly",
+         "token_type": "Bearer"
+         },
+   "scopes": ["https://www.googleapis.com/auth/calendar.readonly"],
+   "token_info_uri": "https://oauth2.googleapis.com/tokeninfo",
+   "invalid": false,
+   "_class": "OAuth2Credentials",
+   "_module": "oauth2client.client"
    }
    ```
 
+- 注意：
+   - 與呼叫身分有關的變數：`"client_id"`、`"client_secret"`
+   - `"token_response"`：將令牌相關的變數都集中在此處。
+
 ## Refresh Token 的存储位置
 
-Refresh Token 的存储需要特别注意安全性，因为它具有长期有效性，并且可以用于获取新的访问令牌。存储位置的选择因应用类型而异：
+Refresh Token 的儲存需要特別注意安全性，因為它具有長期有效性，並且可以用於取得新的存取權杖。儲存位置的選擇因應用類型而異：
 
-1. **Web 应用程序**：
-   - **服务器端存储**：通常将 Refresh Token 存储在服务器端的数据库或安全存储中，与用户的会话或用户标识关联。这样可以确保 Refresh Token 不会暴露给前端用户。
-   - **Cookie 中存储（不推荐）**：将 Refresh Token 存储在浏览器的 HTTP-only 和 Secure Cookie 中，但存在一定的安全风险，特别是防止跨站脚本攻击（XSS）。
+1. **Web 應用程式**：
+ - **伺服器端儲存**：通常將 Refresh Token 儲存在伺服器端的資料庫或安全性儲存中，與使用者的會話或使用者標識關聯。這樣可以確保 Refresh Token 不會暴露給前端使用者。
+ - **Cookie 中儲存（不建議）**：將 Refresh Token 儲存在瀏覽器的 HTTP-only 和 Secure Cookie 中，但存在一定的安全風險，特別是防止跨站腳本攻擊（XSS）。
 
-2. **移动应用程序**：
-   - **安全存储**：在移动应用程序中，可以使用平台提供的安全存储解决方案，比如 iOS 的 Keychain 或 Android 的加密 SharedPreferences。不要直接将 Refresh Token 存储在未加密的本地存储中。
+2. **行動應用程式**：
+ - **安全儲存**：在行動應用程式中，可以使用平台提供的安全儲存解決方案，例如 iOS 的 Keychain 或 Android 的加密 SharedPreferences。不要直接將 Refresh Token 儲存在未加密的本機儲存中。
 
-3. **桌面应用程序**：
-   - **安全存储**：类似于移动应用程序，使用操作系统提供的安全存储机制，如 Windows 的 Credential Vault 或 macOS 的 Keychain。
+3. **桌面應用程式**：
+ - **安全儲存**：類似於行動應用程序，使用作業系統提供的安全儲存機制，如 Windows 的 Credential Vault 或 macOS 的 Keychain。
 
 ## 刷新令牌的使用
 
-当访问令牌过期时，应用程序可以使用刷新令牌来获取新的访问令牌，而无需用户再次进行身份验证：
+當存取令牌過期時，應用程式可以使用刷新令牌來獲取新的存取令牌，而無需用戶再次進行身份驗證：
 
-要在自动化登录流程中使用刷新令牌 (Refresh Token)，可以使用 Python 来编写脚本，定期使用刷新令牌获取新的访问令牌 (Access Token)，然后使用新的访问令牌进行授权请求。以下是具体的实现步骤和示例代码。
+若要在自動化登入流程中使用刷新令牌 (Refresh Token)，可以使用 Python 來編寫腳本，定期使用刷新令牌來取得新的存取權杖 (Access Token)，然後使用新的存取權杖進行授權請求。以下是具體的實作步驟和範例程式碼。
 
-### 自动化登录的原理
+### 自動化登入的原理
 
-1. **初次登录**：
-   - 用户通过授权流程登录，获取初始的访问令牌和刷新令牌。
-   - 将刷新令牌存储在安全的地方，以便在访问令牌过期时使用。
+1. **初次登入**：
+ - 使用者透過授權流程登錄，取得初始的存取令牌和刷新令牌。
+ - 將刷新令牌儲存在安全的地方，以便在存取令牌過期時使用。
 
-2. **自动刷新令牌**：
-   - 当访问令牌过期时，使用刷新令牌自动获取新的访问令牌，而不需要用户再次登录。
-   - 新的访问令牌可以继续用于访问受保护的资源。
+2. **自動刷新令牌**：
+ - 當存取令牌過期時，使用刷新令牌自動取得新的存取令牌，而不需要使用者再次登入。
+ - 新的存取權令牌可以繼續用於存取受保護的資源。
 
-3. **自动化脚本**：
-   - 编写一个 Python 脚本，定期检查访问令牌是否过期，如果过期则自动使用刷新令牌获取新的访问令牌。
-   - 使用新的访问令牌继续进行 API 请求。
+3. **自動化腳本**：
+ - 編寫一個 Python 腳本，定期檢查存取權杖是否過期，如果過期則自動使用刷新令牌以取得新的存取權杖。
+ - 使用新的存取令牌繼續進行 API 請求。
 
 ### 示例代码
 
-以下是一个使用 Python 和 `requests` 库的示例，展示了如何自动化使用刷新令牌来登录并获取新的访问令牌。
+以下是使用 Python 和 `requests` 函式庫的範例，展示如何自動化使用刷新令牌來登入並取得新的存取權杖。
 
 ```python
 import requests
 import time
 
-# 初始的客户端配置
+# 初始的客戶端配置
 CLIENT_ID = 'your_client_id'
 CLIENT_SECRET = 'your_client_secret'
 REFRESH_TOKEN = 'your_refresh_token'
 TOKEN_URL = 'https://authorization-server.com/oauth/token'
 
-# 函数：使用刷新令牌获取新的访问令牌
+# 函數：使用刷新令牌取得新的存取令牌
 def get_access_token(refresh_token):
-    data = {
-        'grant_type': 'refresh_token',
-        'refresh_token': refresh_token,
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-    }
+   data = {
+   'grant_type': 'refresh_token',
+   'refresh_token': refresh_token,
+   'client_id': CLIENT_ID,
+   'client_secret': CLIENT_SECRET,
+   }
 
-    response = requests.post(TOKEN_URL, data=data)
-    token_info = response.json()
-    
-    if response.status_code == 200:
-        return token_info['access_token'], token_info.get('refresh_token', refresh_token)
-    else:
-        print(f"Error: {token_info.get('error_description', 'Failed to refresh token')}")
-        return None, None
+   response = requests.post(TOKEN_URL, data=data)
+   token_info = response.json()
 
-# 函数：自动化的API请求
+   if response.status_code == 200:
+      return token_info['access_token'], token_info.get('refresh_token', refresh_token)
+   else:
+      print(f"Error: {token_info.get('error_description', 'Failed to refresh token')}")
+   return None, None
+
+# 函數：自動化的API請求
 def make_api_request(access_token, api_url):
-    headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-    
-    response = requests.get(api_url, headers=headers)
-    
-    if response.status_code == 401:  # 访问令牌可能已过期
-        print("Access token expired, refreshing token...")
-        new_access_token, new_refresh_token = get_access_token(REFRESH_TOKEN)
-        if new_access_token:
-            # 更新令牌并重试请求
-            return make_api_request(new_access_token, api_url)
-    elif response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Error: {response.status_code}")
-        return None
+   headers = {
+   'Authorization': f'Bearer {access_token}'
+   }
 
-# 示例：使用自动化脚本访问API
+   response = requests.get(api_url, headers=headers)
+
+   if response.status_code == 401: # 存取權杖可能已過期
+   print("Access token expired, refreshing token...")
+   new_access_token, new_refresh_token = get_access_token(REFRESH_TOKEN)
+   if new_access_token:
+   # 更新令牌並重試請求
+      return make_api_request(new_access_token, api_url)
+   elif response.status_code == 200:
+      return response.json()
+   else:
+      print(f"Error: {response.status_code}")
+   return None
+
+# 範例：使用自動化腳本存取API
 API_URL = 'https://api-server.com/protected-resource'
 access_token, REFRESH_TOKEN = get_access_token(REFRESH_TOKEN)
 
 if access_token:
-    data = make_api_request(access_token, API_URL)
-    print("Received data:", data)
+   data = make_api_request(access_token, API_URL)
+   print("Received data:", data)
 ```
 
-### 关键点解析
+### 關鍵點解析
 
-1. **刷新令牌获取新的访问令牌**：
-   - `get_access_token` 函数会使用现有的刷新令牌向授权服务器请求新的访问令牌。
-   - 返回新的访问令牌，并更新刷新令牌（如果服务器返回了新的刷新令牌）。
+1. **刷新令牌以取得新的存取令牌**
+   - `get_access_token` 函數會使用現有的刷新令牌向授權伺服器請求新的存取權杖。
+   - 傳回新的存取令牌，並更新刷新令牌（如果伺服器傳回了新的刷新令牌）。
 
-2. **自动化 API 请求**：
-   - `make_api_request` 函数负责向受保护的 API 发送请求，使用 Bearer 令牌进行授权。
-   - 如果请求返回 401 状态码，表示访问令牌可能已过期，此时会自动使用刷新令牌获取新的访问令牌，并重试请求。
+2. **自動化 API 請求**：
+   - `make_api_request` 函數負責向受保護的 API 發送請求，使用 Bearer 令牌進行授權。
+   - 如果請求傳回 401 狀態碼，表示存取權杖可能已過期，此時會自動使用刷新權杖取得新的存取權令牌，並重試請求。
 
-3. **存储刷新令牌**：
-   - 在实际应用中，刷新令牌应存储在安全的地方，如环境变量、加密文件等。
+3. **儲存刷新令牌**：
+   - 在實際應用中，刷新令牌應儲存在安全的地方，如環境變數、加密檔案等。
 
-### 自动化登录的好处
+### 自動化登入的好處
 
-使用刷新令牌实现自动化登录，可以让应用程序在无需用户干预的情况下，长期保持授权状态。这种方法尤其适用于需要频繁访问 API 的应用程序或后台服务。
+- 使用刷新令牌實現自動化登錄，可以讓應用程式在無需用戶干預的情況下，長期保持授權狀態。這種方法尤其適用於需要頻繁存取 API 的應用程式或後台服務。
 
-通过使用刷新令牌自动化获取新的访问令牌，你可以确保应用程序在访问令牌过期后仍然能够正常运行，提升了系统的稳定性和用户体验。
+透過使用刷新令牌自動化來獲取新的存取令牌，你可以確保應用程式在存取令牌過期後仍然能夠正常運行，提升了系統的穩定性和使用者體驗。
