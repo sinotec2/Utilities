@@ -3,7 +3,7 @@ layout: default
 title:  自動登錄與令牌們的管理
 parent: Calendars
 grand_parent: DB_servers
-last_modified_date: 2024-08-19 18:54:53
+last_modified_date: 2024-08-20 10:53:19
 tags: calendar
 ---
 
@@ -56,35 +56,35 @@ OAuth 2.0 提供了一種稱為「刷新令牌」的機制，可以在訪問令�
 
 通過正確設置 OAuth 2.0，你可以讓應用程序自動處理令牌更新，從而實現自動化登錄，而不需要用戶每天輸入密碼。
 
-## 如何获取 Refresh Token
+## 如何取得 Refresh Token
 
-要获得 OAuth 2.0 的刷新令牌（Refresh Token），通常是在用户首次进行授权时由授权服务器返回的。以下是详细的步骤以及刷新令牌的存储方法：
+要取得 OAuth 2.0 的刷新令牌（Refresh Token），通常是在使用者首次進行授權時由授權伺服器傳回的。以下是詳細的步驟以及刷新令牌的儲存方法：
 
-1. **初次授权流程**：
-   - 用户通过授权码模式（Authorization Code Grant）或密码凭证模式（Password Credentials Grant）等方式登录。
-   - 应用程序向授权服务器发送请求，通常包括 `client_id`、`redirect_uri`、`scope` 等信息。
+1. **初次授權流程**：
+   - 使用者透過授權碼模式（Authorization Code Grant）或密碼憑證模式（Password Credentials Grant）等方式登入。
+   - 應用程式向授權伺服器發送請求，通常包括 `client_id`、`redirect_uri`、`scope` 等資訊。
 
-2. **服务器响应**：
-   - 如果用户授权成功，授权服务器会返回一个包含访问令牌（Access Token）和刷新令牌（Refresh Token）的响应。
-   - 例如，在授权码模式下，应用程序首先接收到一个授权码（Authorization Code），然后将该码与客户端密钥（Client Secret）一起发送到授权服务器，服务器响应中会包含访问令牌和刷新令牌。
+2. **伺服器回應**：
+   - 如果使用者授權成功，授權伺服器會傳回一個包含存取權杖（Access Token）和刷新令牌（Refresh Token）的回應。
+   - 例如，在授權碼模式下，應用程式首先接收到授權碼（Authorization Code），然後將該碼與客戶端金鑰（Client Secret）一起傳送到授權伺服器，伺服器回應中會包含存取權杖和刷新令牌。
 
-3. **示例请求与响应**：
+3. **範例請求與回應**：
 
-   **请求：**
+ **請求：**
 
-   ```http
-   POST /oauth/token
-   Host: authorization-server.com
-   Content-Type: application/x-www-form-urlencoded
+ ```http
+ POST /oauth/token
+ Host: authorization-server.com
+ Content-Type: application/x-www-form-urlencoded
 
-   grant_type=authorization_code&
-   code=AUTH_CODE&
-   redirect_uri=REDIRECT_URI&
-   client_id=CLIENT_ID&
-   client_secret=CLIENT_SECRET
-   ```
+ grant_type=authorization_code&
+ code=AUTH_CODE&
+ redirect_uri=REDIRECT_URI&
+ client_id=CLIENT_ID&
+ client_secret=CLIENT_SECRET
+ ```
 
-   **响应**：以[calendar_sample.py](./calendar_sample.md)連線所得的`calendar.dat`內容為例
+ **回應**：以[calendar_sample.py](./calendar_sample.md)連線所得的`calendar.dat`內容為例
 
    ```json
    {

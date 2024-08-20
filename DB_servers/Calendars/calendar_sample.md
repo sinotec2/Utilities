@@ -3,7 +3,7 @@ layout: default
 title:  calendar_sample.py
 parent: Calendars
 grand_parent: DB_servers
-last_modified_date: 2024-08-19 17:48:01
+last_modified_date: 2024-08-20 10:53:04
 tags: calendar
 ---
 
@@ -23,6 +23,12 @@ tags: calendar
 ---
 
 ## 背景
+
+### 來源
+
+- 這支程式基本上來自於[calendarList().list](https://developers.google.com/calendar/api/v3/reference/calendarList/list?hl=zh-tw)
+
+### 引數
 
 ```bash
 kuang@eng06 /nas2/kuang/MyPrograms/GoogleCalendarAPI
@@ -64,3 +70,8 @@ optional arguments:
 - 當程式執行找不到**本地**的瀏覽器進行Oauth2認證，會出現`noauth_local_webserver`的建議，並出現一長串網址。
 - 將網址輸入到任何瀏覽器，是可以進行認證，但認證結果無法回到程式。
 
+## calendar.dat
+
+- 這個輸入檔案如果不存在，程式會進行Oauth2驗證，取得google calendar的訪問令牌。
+- 如果存在，會利用其中的`"refresh_token"`來通過驗證，即使`"access_token"`失效(一般google token伺服器給的時限是3599秒)，詳情見[自動登錄與令牌們的管理](./OAuth2Tokens.md)
+- `calendar.dat`的內容詳見[如何取得 Refresh Token](./OAuth2Tokens.md#如何取得-refresh-token)
