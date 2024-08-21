@@ -102,6 +102,38 @@ mysql -u root -p
 
 請注意，這些步驟可能會因為您的 Linux 發行版和 MySQL 版本的不同而有所變化。在進行操作時，請確保您已經根據您的具體情況進行了適當的調整。希望這些資訊對您有所幫助！
 
+```bash
+$ mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3674967
+Server version: 5.7.44 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE USER 'superset'@'%' IDENTIFIED BY 'superset';
+ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+mysql> CREATE USER 'superset'@'%' IDENTIFIED BY 'yckuang4139';
+ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+mysql> CREATE USER 'superset'@'%' IDENTIFIED BY 'ycKuang@4139'
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON your_database.* TO 'superset'@'%';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+
+```
 來源: 與 Bing 的交談， 2024/1/17
 (1) Linux 安装Mysql 详细教程（图文教程） - [CSDN博客](https://blog.csdn.net/bai_shuang/article/details/122939884).
 (2) 实战篇：手把手教你Linux安装Mysql（细致入微） - [腾讯云](https://cloud.tencent.com/developer/article/1863236).
