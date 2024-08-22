@@ -11,7 +11,7 @@ from anthropic import Anthropic
 
 cmd = "grep title /nas2/VuePressSrc/Sup.calendars/zh/E1/*md | grep -v READ | cut -d':' -f3"
 cats = subprocess.check_output(cmd, shell=True).decode('utf8').strip('\n')
-ICTcalendar_id = "25ae42ff6cf09e84f742882600ca7da7374bc357b97d9c8bffad8c3dcfa226d6@group.calendar.google.com"
+ICTcalendar_id = "***"
 id_dpt = {ICTcalendar_id: 'ICT'}
 
 def main(ndays, calendar_id):
