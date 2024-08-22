@@ -1,6 +1,30 @@
+---
+layout: default
+title:  rd_cal程式說明
+parent: Calendars
+grand_parent: DB_servers
+last_modified_date: 2024-08-22 14:52:11
+tags: calendar
+---
 
+# 階層讀取Google日曆
 
-### 程式概述
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
+
+###程式概述
 
 這個 Python 程式的主要功能是從 Google Calendar API 擷取事件資料，並處理這些資料以便進行進一步的分析或儲存。程式會針對特定時間範圍內的日曆事件進行查詢，將結果轉換為一個 `DataFrame`，並最終將這些資料輸出為 CSV 檔案。
 
@@ -12,21 +36,21 @@
 4. **`oauth2client`, `googleapiclient`**：Google API 認證與服務操作的工具。
 5. **`anthropic`**：用於對事件摘要進行分類的 NLP 工具。
 
-### 程式詳細說明
 
-#### 1. 指令與參數
+### 1. 指令與參數
 
 ```python
 cmd = "grep title /nas2/VuePressSrc/Sup.calendars/zh/E1/*md | grep -v READ | cut -d':' -f3"
 cats = subprocess.check_output(cmd, shell=True).decode('utf8').strip('\n')
-ICTcalendar_id = "25ae42ff6cf09e84f742882600ca7da7374bc357b97d9c8bffad8c3dcfa226d6@group.calendar.google.com"
+ICTcalendar_id = "***@group.calendar.google.com"
 id_dpt = {ICTcalendar_id: 'ICT'}
 ```
 
 - 這段程式碼使用 Shell 指令從特定路徑中提取檔案標題，並將其轉換為字串形式儲存在變數 `cats` 中。
+    -  cats將會被語言模型用在事件的分類，新增或減少該等檔案將會影響分類方式。
 - `ICTcalendar_id` 是特定 Google Calendar 的 ID，並被用於識別這些日曆的資料。
 
-#### 2. 主函數 `main`
+### 2. 主函數 `main`
 
 ```python
 def main(ndays, calendar_id):
@@ -73,13 +97,13 @@ def main(ndays, calendar_id):
   - 查詢日曆中的事件，並將其轉換為資料框 (DataFrame)。
   - 如果事件包含重複發生 (recurrence)，則進行特別處理。
 
-#### 3. 事件處理
+### 3. 事件處理
 
 - **`process_event(event, future_dates)`**：根據事件的類型（單次或每週重複）進行處理。
 - **`out_weekly(start_dict, end_dict, future_dates)`**：針對每週重複的事件，返回一個日期和事件的列表。
 - **`out_single(start_dict, end_dict)`**：處理單次事件，返回事件的時間和摘要。
 
-#### 4. 分類函數 `summ_cate`
+### 4. 分類函數 `summ_cate`
 
 ```python
 def summ_cate(summ):
@@ -94,8 +118,9 @@ def summ_cate(summ):
 ```
 
 - **功能**：使用 NLP 模型對事件摘要進行自動分類，將其歸類到先前提取的類別中。
+- cats由主程式讀取既有.md的主題而來，新增或減少該等檔案將會影響分類方式。
 
-#### 5. 主程式入口
+### 5. 主程式入口
 
 ```python
 if __name__ == "__main__":
