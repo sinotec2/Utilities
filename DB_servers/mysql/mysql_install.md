@@ -349,3 +349,19 @@ FLUSH PRIVILEGES;
 
 請根據你的實際需求和安全性要求進行調整。 建立使用者並授予權限是資料庫安全的一個重要方面，確保僅為使用者提供他們實際需要的最小權限。
 
+## 中文字型編碼
+
+- MySQL 是支援中文字元的，但需要確保正確配置字元集和排序規則。
+- 要在 MySQL 中使用中文，通常會使用 utf8mb4 字符集，因為它支援所有 Unicode 字符，包括中文。
+- 以下是設定步驟：
+
+1. 以root身分登入、選擇需要中文化的資料庫。
+2. 設定資料庫和表格的字元集： 在建立資料庫和表格時，可以指定字元集，例如：
+
+```sql
+CREATE DATABASE db_name CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE TABLE table_name (column_name VARCHAR(255)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+3. 設定連接字元集： 連接到 MySQL 時，請確保使用 utf8mb4 字元集。例如，在連接字串中指定字元集:```SET NAMES 'utf8mb4';```
+4. 確保客戶端工具支援： 使用的客戶端工具（例如 MySQL Workbench、phpMyAdmin 等）也需要支援並正確配置為使用 utf8mb4 字元集。
