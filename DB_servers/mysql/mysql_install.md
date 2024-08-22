@@ -365,3 +365,4 @@ CREATE TABLE table_name (column_name VARCHAR(255)) CHARACTER SET utf8mb4 COLLATE
 
 3. 設定連接字元集： 連接到 MySQL 時，請確保使用 utf8mb4 字元集。例如，在連接字串中指定字元集:```SET NAMES 'utf8mb4';```
 4. 確保客戶端工具支援： 使用的客戶端工具（例如 MySQL Workbench、phpMyAdmin 等）也需要支援並正確配置為使用 utf8mb4 字元集。
+
