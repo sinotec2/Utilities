@@ -4,7 +4,6 @@ title: Prompting
 nav_order: 99
 has_children: true
 parent: Marking Languages
-permalink: /MarkLang/
 last_modified_date: 2024-08-25 11:24:36
 tags: md
 ---
