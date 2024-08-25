@@ -4,7 +4,6 @@ title: Markdown to PDF
 nav_order: 99
 has_children: true
 parent: Marking Languages
-permalink: /MarkLang/
 last_modified_date: 2024-07-06 11:24:36
 tags: md
 ---
