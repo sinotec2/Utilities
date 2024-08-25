@@ -1,4 +1,27 @@
+---
+layout: default
+title: Prompting
+nav_order: 99
+has_children: true
+parent: Marking Languages
+permalink: /MarkLang/
+last_modified_date: 2024-08-25 11:24:36
+tags: md
+---
 
+# 文件的回顧
+
+## Table of contents
+
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## 背景
+     
 **PRISMA (系統性綜述與統合分析的偏好報告項目)** 是一套廣泛使用的指南，旨在提升系統性綜述（systematic reviews）和統合分析（meta-analyses）的報告質量。PRISMA 最早於 2009 年推出，並於 2020 年進行更新（PRISMA 2020），提供了一份檢查清單和流程圖，幫助作者透明地報告為何及如何進行系統性綜述，以及得到的結果。以下是對 PRISMA 的簡介：
 
 ### PRISMA 的概述
