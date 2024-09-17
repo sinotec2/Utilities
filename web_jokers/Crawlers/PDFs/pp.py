@@ -1,7 +1,7 @@
 import PyPDF2
 import sys 
 def dots(l):
-    tdic={'':'.','(':')','（':'）'}
+    tdic={'':'.','(':')','（':'）'}https://github.com/sinotec2/Utilities/blob/main/web_jokers/Crawlers/PDFs/pp.py
     for p in ['','(','(']:
         for i in range(1,11):
             a=p+str(i)+tdic[p]
