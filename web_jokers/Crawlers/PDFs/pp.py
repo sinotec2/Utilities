@@ -40,7 +40,8 @@ fnames=[
 "D:\E\My Documents\EIAs\電廠\GAS_EIA\(1070721A) 森霸電力第二期燃氣複循環發電計畫環境影響說明書\C07.pdf",
 "D:\E\My Documents\EIAs\電廠\GAS_EIA\(1070731A) 台中發電廠新建燃氣機組計畫環境影響說明書\C07.pdf",
 "D:\E\My Documents\EIAs\電廠\GAS_EIA\(1101051A) 中佳燃氣複循環電廠興建計畫環境影響說明書\C07.pdf",
-"D:\E\My Documents\EIAs\電廠\GAS_EIA\(1110461A) 大林發電廠燃氣機組更新改建計畫環境影響說明書\C07.pdf",
+#"D:\E\My Documents\EIAs\電廠\GAS_EIA\(1110461A) 大林發電廠燃氣機組更新改建計畫環境影響說明書\C07.pdf",
+"C07.pdf",
 ]
 fname=fnames[int(sys.argv[1])]
 pdfFileObj = open(fname, 'rb')
