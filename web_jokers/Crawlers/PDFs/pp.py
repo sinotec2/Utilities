@@ -59,7 +59,7 @@ lines=a.split('\n')
 outlines=[l.strip().split(':')[0].split('：')[0] for l in lines]
 outlines=[l for l in outlines if (dots(l) or CNnum(l) or ENnum(l))  and len(l)<60]# and FloatNotInLine(l)]
 outlines=[l for l in outlines if '-' not in l and '所示' not in l]
-fname=fname.replace('.pdf','outline.txt')
+fname=fname.replace('.pdf','outline.txt').replace('.PDF','outline.txt')
 with open(fname,'w', encoding='utf-8') as f:
     for i in outlines:
         f.write(i+'\n')
