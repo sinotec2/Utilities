@@ -4043,7 +4043,7 @@ sudo ifconfig ib0 up
 ## User
 怎麼知道ldap伺服器有沒有在運作?
 ### ChatGPT
-您可以使用 ldapsearch 命令來測試 LDAP 伺服器的連接。這是一個基本的 LDAP 搜尋命令，它將嘗試連接到 LDAP 伺服器並執行一個簡單的搜尋操作。以下是示例：
+您可以使用 earch 命令來測試 LDAP 伺服器的連接。這是一個基本的 LDAP 搜尋命令，它將嘗試連接到 LDAP 伺服器並執行一個簡單的搜尋操作。以下是示例：
 
 ```bash
 
