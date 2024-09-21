@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 地端jupyterhub伺服器
+title: 地端JupyterHub伺服器
 nav_order: 99
 has_children: true
 permalink: /web_jokers/JupyerHub
@@ -8,7 +8,7 @@ last_modified_date: 2024-09-21 13:31:12
 tags: Jpyter
 ---
 
-# 建立/應用地端jupyterhub伺服器
+# 建立/應用地端JupyterHub伺服器
 
 
 ## Table of contents
@@ -45,3 +45,4 @@ tags: Jpyter
 - 使用遠端計算資源：包括CPU/GPU算力、記憶體、暫存空間等等。
 - 小眾的共同作業區。發展中的計畫方案、暫時性的工作成果。隨作隨教、即時指導。
 - 有效了解、紀錄同仁的發展與應用的需要與過程。
+- 同仁發展的程式、服務可以用插件形式提供其他同仁使用，程式碼可以有良好的保護不致洩漏。
