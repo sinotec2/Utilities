@@ -10,7 +10,6 @@ tags: Jpyter
 
 # 建立/應用地端JupyterHub伺服器
 
-
 ## Table of contents
 
 {: .no_toc .text-delta }
@@ -29,6 +28,7 @@ tags: Jpyter
 - 不需要學習複雜的作業環境指令、顯示設定、檔案與目錄系統。
 - 可以同時滿足新手(習慣使用滑鼠)與老手(習慣使用鍵盤)的單一IDE。
 - 跨平台(MS WIN/Linux/macOS/Mobile)分享python經驗
+- 其他IDE選項如PyCharm, VSCode, IPython等等。
 
 ## 地端 Jupyter 的必要性
 
@@ -36,6 +36,7 @@ tags: Jpyter
 
 - 公司內部、新進人員教育訓練。
 - 需要讀取/分享的檔案、程式具有機敏性，不適合流出到公眾領域。
+- 網際網路公開免費資源包括[jupyter.org](https://jupyter.org/try-jupyter/lab/)、[mybinder.org](https://mybinder.org/)
 
 ## 地端 JupyterHub 伺服器
 
