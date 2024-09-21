@@ -32,7 +32,10 @@ tags: Jupyter notebook
 
 - [kiwi lee(2020)@Medium](https://sean22492249.medium.com/skiwitch-talk-code-creates-the-world-2-f848557997e6)
   - 作者介紹Jupyter的特點很好記：Debug Fast/Display Easy/Extension Huge/Support Good
-  - 安裝：這是在個人電腦上的程序，JupyterHub免安裝、免啟動，直接用瀏覽器開啟伺服器就好。
+  - 安裝：這是在個人電腦上的程序， JupyterHub 免安裝、免啟動，直接用瀏覽器開啟伺服器就好。
+  - Jupyter 的檔案操作:個人電腦版的檔案清單是使用者看到的第一個畫面，會有起始目錄下所有的檔案。 JupyterHub 基本上是從0開始的虛擬機，沒有任何檔案。檔案操作詳[檔案傳送](#檔案傳送)。
+  - [Jupyter 的編寫](https://sean22492249.medium.com/skiwitch-talk-code-creates-the-world-2-f848557997e6)：請詳讀此段。
+- 如需練習，請開啟[outliner.ipynb@mybinder.org](https://mybinder.org/v2/gh/sinotec2/outliner.git/HEAD?filepath=outliner.ipynb) &rightarrow; [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sinotec2/outliner.git/HEAD?filepath=outliner.ipynb)
 
 ## 重要快速鍵
 
@@ -96,4 +99,11 @@ tags: Jupyter notebook
 
 ### 使用者環境的建置與啟用
 
-- 
+- 基本上 JupyterHub 是個空白的虛擬機，不提供使用者有更改作業環境的權限，其python版本與程式庫也不允許使用者進行全域範圍的改變。只能就使用者目錄下的資源來發展。
+- 新創作業環境
+  - 終端機或Jupyter notebook 任意cell執行 `python -m create myenv`。
+  - 會新創一個myenv的目錄、其下將可以安裝所有需要的程式庫。
+- 啟動環境
+  - 指令：`/bin/sh myenv/bin/activate`
+- 安裝程式庫
+  - 指令：`pip install -r requirements.txt`或逐一安裝`pip install numpy pandas ...`
