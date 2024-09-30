@@ -1,4 +1,30 @@
+---
+layout: default
+title:  母子公司網路安全
+parent: Security And Authentication
+grand_parent: Web Jokers
+last_modified_date: 2023-06-12 08:56:43
+tags: OAuth
+---
 
+# 母子公司網路安全
+
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
+
+> 現代防火牆的設置經驗中、對於母公司、子公司人員可能互相調度的情況、請分析檔案管理系統、電子郵件伺服器等等系統的考量，如何滿足同仁以筆電從公司外存取檔案的需求？
+## Flask t
 
 在現代企業環境中，母公司與子公司之間的人員調度經常涉及跨網路、跨區域的訪問需求，尤其是在遠端工作越來越普遍的情況下，如何讓員工從公司外部安全且有效地存取關鍵系統，如檔案管理系統、電子郵件伺服器等，成為核心挑戰。以下將從網路安全、存取控制和便捷性三個角度進行分析，並提出相應的解決方案。
 
