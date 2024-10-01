@@ -1,11 +1,11 @@
 ---
 layout: default
-title:  docker lunchers
-parent:   docker system
+title: HPA in k8s 
+parent: Kubernetes
 grand_parent: Parallel Computation
-last_modified_date: 2024-06-01 17:41:56
+last_modified_date: 2024-010-01 17:41:56
 ---
-# docker lunchers
+# Horizontal  Pods Autoscaling 
 {: .no_toc }
 
 <details open markdown="block">
