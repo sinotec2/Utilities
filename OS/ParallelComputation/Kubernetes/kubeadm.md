@@ -1,3 +1,26 @@
+---
+layout: default
+title:  docker lunchers
+parent:   docker system
+grand_parent: Parallel Computation
+last_modified_date: 2024-06-01 17:41:56
+---
+# docker lunchers
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
+
 
 
 是的，Kubernetes 支持根據資源的 **百分比** 來配置 Pod 的資源需求和限制，而不是只使用固定的 CPU 和內存數量。這意味著你可以在 **kubeadm** 部署的叢集中配置資源限制，讓每個 Pod 根據系統資源的相對百分比來進行分配，而不需要刻意手動分配到具體的節點。
