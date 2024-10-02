@@ -5,7 +5,9 @@ parent: Kubernetes
 grand_parent: Parallel Computation
 last_modified_date: 2024-10-02 10:19:38
 ---
+
 # Horizontal  Pods Autoscaling 
+
 {: .no_toc }
 
 <details open markdown="block">
