@@ -1,3 +1,27 @@
+---
+layout: default
+title:  minikube關閉ssh登入事件
+parent: 地端JupyterHub伺服器
+grand_parent: Web Jokers
+last_modified_date: 2024-10-02 17:59:29
+---
+
+# minikube關閉ssh登入事件
+
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
 
 
 Minikube 本身通常不会直接关闭或影响主机的端口 22，但它可能在某些场景下影响网络配置，间接导致 SSH 连接问题，尤其是当它修改网络接口、创建虚拟网络或与 Docker 的网络配置发生冲突时。这可能会导致你无法通过 SSH 登录主机。

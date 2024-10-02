@@ -1,15 +1,14 @@
 ---
 layout: default
-title: JupyterHub
+title: zero to JupyterHub
 nav_order: 99
-has_children: true
-parent: Languages
-permalink: /Languages/JupyterHub
+parent: 地端JupyterHub伺服器
+grand_parent: Web Jokers
 last_modified_date: 2024-09-16 14:30:21
 tags: operation_systems
 ---
 
-# JupyterHub
+# zero to JupyterHub
 
 ## Table of contents
 

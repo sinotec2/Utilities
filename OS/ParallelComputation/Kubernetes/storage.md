@@ -22,6 +22,10 @@ last_modified_date: 2024-10-02 10:19:38
 
 ## 背景
 
+- [官網](https://kubernetes.io/zh-cn/docs/concepts/storage/)
+
+## 名詞解釋
+
 > k8s儲存設備中所謂的standard是什麼意思？k8s有哪些儲存方案？生產階段佈置的考量有哪些因素？
 
 在 Kubernetes 中，**`standard`** 是一種預設的 **StorageClass** 名稱，通常用來指定叢集中默認的存儲設備。當你創建 **Persistent Volume Claim (PVC)** 而沒有明確指定 **StorageClass** 時，Kubernetes 就會自動將這些 PVC 綁定到被標記為 `standard` 的存儲類別上。
@@ -36,30 +40,33 @@ Kubernetes 提供了多種存儲解決方案，支持不同的使用場景和基
    - **限制**: 數據無法跨節點共享；節點重啟後數據可能丟失。
 
 2. **NFS（Network File System）**  
+   - nfs 卷能將 NFS（網路檔案系統）掛載到你的 Pod 中。不像 emptyDir 那樣會在刪除 Pod 的同時也會被刪除，nfs 卷的內容在刪除 Pod 時會被保存，卷只是被卸載。這意味著 nfs 卷可以被預先填充資料，並且這些資料可以在 Pod 之間共享。
    - **描述**: 通過網絡共享文件系統，允許多個節點讀寫同一份數據。
    - **使用場景**: 用於需要跨節點共享數據的場景，如用戶上傳的數據或分析結果。
    - **優勢**: 跨節點數據共享，擴展性高。
    - **限制**: 性能取決於網絡速度和 NFS 服務器的性能。
+   - [as pod範例](https://kubernetes.io/docs/concepts/storage/volumes/#nfs)-可隨helm chart自動掛載、但不能在 Pod spec 中指定 NFS 掛載選項。可以選擇設置伺服器端的掛載選項，或者使用 /etc/nfsmount.conf。此外，還可以通過允許設置掛載選項的持久卷掛載 NFS 卷。
+   - [as pv/pvc範例](https://github.com/kubernetes/examples/tree/master/staging/volumes/nfs)
 
-3. **Ceph**  
+3. **Ceph**  (removed)
    - **描述**: 分布式存儲系統，支持塊存儲、對象存儲和文件系統存儲。
    - **使用場景**: 大型叢集的分布式文件系統，適合需要高可用性、高性能和數據持久化的場景。
    - **優勢**: 分布式、可擴展，支持數據冗餘和自動修復。
    - **限制**: 需要額外的硬件資源和管理工作，複雜性高。
 
-4. **AWS EBS (Elastic Block Store)**  
+4. **AWS EBS (Elastic Block Store)**  (deprecated)
    - **描述**: AWS 提供的塊存儲服務，適用於在 AWS 上運行的 Kubernetes 叢集。
    - **使用場景**: AWS 環境中的工作負載，適合需要高性能塊存儲的應用。
    - **優勢**: 與 AWS 服務緊密集成，性能穩定。
    - **限制**: 只能綁定到一個節點，跨區域操作較複雜。
 
-5. **Azure Disk / Azure Files**  
+5. **Azure Disk / Azure Files**   (deprecated)
    - **描述**: Azure 提供的塊存儲和文件存儲，適合運行在 Azure 上的 Kubernetes 叢集。
    - **使用場景**: 需要塊存儲的應用（Azure Disk），或跨節點共享文件的應用（Azure Files）。
    - **優勢**: 與 Azure 服務緊密集成，適用於各種 Azure 環境。
    - **限制**: Azure Disk 只能掛載到一個節點，Azure Files 性能相對較低。
 
-6. **GCE Persistent Disk (Google Cloud Platform)**  
+6. **GCE Persistent Disk (Google Cloud Platform)**  (deprecated)  
    - **描述**: Google Cloud 提供的永久性磁盤存儲。
    - **使用場景**: 需要在 Google Cloud 中持久化數據的 Kubernetes 應用。
    - **優勢**: Google Cloud 原生支持，高效且擴展性好。
@@ -229,7 +236,7 @@ spec:
   capacity:
     storage: 500Gi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteMany 
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /path/to/high-speed-nas
@@ -297,7 +304,7 @@ spec:
 
 這樣的配置可以最大化利用資源，根據性能需求分配存儲方案。
 
-## mount設定
+## 掛載設定
 
 > helm chart如何設定使用者登入目錄為快速NAS？又如何自動為使用者mount慢速NAS成為儲存目錄？
 
@@ -406,6 +413,7 @@ spec:
 在 Kubernetes 叢集中，如果你想為每個使用者自動創建一個特定的目錄（如 `/mnt/storage/username`），且使用者本身無法在 NFS 共享目錄中創建目錄，通常可以通過以下方式處理：
 
 ### 1. **預先創建目錄（手動或自動腳本）**
+
 你可以通過以下方式在 NAS 上的 `/mnt/storage` 目錄中預先為每個使用者創建對應的子目錄：
 
 - **手動創建**：對於少量用戶，可以手動在 NFS 伺服器上創建 `/mnt/storage/username` 這樣的目錄結構，並設置正確的權限。
@@ -438,9 +446,11 @@ done
 這樣做可以確保每個用戶在 NFS 共享目錄下都有自己的存儲目錄，並且只有該用戶能夠訪問。
 
 ### 2. **動態創建卷與目錄**
+
 你也可以通過 **動態卷管理** 的方式來自動為每個使用者創建專屬的 PVC，這樣系統會自動創建和管理對應的目錄。這需要更為複雜的配置，通常會涉及到一些動態存儲控制器或外部存儲插件來處理這樣的需求。
 
 ### 3. **配置卷初始化腳本**
+
 在 JupyterHub 的 Helm Chart 中，你可以使用 `initContainers` 在每個用戶的容器啟動時運行一個初始化容器，來為使用者創建專屬目錄。該初始化容器可以有足夠的權限在 `/mnt/storage` 下創建用戶目錄。
 
 `config.yaml` 中的示例配置：
@@ -468,5 +478,25 @@ singleuser:
 這樣，每次使用者容器啟動時，會先通過 `initContainer` 自動創建對應的使用者目錄，並設置權限。
 
 ### 總結
+
 - **手動或腳本創建**：適合靜態環境，可以為每個用戶預先創建目錄。
 - **`initContainer` 動態創建**：適合需要自動化的場景，能夠在使用者容器啟動時自動創建和分配目錄。
+
+## 應用場景
+
+### 2個NAS的分工
+
+- 慢速NFS
+  - 分派作業：將學員所需的檔案放置慢速NFS上，與程式內設置連結、執行作業。
+  - 公用環境：學員啟動公用、共有環境進行作業，來保障作業結果的一致性。
+  - 提交工作成果：將慢速NFS之個人目錄連結到快速NFS的家目錄
+- 快速NFS
+  - 重複累加檔案、
+  - 快速產生檔案、目錄
+  - 其他頻繁IO
+
+### nas 與個人電腦的檔案交換
+
+- 不開放samba
+- 遠程：透過LDAP遠端登入、適用LDAP群組與角色管理。
+

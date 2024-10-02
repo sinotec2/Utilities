@@ -3,7 +3,8 @@ layout: default
 title: 地端JupyterHub伺服器
 nav_order: 99
 has_children: true
-permalink: /web_jokers/JupyerHub
+parent: Web Jokers
+permalink: /web_jokers/JupyerHub/
 last_modified_date: 2024-09-21 13:31:12
 tags: Jpyter
 ---
