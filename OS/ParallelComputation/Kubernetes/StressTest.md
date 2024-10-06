@@ -76,13 +76,15 @@ parse_args() 是一個用於解析命令列引數的函數，該函數依賴 Pyt
 
 	•	模擬 200 個用戶，分 20 個批次創建伺服器：
 
+```bash
 python hub-stress-test.py --endpoint http://localhost:8000/hub/api --token <your-token> stress-test --count 200 --batch-size 20
-
+```
 
 	•	進行乾跑模式，模擬活動壓力測試：
 
+```bash
 python hub-stress-test.py --dry-run activity-stress-test --count 100 --workers 10
-
+```
 
 ### workers 與核心數
 
@@ -95,15 +97,13 @@ python hub-stress-test.py --dry-run activity-stress-test --count 100 --workers 1
 
 範例設置：
 
-	•	CPU-bound 任務：如果每個 worker 都在進行計算密集型工作，例如數據處理或模擬，那麼在 15 核心的環境中，設置 15 個 workers 是合理的。超過這個數量會導致性能下降。
-
+```bash
+# CPU-bound 任務：如果每個 worker 都在進行計算密集型工作，例如數據處理或模擬，那麼在 15 核心的環境中，設置 15 個 workers 是合理的。超過這個數量會導致性能下降。
 python hub-stress-test.py --count 100 --workers 15
 
-
-	•	I/O-bound 任務：如果每個 worker 都是在進行網路請求或等待外部 API 響應，那麼你可以設置 2 倍或更多的 workers。例如，可以設置 30-40 個 workers 來充分利用 I/O 等待時間。
-
+# I/O-bound 任務：如果每個 worker 都是在進行網路請求或等待外部 API 響應，那麼你可以設置 2 倍或更多的 workers。例如，可以設置 30-40 個 workers 來充分利用 I/O 等待時間。
 python hub-stress-test.py --count 100 --workers 30
-
+```
 
 
 如何調整 --workers：
@@ -488,5 +488,485 @@ wait_for_servers_to_stop(stopped=stopped_servers, endpoint=endpoint, session=ses
 
 for user, is_stopped in stopped_servers.items():
     print(f'User {user} server fully stopped: {is_stopped}')
+```
 
 在這個範例中，只有 user1 和 user2 會被等待完全停止，而 user3 由於停止請求未成功發送，因此不會被進一步檢查。
+
+## 刪除測試使用者
+
+函式說明：delete_users_after_stopping_servers(stopped, endpoint, session)
+
+此函式的目的是在伺服器停止後，刪除對應的使用者帳號。
+
+輸入參數：
+
+	•	stopped：一個字典，鍵是使用者名稱，值是布林值，表示伺服器是否已經成功停止。只有伺服器停止的使用者才會被嘗試刪除。
+	•	endpoint：JupyterHub API 的基本 URL，用於發送 API 請求以刪除使用者。
+	•	session：已配置的 requests.Session，用於與 JupyterHub API 通信。
+
+功能詳解：
+
+	1.	遍歷 stopped 字典：
+	•	逐一處理每個使用者，檢查伺服器是否已成功停止（was_stopped 為 True 的情況）。
+	•	對於每個使用者，函式會呼叫 JupyterHub API 的 /users/{username} 接口來刪除該使用者。
+	2.	API 刪除請求：
+	•	若刪除成功，函式會在日誌中記錄該使用者已刪除的訊息。
+	•	如果 API 返回 404 狀態碼，表示該使用者已經被刪除過，函式會記錄相關訊息。
+	•	若出現其他錯誤（如非 404 的失敗狀態碼），函式會記錄警告，並將 success 標誌設為 False，表示刪除過程中出現問題。
+	3.	返回值：
+	•	True：如果所有使用者成功刪除。
+	•	False：如果有任何使用者未能成功刪除。
+	4.	@timeit 裝飾器：
+	•	這個裝飾器會記錄函式執行的總時間，並將結果記錄在日誌中，方便進行效能追蹤。
+
+輸出：
+
+	•	返回布林值表示所有使用者是否成功刪除。若成功，返回 True；若有失敗的刪除操作，返回 False。
+
+應用場景中的注意事項：
+
+	1.	伺服器與使用者的依賴性：
+	•	使用者的刪除操作依賴於伺服器是否已經成功停止。若伺服器未停止，則該使用者不會被刪除。因此，必須確保伺服器先前的停止請求順利完成。
+	2.	API 請求錯誤處理：
+	•	如果在刪除使用者時遇到其他錯誤（例如網絡問題或 API 服務故障），函式會記錄相關錯誤資訊，但會繼續處理後續的使用者，並最終返回 False 以指出問題。
+	3.	批量操作的可擴展性：
+	•	如果刪除大量使用者，應確保 API 有適當的資源和容錯機制來處理這些請求。若伺服器承載壓力過大，可能需要調整刪除批量的策略。
+
+範例：
+
+```python
+# 刪除伺服器已停止的使用者
+session = get_session(token='your_token_here')
+endpoint = 'https://your-jupyterhub-url/hub/api'
+stopped_servers = {'user1': True, 'user2': True, 'user3': False}  # 只有成功停止伺服器的使用者會被刪除
+delete_success = delete_users_after_stopping_servers(stopped=stopped_servers, endpoint=endpoint, session=session)
+
+if delete_success:
+    print("All users were successfully deleted.")
+else:
+    print("Some users could not be deleted.")
+```
+
+在這個範例中，只有伺服器已成功停止的 user1 和 user2 會被嘗試刪除，user3 不會被處理。
+
+## 異步刪除多個使用者
+
+這個函式 delete_users 的目的是批量刪除使用者帳號，並確保使用者伺服器在刪除帳號之前已經停止。這是一個分批處理的過程，確保異步操作得以完成。
+
+函式說明：delete_users(usernames, endpoint, session, batch_size=10)
+
+輸入參數：
+
+	•	usernames：一個包含使用者名稱的列表，這些使用者的帳號將會被刪除。
+	•	endpoint：JupyterHub API 的基本 URL，用於發送 API 請求。
+	•	session：requests.Session 實例，用於與 JupyterHub API 通信。
+	•	batch_size（預設為 10）：每次處理的批量大小，用於限制同時停止伺服器的數量。
+
+功能詳解：
+
+	1.	停止伺服器：
+	•	函式首先調用 stop_servers，以批量的方式停止所有使用者的伺服器。
+	•	這一過程是異步的，因此批量處理可以有效提高停止伺服器的速度。
+	2.	等待伺服器停止：
+	•	當伺服器的停止請求發送後，wait_for_servers_to_stop 會等待伺服器真正停止。此時會輪詢伺服器狀態，直到所有伺服器都成功停止或超時。
+	3.	刪除使用者帳號：
+	•	當所有伺服器停止後，函式會調用 delete_users_after_stopping_servers，刪除對應的使用者帳號。
+	•	刪除成功與否會根據 API 的回應進行記錄，並返回整體結果。
+	4.	回傳結果：
+	•	最終返回布林值，表示所有使用者是否成功刪除。
+	5.	@timeit 裝飾器：
+	•	計時整個批量操作的過程，並記錄執行所需的時間，以便後續分析效能。
+
+具體步驟：
+
+	1.	批量停止伺服器：透過 stop_servers 批量停止伺服器，這步驟為異步操作，批次大小由 batch_size 參數控制。
+	2.	等待伺服器停止：當所有伺服器收到停止請求後，函式會輪詢狀態並等待伺服器完全停止。
+	3.	刪除使用者：確保伺服器完全停止後，最後批量刪除使用者。
+
+範例：
+
+```python
+# 批量刪除使用者帳號
+session = get_session(token='your_token_here')
+endpoint = 'https://your-jupyterhub-url/hub/api'
+usernames = ['user1', 'user2', 'user3']
+
+delete_success = delete_users(usernames=usernames, endpoint=endpoint, session=session, batch_size=5)
+
+if delete_success:
+    print("All users were successfully deleted.")
+else:
+    print("Some users could not be deleted.")
+```
+
+在這個範例中，函式會首先停止 user1、user2 和 user3 的伺服器，然後等待伺服器完全停止，最後刪除這些使用者。如果操作成功，返回 True；如果有任何錯誤，返回 False。
+
+注意事項：
+
+	1.	批量大小 (batch_size)：
+	•	批量大小會影響操作的併發性，過大的批次可能會導致伺服器壓力過大，而過小的批次則可能影響操作效率。應根據實際伺服器承載能力來設置合適的 batch_size。
+	2.	伺服器超時：
+	•	如果伺服器在停止過程中出現異常，wait_for_servers_to_stop 會輪詢一段時間後超時並記錄錯誤。因此需設置合理的超時策略，避免過長等待。
+	3.	錯誤處理：
+	•	delete_users_after_stopping_servers 會記錄每個使用者的刪除結果，並確保即使部分操作失敗，整個批量過程不會中斷。
+
+## 批次創建測試使用者
+
+這個函式 create_users 旨在批量創建使用者，並且每次批次操作可以創建多個使用者，這樣可以提高效率。當遇到創建失敗的情況時，函式會嘗試刪除已創建的使用者，並記錄錯誤。讓我們來詳細分析這個函式：
+
+函式說明：create_users(count, batch_size, endpoint, session, existing_users=[])
+
+輸入參數：
+
+	•	count：需要創建的使用者數量。
+	•	batch_size：每批創建的使用者數量，用於分批發送請求，避免一次創建過多的使用者導致伺服器壓力過大。
+	•	endpoint：JupyterHub API 的基本 URL，用於發送 API 請求。
+	•	session：requests.Session 實例，用於與 JupyterHub API 通信。
+	•	existing_users（可選）：已存在的使用者清單。如果是重新運行該腳本，可以通過這個參數來避免重複創建已存在的使用者。
+
+功能詳解：
+
+	1.	設置超時 (timeout)：
+	•	函式計算出操作的超時時間，將其設置為批量大小和預設超時值的最大值，確保批次操作有足夠的時間完成。
+	2.	批量創建使用者：
+	•	透過批量 POST 請求到 /users API 端點，創建一組新的使用者帳號。
+	•	每次請求會創建一個使用者名列表，並將該列表作為請求的 JSON 負載。
+	3.	錯誤處理：
+	•	如果創建使用者的請求失敗，函式會嘗試刪除該批次已創建的使用者，並記錄錯誤日誌。
+	•	當創建失敗時，會引發一個異常，從而終止函式執行。
+	4.	日誌記錄：
+	•	在批次操作中，會記錄成功創建的使用者，方便日後追蹤。
+	•	若操作失敗，會詳細記錄失敗的使用者及 API 響應的狀態碼和內容。
+	5.	返回值：
+	•	函式會返回一個包含所有已創建使用者列表的列表，供後續操作使用，例如創建伺服器等。
+
+範例：
+
+```python
+# 使用示例
+session = get_session(token='your_token_here')
+endpoint = 'https://your-jupyterhub-url/hub/api'
+users_to_create = 100
+
+created_users = create_users(count=users_to_create, batch_size=10, endpoint=endpoint, session=session)
+
+print("Created users:", created_users)
+```
+
+這個範例會創建 100 個使用者，每次批量創建 10 個使用者。函式會根據批次處理逐步創建使用者，並返回所有已創建的使用者。
+
+注意事項：
+
+	1.	批量大小 (batch_size)：
+	•	批量大小會影響 API 請求的併發性。過大的批次可能會導致伺服器負載過高，而過小的批次則可能影響效率。根據伺服器的承載能力設置合適的 batch_size。
+	2.	既有使用者處理：
+	•	若重複執行腳本，可以使用 existing_users 參數來避免重複創建已存在的使用者。
+	3.	錯誤處理和清理：
+	•	當創建使用者失敗時，會嘗試刪除該批次中已成功創建的使用者，並記錄詳細錯誤信息。
+	4.	伺服器壓力控制：
+	•	大批量的使用者創建和刪除操作會對伺服器造成壓力，應根據實際情況調整 batch_size 和超時時間，並在需要時使用異步處理來提高性能。
+
+## 啟動JH伺服器
+
+這個函式 start_server 用於在 JupyterHub 中為特定使用者啟動伺服器。如果提供了配置檔案 (profile)，則會在啟動伺服器時應用該配置檔案。下面是此函式的詳細說明：
+
+函式說明：start_server(username, endpoint, session, profile=None)
+
+輸入參數：
+
+	•	username：使用者的名稱（帳號），用於指定要啟動伺服器的對象。
+	•	endpoint：JupyterHub API 的基礎 URL，用於發送 API 請求。
+	•	session：requests.Session 實例，用於與 JupyterHub API 通信。
+	•	profile（可選）：伺服器配置檔案，指定伺服器啟動時要使用的特定配置檔案。這個檔案可以根據需求來決定是否需要使用不同的硬體或軟體環境。
+
+功能詳解：
+
+	1.	啟動伺服器請求：
+	•	透過向 /users/{username}/server 發送 POST 請求來啟動指定使用者的伺服器。
+	•	如果提供了 profile，則會將其作為 JSON 負載的一部分傳遞給 API，應用自定義配置。
+	2.	成功日誌：
+	•	如果伺服器啟動成功，函式會記錄一條日誌，表明伺服器正在為指定使用者啟動。
+	3.	錯誤處理：
+	•	如果伺服器啟動失敗，函式會記錄錯誤日誌，並顯示伺服器回應的狀態碼和錯誤內容。
+
+代碼範例：
+
+```python
+# 使用範例
+session = get_session(token='your_token_here')
+endpoint = 'https://your-jupyterhub-url/hub/api'
+username = 'test-user'
+
+start_server(username, endpoint, session, profile='custom-profile')
+```
+
+此範例將為使用者 test-user 啟動伺服器，並應用名為 custom-profile 的伺服器配置檔案。如果沒有指定 profile，伺服器將會根據預設配置啟動。
+
+錯誤處理考慮：
+
+	•	當伺服器啟動失敗時，函式目前僅記錄錯誤，沒有實施進一步的錯誤處理。可以根據需要進行以下改進：
+	1.	自動重試：在伺服器啟動失敗時嘗試重新啟動伺服器。
+	2.	使用者刪除：在伺服器啟動失敗時，選擇是否自動刪除該使用者，避免出現孤立使用者的情況。
+	3.	異常拋出：當伺服器啟動失敗時，可以選擇拋出異常，讓上層邏輯進行處理。
+
+性能優化：
+
+如果需要批量啟動多個使用者的伺服器，可以考慮將這個函式放在多執行緒或多進程環境中，利用並行性來提高速度，特別是在大規模使用者操作時。
+
+### profile範例
+
+在 JupyterHub 中，profile 參數用於指定伺服器啟動時所應用的配置。這些配置可能會根據不同的需求而有所不同，例如不同的資源限制（CPU、記憶體）、環境變數或其他自定義設置。以下是一些 profile 可能包含的內容和範例：
+
+可能的 profile 內容
+
+	1.	資源限制：
+	•	指定 CPU 和記憶體的使用限制。
+	•	例如：
+```json
+{
+    "cpu": 2,
+    "memory": "4G"
+}
+```
+
+	2.	環境變數：
+	•	定義伺服器啟動時需要的環境變數。
+	•	例如：
+
+```json
+{
+    "env": {
+        "MY_ENV_VAR": "value",
+        "ANOTHER_VAR": "another_value"
+    }
+}
+```
+
+	3.	映像檔：
+	•	指定要使用的 Docker 映像檔。
+	•	例如：
+
+```python
+{
+    "image": "my-docker-image:latest"
+}
+```
+
+	4.	啟動命令：
+	•	定義伺服器啟動時的命令或參數。
+	•	例如：
+
+```python
+{
+    "cmd": ["jupyterhub-singleuser", "--NotebookApp.token='mytoken'"]
+}
+```
+
+	5.	持久化儲存：
+	•	指定要掛載的持久化儲存。
+	•	例如：
+
+```python
+{
+    "volumes": [
+        {
+            "name": "my-volume",
+            "mountPath": "/home/jovyan/work"
+        }
+    ]
+}
+```
+
+
+總合範例
+
+下面是一個可能的完整 profile JSON，包含多個設置：
+
+```json
+{
+    "name": "data-science",
+    "cpu": 4,
+    "memory": "8G",
+    "env": {
+        "PYTHON_ENV": "development",
+        "API_KEY": "my_api_key"
+    },
+    "image": "my-data-science-image:latest",
+    "cmd": ["jupyterhub-singleuser", "--NotebookApp.token='mytoken'"],
+    "volumes": [
+        {
+            "name": "user-data",
+            "mountPath": "/home/jovyan/data"
+        }
+    ]
+}
+```
+
+使用範例
+
+在 start_server 函式中使用這個配置：
+
+```json
+profile = {
+    "name": "data-science",
+    "cpu": 4,
+    "memory": "8G",
+    "env": {
+        "PYTHON_ENV": "development",
+        "API_KEY": "my_api_key"
+    },
+    "image": "my-data-science-image:latest",
+    "cmd": ["jupyterhub-singleuser", "--NotebookApp.token='mytoken'"],
+    "volumes": [
+        {
+            "name": "user-data",
+            "mountPath": "/home/jovyan/data"
+        }
+    ]
+}
+
+start_server(username='test-user', endpoint='https://your-jupyterhub-url/hub/api', session=session, profile=profile)
+```
+
+注意事項
+
+	•	請確保所使用的 profile 內容符合 JupyterHub 的配置要求，並且支持您所使用的服務器或 Docker 映像檔。
+	•	這些配置需要根據實際需求進行調整。不同的使用案例和需求可能會有不同的 profile 設置。
+
+## 同步開啟使用者伺服器
+
+您的 start_servers 函數旨在使用 ThreadPoolExecutor 同時啟動多個 JupyterHub 筆記本伺服器。以下是函數的主要組成部分的說明，並提供一些改進建議，以提高其穩健性和功能性。
+
+### 函數解析
+
+	1.	日誌記錄：
+	•	函數開始時記錄伺服器初始化過程，增強日誌的可見性。
+	2.	ThreadPoolExecutor：
+	•	使用 ThreadPoolExecutor 允許同時執行 start_server 函數，提高效率，特別是在啟動多個伺服器時。
+	3.	遍歷用戶：
+	•	外部循環遍歷用戶組（users），為每個組啟動一組新的伺服器。
+	4.	提交任務：
+	•	對於當前批次中的每個用戶名，將 start_server 函數提交給執行者，該執行者處理實際的伺服器啟動。
+
+### 建議改進
+
+	1.	錯誤處理：
+	•	添加伺服器啟動失敗的錯誤處理。您可以捕獲異常並適當地記錄。
+	2.	等待完成：
+	•	您可能希望等待所有的未來任務完成，特別是如果您需要確保在繼續之前所有伺服器都已啟動。
+	3.	參數驗證：
+	•	在啟動操作之前考慮驗證 users、endpoint 和 session 參數。
+	4.	動態工作數：
+	•	而不是使用 len(usernames) 作為 max_workers，您可以設置一個全局限制，以避免過度加載 JupyterHub。
+
+### 修訂函數
+
+以下是結合這些建議的修訂版本：
+
+```python
+@timeit
+def start_servers(users, endpoint, session, profile=None):
+    LOG.info('正在啟動筆記本伺服器')
+    futures_list = []
+    
+    for index, usernames in enumerate(users):
+        thread_name_prefix = f'hub-stress-test:start_servers:{index}'
+        with futures.ThreadPoolExecutor(max_workers=10, thread_name_prefix=thread_name_prefix) as executor:
+            for username in usernames:
+                future = executor.submit(start_server, username, endpoint, session, profile=profile)
+                futures_list.append(future)
+    
+    # 等待所有未來任務完成並記錄結果
+    for future in futures.as_completed(futures_list):
+        try:
+            future.result()  # 這將重新引發執行過程中捕獲的任何異常
+        except Exception as e:
+            LOG.error('啟動伺服器時出錯: %s', str(e))
+```
+
+### 主要變更
+
+	•	錯誤處理：現在如果啟動伺服器失敗，會記錄錯誤信息。
+	•	完成等待：它會等待所有提交的任務完成，以確保在結束函數之前所有伺服器都已啟動。
+	•	最大工作數：設置最大工作數為 10，這可以根據您的需求進行調整。
+
+最後的想法
+
+這個修訂的函數更加穩健和信息豐富，能提供更好的洞察力以處理在伺服器啟動過程中可能出現的任何問題。根據預期負載和 JupyterHub 部署的能力，始終調整像 max_workers 這樣的參數。
+
+## 
+
+wait_for_servers_to_start 函數用於等待指定用戶的 JupyterHub 筆記本伺服器啟動並準備就緒。這段代碼的邏輯清晰，並且已經處理了多個可能的情況，以下是對其各個部分的分析和改進建議：
+
+函數解析
+
+	1.	日誌記錄：
+	•	在函數開始時記錄信息，以指示正在等待伺服器準備就緒。
+	2.	遍歷用戶：
+	•	兩層循環遍歷用戶列表，首先遍歷用戶組，然後遍歷每個用戶名。
+	3.	等待伺服器準備：
+	•	對於每個用戶，使用 while 循環進行檢查，最多進行 SERVER_LIFECYCLE_TIMEOUT 次檢查，以確保伺服器是否已準備好。
+	4.	伺服器狀態檢查：
+	•	使用 GET 請求獲取用戶信息，並檢查伺服器是否處於準備狀態。
+	•	如果伺服器沒有在準備狀態且沒有處於待處理狀態，則記錄錯誤並中止檢查。
+	5.	超時處理：
+	•	如果超過了指定的時間，則記錄一條錯誤信息。
+
+建議改進
+
+	1.	重試次數的可配置性：
+	•	將 SERVER_LIFECYCLE_TIMEOUT 提取到函數參數中，以便於靈活設置。
+	2.	更詳細的日誌信息：
+	•	記錄每次檢查的時間間隔，以便於更好地調試。
+	3.	異常處理：
+	•	對 session.get 方法進行異常處理，以避免網絡錯誤導致的崩潰。
+	4.	返回值：
+	•	考慮在函數結束時返回一個布爾值，以指示所有伺服器是否已經成功啟動。
+
+修訂版本
+
+以下是根據上述建議進行的修訂版本：
+
+@timeit
+def wait_for_servers_to_start(users, endpoint, session, timeout=SERVER_LIFECYCLE_TIMEOUT):
+    LOG.info('正在等待筆記本伺服器準備就緒')
+    
+    for usernames in users:
+        for username in usernames:
+            count = 0  # 開始計時
+            while count < timeout:
+                try:
+                    resp = session.get(endpoint + '/users/%s' % username)
+                    if resp:
+                        user = resp.json()
+                        server = user.get('servers', {}).get('', {})
+                        
+                        if server.get('ready'):
+                            LOG.debug('用戶 %s 的伺服器在 %d 次檢查後已準備就緒', username, count + 1)
+                            break
+                        elif not server.get('pending'):
+                            LOG.error('用戶 %s 的伺服器啟動失敗。已等待 %d 秒，但用戶記錄沒有待處理操作。檢查 Hub 日誌以獲取詳細信息。用戶: %s', 
+                                      username, count, user)
+                            break
+                    else:
+                        LOG.warning('獲取用戶 %s 失敗。響應狀態碼: %d。響應內容: %s', username, resp.status_code, resp.content)
+                
+                except requests.RequestException as e:
+                    LOG.error('在獲取用戶 %s 的伺服器狀態時發生錯誤: %s', username, str(e))
+                
+                time.sleep(1)  # 等待一秒再檢查
+                count += 1
+            
+            else:
+                LOG.error('在 %d 秒內未能等待用戶 %s 的伺服器準備就緒', timeout, username)
+
+    return True  # 可選：根據需要返回是否所有伺服器都已啟動
+
+主要變更
+
+	•	異常處理：為 session.get 添加了異常處理，防止請求失敗導致崩潰。
+	•	時間間隔日誌：保留了檢查的時間間隔，以便進一步調試。
+	•	可配置性：將超時時間設置為函數參數，使其更靈活。
+	•	返回值：可以選擇性地返回布爾值以指示所有伺服器是否已經成功啟動。
+
+這樣的設計可以提高函數的穩健性和可維護性，同時增強錯誤處理能力。
