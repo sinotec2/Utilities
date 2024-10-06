@@ -216,16 +216,20 @@ python hub-stress-test.py --count 100 --workers 30
 
 範例：
 
+```python
 @timeit
 def example_function():
     time.sleep(2)  # 模擬需要2秒鐘的操作
     return "done"
 
 example_function()
+```
 
 在日誌中會出現：
 
+```python
 INFO: Took 2.002 seconds to example_function
+```
 
 ## 取得請求
 
@@ -233,13 +237,13 @@ INFO: Took 2.002 seconds to example_function
 
 此函式用來創建並設定一個 HTTP 請求的 requests.Session 物件，為進行壓力測試時設置必要的參數和行為。根據傳入的參數，函式可以返回一個模擬的 session 以進行 dry run（不實際進行請求），或返回一個有重試機制的 requests.Session 實例。
 
-輸入參數：
+### 輸入請求參數：
 
 	•	token：JupyterHub 管理員 API token，將被用於請求的認證標頭中，格式為 Authorization: token <token>。
 	•	dry_run（預設值為 False）：當此值為 True 時，將返回一個模擬的 session，用於測試或演示；為 False 時，返回一個真正的 HTTP session。
 	•	pool_maxsize（預設值為 100）：設置 HTTP 連接池的最大大小，用於控制 session 中的最大併發連接數。
 
-功能詳解：
+### 請求功能詳解：
 
 	1.	Dry Run：
 	•	如果 dry_run 為 True，函式將返回一個模擬的 requests.Session 物件，這樣可以避免實際執行 HTTP 請求。此處使用 mock.create_autospec() 來創建一個模擬對象。
@@ -256,11 +260,11 @@ INFO: Took 2.002 seconds to example_function
 	4.	回應時間日誌：
 	•	如果日誌級別設置為 DEBUG，會將 log_response_time 函式添加到 session 的 response hooks 中，從而在每次請求回應後記錄回應時間。
 
-輸出：
+### 輸出：
 
 	•	返回一個配置好的 requests.Session 物件。如果 dry_run 為 True，則返回模擬的 session；否則返回實際的 session。
 
-應用場景中的注意事項：
+### 應用場景中的注意事項：
 
 	1.	重試邏輯：
 	•	重試策略是針對壓力測試中的常見錯誤設置的，如過多請求或服務不可用。這樣能夠讓測試更具韌性，但要注意過多的重試可能會對伺服器造成更大負荷。
@@ -269,11 +273,66 @@ INFO: Took 2.002 seconds to example_function
 	3.	性能考量：
 	•	每次請求的回應時間都會被記錄（當日誌級別為 DEBUG 時）。這對於診斷測試中的瓶頸非常有幫助，但可能會略微影響性能。
 
-範例：
+### 範例：
 
+```python
 # 創建一個帶有重試機制的 session
 session = get_session(token='your_token_here')
 
 # 使用 session 發送請求
 response = session.get('https://example.com/api/data')
+```
 
+## 伺服器監控
+
+函式說明：wait_for_server_to_stop(username, endpoint, session)
+
+此函式監控指定 JupyterHub 使用者的伺服器狀態，等待伺服器停止運行。在壓力測試或系統調度過程中，它用來確認某個使用者的 notebook 伺服器是否已關閉，並根據狀態回傳結果。
+
+輸入參數：
+
+	•	username：需要監控伺服器狀態的使用者名稱。
+	•	endpoint：JupyterHub API 的基本 URL，用來查詢使用者的伺服器狀態。
+	•	session：一個配置好的 requests.Session 實例，用於發送 API 請求。
+
+功能詳解：
+
+	1.	API 請求循環檢查：
+	•	函式每秒對 /users/{username} 發送一個 GET 請求，目的是檢查該使用者的伺服器狀態。SERVER_LIFECYCLE_TIMEOUT 變數定義了最大檢查次數或超時時間。
+	•	迴圈會持續直到伺服器停止，或者達到 SERVER_LIFECYCLE_TIMEOUT 設定的時間上限。
+	2.	回應檢查：
+	•	當伺服器停止時，使用者的 servers 字典應該是空的，這代表伺服器已成功關閉。若發現 servers 是空的，函式返回 True，表示伺服器已關閉。
+	•	若伺服器未關閉，會記錄 DEBUG 級別的日誌，並持續嘗試。
+	3.	404 狀態碼處理：
+	•	如果回應狀態碼為 404，則表示該使用者可能已被刪除。這種情況也被認為是伺服器停止，並且函式返回 True。
+	4.	異常處理：
+	•	如果伺服器返回其他異常狀態碼或錯誤，函式會記錄警告，並繼續重試直到超時。
+	5.	超時：
+	•	如果在 SERVER_LIFECYCLE_TIMEOUT 設定的時間內伺服器仍未關閉，函式將返回 False，並記錄超時警告。
+
+輸出：
+
+	•	True：伺服器已成功停止，或使用者已被刪除。
+	•	False：伺服器在指定時間內未能成功停止，並超時。
+
+應用場景中的注意事項：
+
+	1.	SERVER_LIFECYCLE_TIMEOUT 設定：
+	•	這個變數應設置為一個合理的超時時間，根據系統負載情況決定。過短可能導致過早返回 False，過長則可能拖慢系統。
+	2.	API 響應檢查：
+	•	如果伺服器正在高負載運行，可能會遇到 503 等伺服器錯誤狀態。雖然函式沒有特別處理這些情況，但可以考慮增加重試邏輯。
+	3.	伺服器停止的依賴性：
+	•	假如系統在運行大規模壓力測試，可能需要依賴該函式來確保伺服器已經停止再進行下一步操作，避免伺服器資源浪費。
+
+範例：
+
+# 檢查使用者 'user1' 的伺服器是否已停止
+session = get_session(token='your_token_here')
+result = wait_for_server_to_stop(username='user1', endpoint='https://your-jupyterhub-url/hub/api', session=session)
+
+if result:
+    print("伺服器已成功停止")
+else:
+    print("伺服器停止超時")
+
+## 
