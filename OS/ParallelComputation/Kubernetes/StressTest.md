@@ -283,7 +283,7 @@ session = get_session(token='your_token_here')
 response = session.get('https://example.com/api/data')
 ```
 
-## 伺服器監控
+## 等候伺服器停止
 
 函式說明：wait_for_server_to_stop(username, endpoint, session)
 
@@ -324,8 +324,9 @@ response = session.get('https://example.com/api/data')
 	3.	伺服器停止的依賴性：
 	•	假如系統在運行大規模壓力測試，可能需要依賴該函式來確保伺服器已經停止再進行下一步操作，避免伺服器資源浪費。
 
-範例：
+### 範例：
 
+```python
 # 檢查使用者 'user1' 的伺服器是否已停止
 session = get_session(token='your_token_here')
 result = wait_for_server_to_stop(username='user1', endpoint='https://your-jupyterhub-url/hub/api', session=session)
@@ -334,5 +335,158 @@ if result:
     print("伺服器已成功停止")
 else:
     print("伺服器停止超時")
+```
+## 停下使用者的伺服器
 
-## 
+函式說明：stop_server(username, endpoint, session, wait=False)
+
+此函式的目的是通過 JupyterHub API 停止指定使用者的 notebook 伺服器。可以選擇是否等待伺服器停止後再返回結果，或只確認伺服器停止請求是否成功發送。
+
+### 輸入參數：
+
+	•	username：要停止伺服器的使用者名稱。
+	•	endpoint：JupyterHub API 的基本 URL，用來發送停止伺服器的請求。
+	•	session：一個經過配置的 requests.Session，用於發送 API 請求。
+	•	wait（可選，預設為 False）：若設置為 True，則在發送停止請求後會等待伺服器完全停止再返回結果；若為 False，則只確認請求成功後立即返回。
+
+### 功能詳解：
+
+	1.	停止伺服器的請求：
+	•	使用 HTTP DELETE 方法對 /users/{username}/server 端點發送 API 請求，該請求會告知 JupyterHub 停止該使用者的 notebook 伺服器。
+	2.	狀態碼檢查：
+	•	如果 API 回應狀態碼為 204，表示伺服器已成功停止，無需進一步等待或輪詢，函式返回 True。
+	•	如果設置了 wait=True，在發送請求後會調用 wait_for_server_to_stop() 函式進行輪詢，直到伺服器完全停止或超時。
+	3.	錯誤處理：
+	•	若 API 請求失敗，會記錄警告，並返回 False，表示伺服器停止請求未成功。
+
+### 輸出：
+
+	•	True：
+	•	當伺服器成功停止，或伺服器停止請求成功發送時返回（若未設置 wait）。
+	•	False：
+	•	當伺服器停止請求失敗時返回，或當輪詢期間伺服器未能成功停止。
+
+### 應用場景中的注意事項：
+
+	1.	非同步停止與等待選擇：
+	•	設置 wait=False 可以使系統在發送請求後立即返回，不需要等待伺服器真正停止，這在高效能環境中尤其有用。
+	•	設置 wait=True 時，系統會確保伺服器完全停止後才進行後續操作，適合需要嚴格控制伺服器資源的場景。
+	2.	API 錯誤處理：
+	•	當 API 請求失敗時（例如伺服器忙碌、無法連接等），需要進一步調查 resp.status_code 和 resp.content 來了解具體錯誤原因。
+	3.	伺服器壓力測試應用：
+	•	在進行壓力測試時，可能需要大量伺服器啟動和關閉。使用此函式可以高效地控制伺服器的啟停狀態，尤其是在集群運行大規模用戶負載時。
+
+### 範例：
+
+```python
+# 停止 'user1' 的伺服器
+session = get_session(token='your_token_here')
+result = stop_server(username='user1', endpoint='https://your-jupyterhub-url/hub/api', session=session, wait=True)
+
+if result:
+    print("伺服器已成功停止")
+else:
+    print("伺服器停止失敗")
+```
+
+## 批次停止多個使用者的伺服器
+
+函式說明：stop_servers(usernames, endpoint, session, batch_size)
+
+此函式的目的是批量停止多個使用者的 notebook 伺服器，並使用 Python 的 ThreadPoolExecutor 來並行處理停止伺服器的請求。通過使用 @timeit 裝飾器，函式運行的時間也會被記錄。
+
+### 輸入參數：
+
+	•	usernames：要停止伺服器的使用者名稱列表。
+	•	endpoint：JupyterHub API 的基本 URL，用於發送停止伺服器的請求。
+	•	session：一個經過配置的 requests.Session，用於發送 API 請求。
+	•	batch_size：並行處理的批次大小，也就是允許同時處理的最大伺服器停止請求數。
+
+### 功能詳解：
+
+	1.	批次停止伺服器：
+	•	使用 ThreadPoolExecutor 來實現多線程的並行處理，每個使用者的伺服器停止請求都會由一個執行緒負責。
+	•	每批次最大執行緒數量由 batch_size 控制，這樣可以有效避免一次性發出過多 API 請求，從而防止伺服器過載。
+	2.	future_to_username 映射：
+	•	每個提交給 ThreadPoolExecutor 的任務（executor.submit()）返回一個 Future 物件，並將其與對應的使用者名稱進行映射，這樣可以跟蹤每個使用者伺服器停止請求的完成狀態。
+	3.	異步等待任務完成：
+	•	futures.as_completed() 用於遍歷已完成的任務，每個已完成的任務會返回一個 Future 物件，通過該物件可以提取伺服器是否成功停止的結果。
+	4.	結果儲存：
+	•	每個使用者伺服器的停止結果（成功或失敗）會存入 stopped 字典，鍵為使用者名稱，值為布林值 True 或 False。
+	5.	@timeit 裝飾器：
+	•	裝飾器會記錄此函式執行的總時間，並在日誌中輸出執行時間，方便進行性能監控。
+
+輸出：
+
+	•	stopped：返回一個字典，鍵是使用者名稱，值為伺服器是否成功停止的布林值。
+
+應用場景中的注意事項：
+
+	1.	批次大小 (batch_size) 的選擇：
+	•	batch_size 代表可以同時處理的伺服器停止請求數量，根據系統的硬體資源和 API 限制，選擇合適的批次大小可以提高效率，同時避免過載。
+	•	在大量使用者的壓力測試中，過大的批次大小可能導致 JupyterHub 的 API 過載，而過小的批次大小則會降低並行處理的效率。
+	2.	並行處理與伺服器資源：
+	•	伺服器的 CPU 和 I/O 資源對這些並行處理的影響較大，建議根據系統資源適當調整 batch_size 的大小以達到最佳性能。
+	3.	錯誤處理：
+	•	對於每個伺服器的停止操作都應該仔細檢查結果，若有失敗，應進行進一步的錯誤處理或記錄以便後續分析。
+
+### 範例：
+
+```python
+# 使用 batch_size = 5 並行停止 10 個使用者的伺服器
+session = get_session(token='your_token_here')
+usernames = ['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8', 'user9', 'user10']
+stopped_servers = stop_servers(usernames=usernames, endpoint='https://your-jupyterhub-url/hub/api', session=session, batch_size=5)
+
+for user, stopped in stopped_servers.items():
+    print(f'User {user} server stopped: {stopped}')
+```
+
+## 等待一組使用者伺服器完全停止
+
+函式說明：wait_for_servers_to_stop(stopped, endpoint, session)
+
+此函式的目的是等待一組使用者伺服器完全停止，並根據伺服器停止的請求結果來決定是否要等待它們的最終停止狀態。
+
+### 輸入參數：
+
+	•	stopped：一個字典，鍵是使用者名稱，值是布林值，代表伺服器是否已經收到停止請求。當值為 True 時，函式會等待伺服器完全停止，並更新字典中的值為伺服器是否成功完全停止的結果。
+	•	endpoint：JupyterHub API 的基本 URL，用於發送 API 請求以檢查伺服器的狀態。
+	•	session：已配置的 requests.Session，用於與 JupyterHub API 通信。
+
+### 功能詳解：
+
+	1.	遍歷 stopped 字典：
+	•	函式會逐一檢查字典中的每個使用者名稱及其對應的布林值（伺服器是否已發出停止請求）。
+	•	如果伺服器已經收到停止請求 (was_stopped == True)，函式會呼叫 wait_for_server_to_stop 來確保伺服器已完全停止。
+	2.	更新伺服器停止狀態：
+	•	函式會更新 stopped 字典中的值，從代表伺服器「已發出停止請求」的布林值轉變為「伺服器是否完全停止」的最終結果，這樣便於後續邏輯處理。
+	3.	@timeit 裝飾器：
+	•	裝飾器會記錄整個等待伺服器停止的過程所花費的時間，並將結果記錄在日誌中，方便進行性能分析。
+
+輸出：
+
+	•	無直接輸出，但它會更新傳入的 stopped 字典，從而表示伺服器是否完全停止。
+
+### 應用場景中的注意事項：
+
+	1.	伺服器停止的狀態追蹤：
+	•	對於每個伺服器，必須確保伺服器已經完全停止（不再運行）。如果有使用者的伺服器並未成功發出停止請求，則不會等待該伺服器停止。
+	2.	伺服器停止的耗時：
+	•	根據伺服器的配置和運行狀態，停止伺服器可能需要一些時間，因此這個過程可能會根據伺服器的數量和網絡延遲有所不同。
+	3.	併發操作的影響：
+	•	如果批量操作大量伺服器，請確保適當的資源和 API 限制，以防止系統過載或 API 拒絕服務（如過多的請求導致 429 錯誤）。
+
+### 範例：
+
+```python
+# 等待之前已發出停止請求的伺服器完全停止
+session = get_session(token='your_token_here')
+endpoint = 'https://your-jupyterhub-url/hub/api'
+stopped_servers = {'user1': True, 'user2': True, 'user3': False}  # True 表示伺服器已經收到停止請求
+wait_for_servers_to_stop(stopped=stopped_servers, endpoint=endpoint, session=session)
+
+for user, is_stopped in stopped_servers.items():
+    print(f'User {user} server fully stopped: {is_stopped}')
+
+在這個範例中，只有 user1 和 user2 會被等待完全停止，而 user3 由於停止請求未成功發送，因此不會被進一步檢查。
