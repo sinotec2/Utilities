@@ -1,12 +1,12 @@
 ---
 layout: default
-title:  引數與執行
+title:  共用程式
 parent: System Stress Test
 grand_parent: Kubernetes
 last_modified_date: 2024-10-06 10:19:38
 ---
 
-#  引數與執行
+#  共用程式
 
 {: .no_toc }
 
