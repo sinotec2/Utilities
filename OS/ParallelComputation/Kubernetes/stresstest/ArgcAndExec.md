@@ -1,12 +1,12 @@
 ---
 layout: default
-title:  Stress Test
-parent: Kubernetes
-grand_parent: Parallel Computation
+title:  引數與執行
+parent: System Stress Test
+grand_parent: Kubernetes
 last_modified_date: 2024-10-06 10:19:38
 ---
 
-# Z2JH 壓力測試 
+#  引數與執行
 
 {: .no_toc }
 
