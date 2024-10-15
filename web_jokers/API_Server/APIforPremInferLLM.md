@@ -167,3 +167,7 @@ tags: API_Server
 
 如果需求較為複雜，像是涉及 WebSocket 或長時間連接的情況，可以考慮使用 Tornado 或 Django Channels。
 
+## Instances 
+
+- [rag_api])https://github.com/AshishSinha5/rag_api)
+
