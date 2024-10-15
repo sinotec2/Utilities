@@ -1,3 +1,26 @@
+---
+layout: default
+title:  API Server on Windows 
+parent: API Servers
+grand_parent: Web Jokers
+last_modified_date: 2024-01-19 13:25:11
+tags: API_Server 
+---
+
+# 地端LLM的API伺服器
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 > 地端語言模型生產階段的推論服務，如何有效面對並發請求？
 
