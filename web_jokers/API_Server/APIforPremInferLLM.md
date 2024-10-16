@@ -1,9 +1,9 @@
 ---
 layout: default
-title:  API Server on Windows 
+title:  地端LLM的API伺服器
 parent: API Servers
 grand_parent: Web Jokers
-last_modified_date: 2024-01-19 13:25:11
+last_modified_date: 2024-10-16 08:16:17
 tags: API_Server 
 ---
 
@@ -169,5 +169,5 @@ tags: API_Server
 
 ## Instances 
 
-- [rag_api])https://github.com/AshishSinha5/rag_api)
+- [rag_api](https://github.com/AshishSinha5/rag_api)
 
