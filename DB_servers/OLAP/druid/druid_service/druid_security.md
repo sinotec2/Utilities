@@ -1,9 +1,8 @@
 ---
 layout: default
 title:  Druid安全設定
-parent: Apache Druid
-grand_parent: DB_servers
-grand_parent: OLAP
+parent: Apache Druid Services
+grand_parent: Apache Druid
 last_modified_date: 2024-02-12 14:15:31
 tags: DB_servers Druid
 ---

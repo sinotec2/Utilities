@@ -1,9 +1,8 @@
 ---
 layout: default
 title:  使用Kerberos進行身分驗證
-parent: Apache Druid
-grand_parent: DB_servers
-grand_parent: OLAP
+parent: Apache Druid Services
+grand_parent: Apache Druid
 last_modified_date: 2024-01-31 19:49:51
 tags: DB_servers Druid
 ---

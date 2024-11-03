@@ -1,4 +1,27 @@
+---
+layout: default
+title:  Apache Druid 之API
+parent: Apache Druid Services
+grand_parent: Apache Druid
+last_modified_date: 2024-02-12 14:15:31
+tags: DB_servers Druid
+---
 
+# Apache Druid 之API
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
 
 - [Druid SQL API](https://www.bookstack.cn/read/druid-27.0-en/cf91c9e9d2d2bf3f.md#Result%20formats)
 {"query":"SELECT deltaBucket, COUNT(*) AS Count FROM wikipedia GROUP BY 1 ORDER BY 2 DESC",

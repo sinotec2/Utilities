@@ -1,9 +1,8 @@
 ---
 layout: default
 title:  code_name.py
-parent: Apache Druid
-grand_parent: DB_servers
-grand_parent: OLAP
+parent: Apache Druid Services
+grand_parent: Apache Druid
 last_modified_date: 2024-02-28 21:56:31
 tags: DB_servers Druid
 ---
