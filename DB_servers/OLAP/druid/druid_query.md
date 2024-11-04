@@ -243,15 +243,41 @@ curl -u admin:password1 -H 'Content-Type: application/json' -X POST http://${ip}
 
 ![](query_png/2024-02-28-17-44-20.png)
 
+### 空品測站名稱查找
+
+```sql
+SELECT
+    stn2,
+    LOOKUP(CAST(stn2 AS CHAR(6)), '空品測站名稱') AS stn3,
+    COUNT(*) AS "Count",
+    ROUND(MAX("SO2"), 2) AS "max_SO2"
+FROM (
+    SELECT 
+        CAST(DF."stn" AS INTEGER) AS stn2,
+        DF."SO2"
+    FROM "all_yr" AS DF
+) AS subquery
+GROUP BY stn2
+ORDER BY "Count" DESC
+```
+
 ### 對照表之輸入與連結
 
 - 對照表的產生詳見[code_name.py](druid_service/code_name.py)
 - 需在`./conf/druid/auto/_common/common.runtime.properties`的外掛清單中增加` "druid-lookups-cached-global"`
 - 詳見[官網](https://druid.apache.org/docs/latest/development/extensions-core/lookups-cached-global/)的說明
+- 介面：
+  - 由瀏覽列最右側3個點進入
+  - 按下新增，點選`json`進入json檔案的設定
+
+![query_png/2024-11-03-14-54-31.png](query_png/2024-11-03-14-54-31.png)
+
 - json檔案模板與設定說明
-  - 避免使用中文檔名及欄位名稱，系統會不穩定。
+  - 避免使用中文檔名及**欄位名稱**，系統會不穩定。
   - `"pollPeriod": "P1D",`如果過度頻繁會造成系統不必要的負荷。
   - `"firstCacheTimeout": 500,`單位是毫秒，因此如果檔案較大，須給足夠的時間上載數據。過大的對照表如數以萬計的「事業名稱表」，延長`firstCacheTimeout`似乎不會有幫助(還是需要使用`JOIN`，見[資料表的關聯](#資料表的關聯join))。
+  - `"uriPrefix"`：目錄位置
+  - `"fileRegex"`：檔案名稱(規則)
 
 ```json
 {
@@ -276,6 +302,10 @@ curl -u admin:password1 -H 'Content-Type: application/json' -X POST http://${ip}
   "injective": true
 }
 ```
+
+{% include note.html content="對照表的注意事項：表中的鍵值，必須涵蓋所有資料庫中可能發生的情況，否則會發生錯誤。" %}
+ 
+
 
 ### 資料表的關聯(JOIN)
 
