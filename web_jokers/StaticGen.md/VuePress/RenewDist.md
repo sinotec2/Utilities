@@ -1,4 +1,27 @@
+---
+layout: default
+title: 更新發布的考量
+parent: VuePress
+grand_parent: Static Site Generators
+nav_order: 99
+last_modified_date: 2024-11-13 03:35:40
+tags: VuPress
+---
 
+# 更新發布的考量
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 方案介紹
 
 如果每次部署都會清除並重新生成 dist 資料夾中的資源，這確實會影響使用者的載入速度，因為他們需要重新下載所有資源。以下是幾種改善方案，以減少使用者的重新下載需求並優化載入速度：
 
