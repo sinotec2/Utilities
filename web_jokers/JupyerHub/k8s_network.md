@@ -18,7 +18,11 @@ tags: operation_systems
 {:toc}
 
 ---
-- [medium](https://weng-albert.medium.com/%E6%B7%BA%E8%AB%87kubernetes%E5%85%A7%E9%83%A8%E7%B6%B2%E8%B7%AF%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%A7%80%E5%BF%B5-e9d993e01423)
+
+## kubernetes內部網路通信
+
+- 淺談kubernetes內部網路通信的基本觀念
+  - [medium](https://weng-albert.medium.com/淺談kubernetes內部網路通信的基本觀念-e9d993e01423)
 
 ## NGINX反向代理
 
@@ -36,10 +40,10 @@ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header X-Forwarded-Proto $scheme;
 ```
 
-這些標頭的功能如下：
-	•	X-Real-IP：直接傳遞客戶端的真實 IP 地址。
-	•	X-Forwarded-For：傳遞所有代理伺服器的 IP 地址列表，最後一個 IP 是客戶端的真實 IP。
-	•	X-Forwarded-Proto：標記原始請求的協議（HTTP 或 HTTPS），讓後端知道請求的安全性。
+- 這些標頭的功能如下：
+  - X-Real-IP：直接傳遞客戶端的真實 IP 地址。
+  - X-Forwarded-For：傳遞所有代理伺服器的 IP 地址列表，最後一個 IP 是客戶端的真實 IP。
+  - X-Forwarded-Proto：標記原始請求的協議（HTTP 或 HTTPS），讓後端知道請求的安全性。
 
 ### JupyterHub 設置接收真實 IP
 
@@ -51,7 +55,7 @@ c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--ip', '0.0.0.0',
 c.JupyterHub.trusted_ips = ['Nginx IP Address']  # 將Nginx伺服器的IP加入信任列表
 ```
 
-	•	c.JupyterHub.trusted_ips：將 Nginx 伺服器的 IP 地址加入信任清單，這樣 JupyterHub 會信任從 Nginx 傳遞過來的 X-Real-IP 和 X-Forwarded-For 標頭。
+- c.JupyterHub.trusted_ips：將 Nginx 伺服器的 IP 地址加入信任清單，這樣 JupyterHub 會信任從 Nginx 傳遞過來的 X-Real-IP 和 X-Forwarded-For 標頭。
 
 ### TCP/IP 層的連接追蹤
 
