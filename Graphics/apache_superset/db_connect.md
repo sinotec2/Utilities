@@ -3,7 +3,7 @@ layout: default
 title:  數據庫的連接
 parent: apache_superset
 grand_parent: Graphics
-last_modified_date: 2024-06-15 11:00:11
+last_modified_date: 2024-12-03 11:22:40
 tags: apache_superset graphics
 ---
 
@@ -25,7 +25,8 @@ tags: apache_superset graphics
 
 ## Druid的連結
 
-- 來源
+- [來源](https://superset.apache.org/docs/configuration/databases/#supported-databases-and-dependencies)
+- `pip install pydruid`
 
 ### superset  UI settings
 
@@ -41,7 +42,7 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
 
 ![](2024-07-11-10-13-05.png)
 
-3. **填寫 Druid 數據源的詳細信息：** 
+3. **填寫 Druid 數據源的詳細信息：**
 
 - 在「SUPPORTED DATABASES」下拉選單中選擇「Apache Druid」數據庫類型。
 - 在「SQLALCHEMY URI」中提供有關 Druid 數據源的詳細信息，包括數據庫名稱、Druid Broker 和 Coordinator 的地址等。在「Additional Parameters」部分，您可能需要提供一些額外的配置參數，具體取決於您的 Druid 部署。
@@ -177,4 +178,3 @@ Superset 本身對於 CSV 檔案的大小並沒有固定的硬性限制。然而
 3. **Superset 設定：** Superset 伺服器的設定也可能包含一些與檔案大小相關的設置，例如上傳限制或查詢限制。
 
 通常，如果你處理的是較小的 CSV 檔案，Superset 應該能夠輕鬆地處理。對於較大的檔案，你可能需要確保伺服器資源足夠，並檢查相關的瀏覽器和 Superset 設定，以確保能夠正常處理。如果需要處理大型數據集，也可以考慮使用其他工具來預處理數據，然後在 Superset 中進行可視化。
-
