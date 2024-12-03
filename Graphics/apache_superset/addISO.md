@@ -23,6 +23,11 @@ tags: apache_superset graphics
 
 ## 背景
 
+- [The Country Map Visualization](https://superset.apache.org/docs/configuration/country-map-tools/)
+- [Generic Map Plugin](https://github.com/apache/superset/discussions/21758)
+- [Add tile layer (XYZ) support in deck.gl maps](https://github.com/apache/superset/discussions/27475)
+- [superset-frontend/plugins/legacy-plugin-chart-country-map/scripts/Country Map GeoJSON Generator.ipynb](https://github.com/apache/superset/blob/master/superset-frontend/plugins/legacy-plugin-chart-country-map/scripts/Country%20Map%20GeoJSON%20Generator.ipynb)
+
 ## 準備
 
 - 需先重新編譯以啟動plugins
@@ -171,3 +176,7 @@ PARTITIONED BY ALL
 - 指標：即為choropleth的顏色數量，選擇排放量-sum。
 
 ![](2024-12-03-12-56-45.png)
+
+## polygon
+
+- Spatial analytics on Apache Superset by [Sai Krishna Dammalapati(2024)@medium](https://medium.com/@saikrishna_17904/spatial-analytics-on-apache-superset-fdbfb1ebdeb1)
