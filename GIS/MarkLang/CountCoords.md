@@ -29,10 +29,10 @@ tags: KML GIS
 ## 程式碼
 
 ```python
-import xml.etree.ElementTree as ET
 import sys
 
 def count_coordinates(kml_file):
+    import xml.etree.ElementTree as ET
     tree = ET.parse(kml_file)
     root = tree.getroot()
     ns = {'kml': 'http://www.opengis.net/kml/2.2'}

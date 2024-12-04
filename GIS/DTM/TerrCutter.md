@@ -41,7 +41,7 @@ tags: dtm GIS
   - [streamlit](https://streamlit.io/)網頁設計雖然較為簡潔，但元件不多、與js、css等還是有很大的扞格。
   - 由於等高線是專案關切主題、而不是地面資訊，此處選擇[Mapbox](https://www.mapbox.com/)的圖磚，較[內政部圖磚](https://maps.nlsc.gov.tw/T09/mapshow.action?In_type=web)、[openTopoMap](https://opentopomap.org)等來得清晰簡潔、遮蔽較少，有較高的地圖品質（雖然尚未全面中文化）。
 - API伺服器
-  - 此處只有傳送邊界座標(`bounds`:東北、西南經緯度座標共4個數字)、以及切割後處理好的地形圖檔(`.png`或`.dxf`[後者詳](../DXF.md))，算是單純，不考慮複雜且功能完整的API伺服器。
+  - 此處只有傳送邊界座標(`bounds`:東北、西南經緯度座標共4個數字)、以及切割後處理好的地形圖檔(`.png`或`.dxf`[後者詳](../DXF/DXF.md))，算是單純，不考慮複雜且功能完整的API伺服器。
   - GPT建議以[Flask](https://flask.palletsprojects.com/en/3.0.x/)來撰寫最簡潔穩定，且最受歡迎。
   - Flask伺服器可以同時營運html及多個API，程式架構單純。
 - 資料庫

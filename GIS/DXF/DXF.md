@@ -1,7 +1,8 @@
 ---
 layout: default
 title:  DXF檔之讀寫
-parent: GIS Relatives
+grand_parent: GIS Relatives
+parent: DXF
 last_modified_date: 2024-05-09 10:42:16
 tags: GIS DXF
 ---
