@@ -179,4 +179,39 @@ PARTITIONED BY ALL
 
 ## polygon
 
+### ref
+
+- 必須是座標序列的長字串
 - Spatial analytics on Apache Superset by [Sai Krishna Dammalapati(2024)@medium](https://medium.com/@saikrishna_17904/spatial-analytics-on-apache-superset-fdbfb1ebdeb1)
+
+### 程式
+
+- 原作在MultiPolygon時會出錯，修改如下:
+
+```python
+import geopandas as gpd
+gdf = gpd.read_file("polygons.geojson")
+
+# Function to convert geometry to text
+def geometry_to_text(geom):
+    if geom.geom_type == 'Polygon':
+        coords = list(geom.exterior.coords)
+    else:
+        coords=[]
+        for polygon in geom.geoms:
+            # Access the coordinates of each polygon
+            coords+= list(polygon.exterior.coords)
+    return str([[lon, lat] for lon, lat in coords])
+
+# Apply the function to create a new column
+gdf['polygons'] = gdf['geometry'].apply(geometry_to_text)
+
+gdf.drop('geometry', axis=1).to_csv('polygons.csv')
+```
+
+### superset作圖
+
+- 雖然沒有dict的型態，仍然必須選JSON
+- 有搭配數量就可以著色與高度之區別(`指標`)
+
+![](2024-12-03-17-04-10.png)
