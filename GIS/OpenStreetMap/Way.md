@@ -223,6 +223,48 @@ Relations: 37,756
           p.join()
   ```
 
+### 使用 `osmconvert`
+
+- install：`sudo apt install osmctools`
+- first cut
+
+  ```bash
+  ln -s taiwan-latest.osm input.osm
+  left=121.5332504
+  right=121.5712818
+  top=25.0792724
+  bottom=25.0562234
+  osmconvert input.osm -b=${left},${bottom},${right},${top} --complete-ways -o=output.osm
+  ```
+
+- further cutting
+
+  ```bash
+  mv output.osm output48.osm
+  ln -sf output48.osm input.osm
+  echo ${left},${bottom},${right},${top}
+  left=121.5432504
+  right=121.5612818
+  top=25.07
+  bottom=25.0662234
+  osmconvert input.osm -b=${left},${bottom},${right},${top} --complete-ways -o=output.osm
+  ```
+
+- view by aspose
+
+![](output.128500db-7377-4198-984d-280b32e0d5bd.Png)
+
+## convert to KML and view
+
+- fail using ogr2ogr
+
+  ```bash
+  ogr2ogr -f "KML" output.kml input.osm
+  ```
+
+-  try python
+-  s
+
 ## BBBike
 
 ## Onlne Viewers
