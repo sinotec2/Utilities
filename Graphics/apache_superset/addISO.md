@@ -36,7 +36,7 @@ tags: apache_superset graphics
 cd superset-frontend/
 nvm use v20.11.1
 npm install && npm run plugins:build
-cd ../venv/lib/python3.11/site-packages/superset/static/assets/
+cd ../venv/[[2024-12-08]]
 rm -fr *
 cp -r ~/MyPrograms/superset/superset/static/assets/* .
 ```
