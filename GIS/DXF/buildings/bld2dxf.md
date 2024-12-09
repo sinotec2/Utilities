@@ -92,7 +92,18 @@ tags: GIS DXF
 
 ### 多邊形立體物件的輸出
 
+### 串連道路資料庫
+
 ## 切割套件
+
+### app.py
+
+- 輸入bld2dxf模組
+- 新增`bld(swLL, neLL)`之呼叫
+
+### index.html
+
+- 新增`SaveButtom_b` javascriple函式
 
 ### 檢查執行進度
 
@@ -102,10 +113,10 @@ tags: GIS DXF
   - 背景數據品質問題(訊息為`Network Response not OK`，請將**經緯度**範圍複製給研資部進一步追蹤除錯，TWD97值還需轉換。)
 - 空白處按右鍵進入`檢查`
 
-![](2024-12-09-14-06-17.png)
-- 點選`console`(或紅色停止標誌-帶數字![](2024-12-09-14-00-48.png)) 
+![pngs/2024-12-09-14-06-17.png](pngs/2024-12-09-14-06-17.png)
+- 點選`console`(或紅色停止標誌-帶數字![pngs/2024-12-09-14-00-48.png](pngs/2024-12-09-14-00-48.png)) 
 
-![](2024-12-09-13-58-44.png)
+![pngs/2024-12-09-13-58-44.png](pngs/2024-12-09-13-58-44.png)
 
 - `The file at blob ... is loaded`：是正確信息
   - 請檢視瀏覽器的`下載`介面。
@@ -130,6 +141,6 @@ tags: GIS DXF
 
 ![](./pngs/1733720994018.jpg)
 
-  ## 程式碼[bld2dxf.py](./pys/bld2dxf.py)
+## 程式碼[bld2dxf.py](./pys/bld2dxf.py)
 
   {% include download.html content="建築物DXF檔之改寫[bld2dxf.py](./pys/bld2dxf.py)" %}

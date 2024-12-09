@@ -45,7 +45,7 @@ tags: GIS DXF
 程式將生成兩個 CSV 檔案：
 
 1. 第一個檔案：包含匹配的點與多邊形的資料。這個索引的表格是用來檢核結果的正確性，並沒有後續應用的必要性。
-2. 第二個檔案：包含最終的多邊形與對應的地址資料。命名原則：`final_pnt_bld.csv`
+2. 第二個檔案：包含最終的多邊形與對應的地址資料。命名原則：`final_pnt_bld.csv` (`'final'+sys.argv[1]+sys.argv[2]`)
 
 ### 重要邏輯
 
@@ -62,7 +62,7 @@ tags: GIS DXF
 6. **寫入 CSV**：
    將結果 GeoDataFrame 輸出為 CSV 檔案。
 
-### 較艱澀語法的解釋
+### 艱澀語法的解釋
 
 - `apply(loads)`：這行代碼將 `loads` 函數應用到幾何列的每一個元素，將其從 WKT（Well-Known Text）格式轉換為 Shapely 幾何對象，這樣可以進行空間運算。  
 - `idx.insert(i, geometry.bounds)`：這行代碼將多邊形的邊界（bounds）插入到 Rtree 索引中，以便後續進行快速查詢。
