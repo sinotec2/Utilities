@@ -117,9 +117,11 @@ tags: GIS DXF
 - 範圍
 
 ![](./pngs/1733710208552.jpg)
+
 - 地形
 
 ![](./pngs/terr_pxdm_ssw.png)
+
 - 建築物群
 
 ![](./pngs/messageImage_1733719838403.jpg)
@@ -128,6 +130,6 @@ tags: GIS DXF
 
 ![](./pngs/1733720994018.jpg)
 
-## 程式碼
+## 程式碼[bld2dxf.py](pys/bld2dxf.py)
 
-{% include download.html content="建築物DXF檔之改寫[bld2dxf.py](./bld2dxf.py)" %}
+{% include download.html content="建築物DXF檔之改寫[bld2dxf.py](./pys/bld2dxf.py)" %}
