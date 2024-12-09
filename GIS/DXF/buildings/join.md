@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  bld2dxf
+title:  join_pnt_bld.py
 grand_parent: DXF
 parent: buildings
 last_modified_date: 2024-12-08 16:24:44
