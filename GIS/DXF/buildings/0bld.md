@@ -14,6 +14,11 @@ tags: GIS gmt
 
 # 建築物的整理與轉換
 
+- 整體工作流程如圖所示，區分為3大區塊
 
+  ![alt text](./pngs/image-1.png)
+
+- [bld2dxf.py](./bld2dxf.md)
+- []
 ## Reference
 
