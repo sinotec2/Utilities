@@ -1,57 +1,42 @@
 import geopandas as gpd
-import osmium
-from shapely.geometry import Point, LineString, Polygon
+from rtree import index
 import sys
+from shapely.wkt import loads
 
-class OSMHandler(osmium.SimpleHandler):
-    def __init__(self):
-        osmium.SimpleHandler.__init__(self)
-        self.nodes = {}
-        self.ways = {}
-        self.relations = {}
 
-    def node(self, n):
-        if n.location.valid():
-            tags = {tag.k: tag.v for tag in n.tags}
-            self.nodes[n.id] = {
-                'geometry': Point(n.location.lon, n.location.lat),
-                **tags
-            }
+# Assuming you have two GeoDataFrames, one with points and one with polygons
+points_gdf = gpd.read_file(sys.argv[1])
+polygons_gdf = gpd.read_file(sys.argv[2])
 
-    def way(self, w):
-        valid_coords = []
-        tags = {tag.k: tag.v for tag in w.tags}
-        if "building" not in tags: return
-        for nd in w.nodes:
-            if nd.ref in self.nodes:
-                valid_coords.append(self.nodes[nd.ref]['geometry'])
-        if len(valid_coords) > 1:
-            way_geometry = Polygon(valid_coords)
-#            for node_id, node_data in self.nodes.items():
-#                node_geometry = node_data['geometry']
-#                if node_geometry.within(way_geometry):
-#                    # Add the node's tags to the way's tags
-#                    for k, v in node_data.items():
-#                        if k != 'geometry':
-#                            tags.update({k: v})
-#                    break
+# Convert the geometry columns from string to Shapely objects
+points_gdf['geometry'] = points_gdf['geometry'].apply(loads)
+polygons_gdf['geometry'] = polygons_gdf['geometry'].apply(loads)
 
-            self.ways[w.id] = {
-                'geometry': way_geometry,
-                **tags
-            }
+# Create an Rtree index for the polygons
+idx = index.Index()
+for i, geometry in enumerate(polygons_gdf.geometry):
+    idx.insert(i, geometry.bounds)
 
-handler = OSMHandler()
-fname=sys.argv[1]
-handler.apply_file(fname)
+# Query the Rtree index to find which points are within which polygons
+points_in_polygons = []
+for i, point in enumerate(points_gdf.geometry):
+    possible_matches = list(idx.intersection(point.bounds))
+    for j in possible_matches:
+        if polygons_gdf.geometry[j].contains(point):
+            points_in_polygons.append((i, j))
 
-# Create a GeoDataFrame from the nodes, ways, and relations
-osm_data = gpd.GeoDataFrame(
-    list(handler.nodes.values()) + list(handler.ways.values()) ,
-    geometry='geometry',
-    crs="EPSG:4326"
-)
-fname=fname.replace('.osm','bld.csv')
-building = osm_data.loc[osm_data["building"].map(lambda x:type(x)==str)]
-building = building.dropna(axis=1, how='all')
-building.to_csv(fname, index=False)
+# Create a new GeoDataFrame with the matched points and polygons
+result_gdf = gpd.GeoDataFrame({
+    'point_idx': [p[0] for p in points_in_polygons],
+    'polygon_idx': [p[1] for p in points_in_polygons],
+    'geometry_pnt': [points_gdf.geometry[p[0]] for p in points_in_polygons],
+    'geometry_png': [polygons_gdf.geometry[p[1]] for p in points_in_polygons]
+})
+#result_gdf for checking
+result_gdf.to_csv(sys.argv[1]+sys.argv[2],index=False)
+
+pgn_pnt={i:j for i,j in zip(result_gdf.polygon_idx,result_gdf.point_idx)}
+s_polygon_idx=list(set(result_gdf.polygon_idx))
+final=gpd.GeoDataFrame({'geometry':[polygons_gdf.geometry[i] for i in s_polygon_idx]})
+final['addr:full']=[points_gdf.loc[pgn_pnt[i],'addr:full'] for i in s_polygon_idx]
+final.to_csv('final'+sys.argv[1]+sys.argv[2],index=False)

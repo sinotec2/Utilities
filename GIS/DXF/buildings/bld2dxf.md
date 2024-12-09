@@ -130,6 +130,6 @@ tags: GIS DXF
 
 ![](./pngs/1733720994018.jpg)
 
-## 程式碼[bld2dxf.py](pys/bld2dxf.py)
+  ## 程式碼[bld2dxf.py](./pys/bld2dxf.py)
 
-{% include download.html content="建築物DXF檔之改寫[bld2dxf.py](./pys/bld2dxf.py)" %}
+  {% include download.html content="建築物DXF檔之改寫[bld2dxf.py](./pys/bld2dxf.py)" %}
