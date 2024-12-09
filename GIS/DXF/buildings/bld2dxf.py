@@ -1,7 +1,5 @@
-In [5]: pwd
-Out[5]: '/nas2/kuang/MyPrograms/CADNA-A'
-
-In [6]: cat bld2dxf.py
+kuang@DEVP /nas2/kuang/MyPrograms/CADNA-A
+$ cat bld2dxf.py
 import numpy as np
 import tempfile as tf
 from io import BytesIO
@@ -128,21 +126,23 @@ def bld(swLL,neLL):
   #read the 3d buildings
   roots='/nas2/kuang/MyPrograms/CADNA-A/OSM'
   dim=['3D','2D']
-  p = []
   for d in dim[:]:
     fname=f"{roots}/building{d}.csv"
     polygons_gdf = pd.read_csv(fname)
     polygons_gdf['geometry'] = polygons_gdf['geometry'].apply(loads)
     polygons_gdf = gpd.GeoDataFrame(polygons_gdf, geometry='geometry', crs="EPSG:3857")
+    p = []
     for i, geom in enumerate(['Point', 'Polygon', 'MultiPolygon']):
       gdf_tmp = polygons_gdf.loc[polygons_gdf.geometry.map(lambda x: x.geom_type == geom)]
       p.append(gpd.overlay(gdf_tmp, bounds_gdf, how='intersection'))
-  sliced_gdf = pd.concat(p, ignore_index=True)
+    sliced_gdf = pd.concat(p, ignore_index=True)
+    if len(sliced_gdf)>=4:
+      break
   if len(sliced_gdf)==0:
     return 'no buildings'
   sliced_gdf = gpd.GeoDataFrame(sliced_gdf, geometry='geometry', crs=polygons_gdf.crs)
   sliced_gdf['mean_ll']=sliced_gdf.geometry.centroid
-  print(sliced_gdf['mean_ll'])
+  if 'maxAltitude' not in sliced_gdf.columns: sliced_gdf['maxAltitude'] = 5
   sliced_gdf['maxAltitude'] = sliced_gdf['maxAltitude'].fillna(5)
 
 # drop duplicate
@@ -179,16 +179,16 @@ def bld(swLL,neLL):
   if len(s)>0:
     points=list(s.geometry)
     sliced_gdf.loc[s.index,'geometry_twd97']=[query_g2(i,pnyc) for i in points]
-  print(point_tw)
 
   doc = ezdxf.new(dxfversion="R2010")
   msp = doc.modelspace()
   align=TextEntityAlignment.CENTER
-  layer_name = f"Polygon_{len(sliced_gdf)+1}"
-  layer = doc.layers.add(layer_name)
+  ii=0
   for i in sliced_gdf.index:
-    print(i)
-    bot=sliced_gdf.loc[i,'elevation']
+    layer_name = f"Polygon_{ii}"
+    layer = doc.layers.add(layer_name)
+    bot=float(sliced_gdf.loc[i,'elevation'])
+    Vbot=Vec3(0, 0, bot)
     top=bot+sliced_gdf.loc[i,'maxAltitude']
     if i in p.index or i in s.index:
       polygons=[sliced_gdf.loc[i,'geometry_twd97']]
@@ -196,9 +196,11 @@ def bld(swLL,neLL):
       polygons=[polygon for polygon in sliced_gdf.loc[i,'geometry_twd97'].geoms]
     for polygon in polygons:
       points=[j for j in polygon.exterior.coords] #reorder_polygon_points(polygon)
+      #上下平面
       for hgt in [bot,top]:
-        pnts=[(p[0],p[1],hgt) for p in points]
+        pnts=[Vec3(p[0],p[1],hgt) for p in points]
         npnts=len(pnts)
+        msp.add_polyline2d(pnts, dxfattribs={ "layer": layer_name, 'elevation':Vbot  })
         if npnts <=4 and npnts in [3,4]:
           msp.add_3dface(pnts, dxfattribs={'layer': layer_name})
         else:
@@ -208,17 +210,18 @@ def bld(swLL,neLL):
               nnd=min(n+4,npnts)
               if nnd-n not in [3,4]:continue
               msp.add_3dface(pnts[n:nnd], dxfattribs={'layer': layer_name})
-
+      #立面
       for j in range(len(points)):
         pj = points[j]
-        p1 = (pj[0],pj[1],bot)
+        p1 = Vec3(pj[0],pj[1],bot)
         pn = points[(j + 1) % len(points)]
-        p2 = (pn[0],pn[1],bot)
-        p3 = (p2[0], p2[1], top)
-        p4 = (p1[0], p1[1], top)
+        p2 = Vec3(pn[0],pn[1],bot)
+        p3 = Vec3(p2[0], p2[1], top)
+        p4 = Vec3(p1[0], p1[1], top)
         pnts=[p1, p2, p3, p4]
+        msp.add_polyline2d(pnts, dxfattribs={ "layer": layer_name, 'elevation': Vbot })
         msp.add_3dface(pnts, dxfattribs={'layer': layer_name})
-
+    ii+=1
 
   ran=tf.NamedTemporaryFile().name.replace('/','').replace('tmp','')
   fname='bldn_'+ran+'.dxf'
