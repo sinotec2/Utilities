@@ -24,7 +24,7 @@ tags: GIS KML
 
 - 整體工作流程如圖所示，區分為3大區塊
 
-  ![alt text](image-1.png)
+  ![alt text](../DXF/buildings/pngs/image-1.png)
 
 ## OSM數據的整理
 
