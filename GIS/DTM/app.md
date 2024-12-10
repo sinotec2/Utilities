@@ -3,7 +3,7 @@ layout: default
 title:  API伺服器的設計
 parent: DTM and Relatives
 grand_parent: GIS Relatives
-last_modified_date: 2024-06-07 00:32:27
+last_modified_date: 2024-12-10 16:53:58
 nav_order: 7
 tags: dtm GIS
 ---
@@ -27,7 +27,7 @@ tags: dtm GIS
 
 - 前台[leaflet](https://leafletjs.com/)、API伺服器、製圖函式([cntr](./mem2cntr.md)及[dxf](./mem2dxf.md))、[資料檔](./dtm_info.md)與[前處理](./img2mem.md)等作業方式，如圖所示。
 
-![](pngs/2024-06-07-09-13-26.png)
+![pngs/2024-12-10-17-36-50.png](pngs/2024-12-10-17-36-50.png)
 
 - 這支程式([app.py](./app.py))接收前端html leaflet元件的呼叫、傳入`bounds`座標值，引用[cntr](./mem2cntr.md)、[dxf](./mem2dxf.md)2支函式進行檔案切割、製圖，最後將結果檔回傳給前端，儲存在使用者本機的`下載`目錄。
 
@@ -190,5 +190,106 @@ if __name__ == '__main__':
 ```
 
 此應用程序提供了一個簡單的網頁界面，並且可以通過 API 調用來生成並下載 DXF 文件和 PNG 圖像。確保 `mem2cntr` 和 `mem2dxf` 模組正確地被導入並且運行正常。
+
+## 運轉維護
+
+### app.py紀錄
+
+- app.py增添下列指令
+
+```python
+
+import logging
+from datetime import datetime
+
+app = Flask(__name__)
+
+# 設定日誌配置
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    handlers=[
+        logging.FileHandler('user_activity.log'),
+        logging.StreamHandler()
+    ]
+)
+
+@app.route('/log_console_output', methods=['POST'])
+def log_console_output():
+    # 獲取前端傳來的console輸出
+    console_output = request.get_json().get('console_output')
+    logging.info(f"Console output: {console_output}")
+    error_output = request.get_json().get('errort')
+    logging.info(f"Error output: {error_output}")
+    bound_output = request.get_json().get('Saved bounds')
+    logging.info(f"Bound output: {bound_output}")
+
+    return jsonify({'status': 'success'})
+...
+        print("Received data:", data)  # 调试输出
+        sw_lat = data.get('sw_lat')
+        sw_lon = data.get('sw_lon')
+        ne_lat = data.get('ne_lat')
+        ne_lon = data.get('ne_lon')
+
+
+        with open('user_activity.log', 'a') as log_file:
+            log_file.write(f"Received data: {data}\n")
+
+```
+
+### index.html啟動紀錄
+
+```html
+...
+ <script>
+window.addEventListener('error', function(event) {
+  // 獲取錯誤資訊
+  var errorMessage = event.message;
+  var errorStack = event.error.stack;
+
+  // 使用AJAX將錯誤資訊傳送到Flask後端
+  fetch('/log_console_output', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      console_output: `Error: ${errorMessage}\nStack: ${errorStack}`
+    })
+  })
+  .then(response => {
+    console.log('Console output logged successfully');
+  })
+  .catch(error => {
+    console.error('Error logging console output:', error);
+  });
+});
+ </script>
+...
+```
+
+### 定期檢查與啟動
+
+- 上班日每天7時進行檢查，如果沒有運轉，則予以啟動
+- 如果前一天有人執行，則將紀錄檔案重新更名。
+
+```bash
+$ crontab -l|grep ck_up
+0  7  *  *  1-5 /nas2/kuang/MyPrograms/CADNA-A/ck_up.cs >& /dev/null 2>&1
+
+$ cat ck_up.cs
+#!/bin/bash
+#default running at DEVP.sinotech-eng.com:5000
+cd /nas2/kuang/MyPrograms/CADNA-A
+n=$(ps -ef|grep app.py|wc -l)
+if [ $n -lt 3 ];then
+  ~/.conda/envs/pyn_env/bin/python app.py
+  echo excuted
+fi
+
+if [ -e "user_activity.log" ];then mv user_activity.log user_activity.log.$(date -d "yesterday" +%Y%m%d);fi
+```
 
 [flask]: https://flask.palletsprojects.com/en/3.0.x/ "Flask是一個使用Python編寫的輕量級Web應用框架。基於Werkzeug WSGI工具箱和Jinja2模板引擎。Flask使用BSD授權。 Flask被稱為「微框架」，因為它使用簡單的核心，用擴充增加其他功能。Flask沒有預設使用的資料庫、表單驗證工具。 維基百科"
