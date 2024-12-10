@@ -31,6 +31,7 @@ tags: GIS DXF
 
 - 主程式管理目錄下所有`*LINE*.kml`，執行`read_kml_to_gdf`副程式。
 - 屬性資料儲存後予以刪除，以備整合成為一個大檔`'line3D.csv'`。
+- 雖然這個檔案讀取的時間還在可接受的範圍，但畢竟單一很大（～1GB）的檔案有壞掉的風險，還是有必要發展更要效率、更安全的服務方案（[]()）。
 
 ```python
 import geopandas as gpd
