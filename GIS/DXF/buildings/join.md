@@ -7,7 +7,7 @@ last_modified_date: 2024-12-08 16:24:44
 tags: GIS DXF
 ---
 
-# 建築物多邊形與節點的整併（join_pnt_bld.py）
+# OSM建築物多邊形與節點的整併（join_pnt_bld.py）
 
 {: .no_toc }
 
@@ -24,10 +24,25 @@ tags: GIS DXF
 
 ## 背景
 
-- 建築物資料庫的整理、整併、與切割應用的工作流程如圖所示。
-- 大致上整體工作區分為3大區塊，`join_pnt_bld.py`的範圍與功能，為最終整併成`buildings.csv`的重要程序。
+- 整體建築物資料庫的整理、整併、與切割應用的工作流程如圖所示。
+- 大致上整體工作區分為3大區塊。`join_pnt_bld.py`的步驟屬於前期處理，為最終整併成`3Dbuildings.csv`的重要程序。OSM其他沒有高度的建築物資訊，則併入`2Dbuildings.csv`中，在找不到足夠3D資訊的時候可以作為替代。
 
   ![alt text](./pngs/image-1.png)
+
+- 任務說明如下：
+  - 拆分taiwan.osm
+  - 過濾建築物標籤
+  - 區分多邊形與節點
+  - 從地址中可以辨識所在縣市之篩選
+  - 整合節點與多邊形
+- 任務策略檢討說明如下
+
+### 全台OSM數據的拆分策略
+
+-任務說明
+  - OSM檔案是個ASCII檔，按順序區分為節點(`node`)、道路(`way`含`LineString`及`Polygon`，`MuitiPolygon`)，與關聯(`relation`)等3個段落。何以可以寫成這樣不理解，猜測應該是資料庫輸出的結果。
+  - 因為道路與關聯是用節點標籤來表示，如果在同一個程式內來處理檔案，會造成記憶體不足的衝擊，必須先行拆分。
+- 拆分的官方建議：使用online服務（`overpass`）、QGIS、使用`osmconvert`或`ogr2ogr`等命令列工具(參考[GIS StackExchang](https://gis.stackexchange.com/questions/121652/obtaining-osm-data-within-bounds)的討論)。QGIS個人就不建議了，（猜）記憶體也會被卡死。
 
 ### 程式說明
 
@@ -36,8 +51,7 @@ tags: GIS DXF
 ### 輸入
 
 程式接受兩個命令列參數，這兩個參數是 GeoDataFrame 檔案的路徑：
-1
-. 第一個檔案：包含節點的 GeoDataFrame。
+1. 第一個檔案：包含節點的 GeoDataFrame。
 2. 第二個檔案：包含多邊形的 GeoDataFrame。
 
 ### 輸出
@@ -47,7 +61,7 @@ tags: GIS DXF
 1. 第一個檔案：包含匹配的點與多邊形的資料。這個索引的表格是用來檢核結果的正確性，並沒有後續應用的必要性。
 2. 第二個檔案：包含最終的多邊形與對應的地址資料。命名原則：`final_pnt_bld.csv` (`'final'+sys.argv[1]+sys.argv[2]`)
 
-### 重要邏輯
+### 重要邏輯s
 
 1. **讀取 GeoDataFrames**：
    使用 `gpd.read_file()` 讀取點和多邊形資料。

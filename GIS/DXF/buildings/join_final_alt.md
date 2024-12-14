@@ -7,7 +7,7 @@ last_modified_date: 2024-12-08 16:24:44
 tags: GIS DXF
 ---
 
-# 建築物與節點高度的整併（join_final_alt.py）
+# OSM建築物與內政部資訊的整併（join_final_alt.py）
 
 {: .no_toc }
 
