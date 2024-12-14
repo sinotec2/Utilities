@@ -28,7 +28,7 @@ tags: GIS DXF
 
   ![alt text](./pngs/image-1.png)
 
-### 檢視
+### 檢視工具
 
 - 利用ezdxf模組解讀、輸出建築物的3維平面
 - 座標轉換
@@ -46,38 +46,8 @@ tags: GIS DXF
 
 ### 是否納入沒有高度的建築物
 
-### ezdxf輸出函式的應用
 
-## OSM數據的整理
-
-- OSM整理的困難與對策
-- 數據檔龐大
-  - 不區分直接切割：必須將節點全部載入記憶體，才會讀取道路，這超過記憶體容量、且無法同步運作。
-  - 按照縣市區分：並不是所有的元件都有完整的地址，道路、relation就沒有太多的屬性信息
-  - 按照經緯度（解析度0.5/0.1度）區分：對節點與多邊形有其可行性。
-- 道路含多邊形、如何區分
-  - 讀取套件不會自行判定是否為封閉曲線
-
-### OSM幾何物件的拆解
-
-- 切割OSM檔案：使用`ogr2ogr -b=指令
-- 切割後的物件區分：`rd_pnt.py`、`rd_bld.py`，
-- 節點會有較完整的訊息，分別按照經緯度順序編號儲存、只儲存具有`buuilding`屬性內容的節點。
-- 整併節點座標後的道路（含建物），
-
-### 節點與多邊形屬性資料的整併
-
-- `join_pnt_bld.py`，
-- 分各個經緯度範圍儲存在`final*.csv`。
-- 這類的多邊形可以連結完整的地址可供辨識，將進一步結合內政部建築物的高度。
-
-## 內政部建築物資料的整理與合併
-
-- 為非典型的`kml`格式
-
-### 資料項目
-
-## 範圍切割與DXF製作
+## 範圍切割
 
 ### building.csv切割
 
@@ -86,7 +56,18 @@ tags: GIS DXF
 - 點Point如何轉成Polygon
 - 高度設定的考量
 
-### 高程數據的應用
+## 高程數據的應用
+
+### 地形高程的策略考量
+
+- 因為是三維的模型，建築物的基地高程就變得很重要。還好已經有準備好的地形檔案可以快速引用。
+- 策略面要考慮的是
+  - 高程需不需要內插到多邊形的每一個點？這樣建築物會不會歪斜？這也會牽動到執行量與執行速率。
+  - 如果不需要每一點，那建築物該取哪一點來代表它的位置？最低、最高、中心？平均高程？
+  - 內插機制怎麼樣做到很快速又正確？
+
+### 程式說明
+  
 
 ### 幾何物件頂點的座標轉換
 
@@ -94,10 +75,117 @@ tags: GIS DXF
 
 ### 串連道路資料庫
 
-## 切割套件
+## ezdxf輸出函式的應用及程式說明
+
+- `Vec3`物件
+  - 一如在數值地形資料的輸出，如果只是輸出線形物件，後續程式仍然不能正確讀取DXF檔案，因為DXF的點都必須是3度空間完整定義([Vec3](https://ezdxf.readthedocs.io/en/stable/math/core.html#ezdxf.math.Vec3)物件)
+- `3dface`
+  - 使用`3dface`的必要性似乎是很直覺的，畢竟要輸出的是建築物的立方體，會需要上層、底層、各個立面的平面。
+  - layer的高程設定卡了一陣子無法決定，如果建築物在山坡上，layer的高程究竟該取上、下層的高程？平均？答案是：都沒差別、在`polyliine3d`的個案中，直接把layer的高程設為0，徹底解決斷層的問題。
+- `polyliine2d`物件
+  - 會想重複提供多邊形邊框的描繪是查看範例檔案中有很多`LineString`物件，並沒有測試其必要性。
+  - 在繪圖預覽過程中，有`polyliine2d`物件對不夠完整的`3dface`集合會有很大的幫助，建築物看起來會比較平整。
+- 參考
+  - [ezdxf官網說明](https://ezdxf.readthedocs.io/en/stable/index.html)
+  - [等高線DXF輸出的經驗](../../DTM/mem2dxf.md)
+  - [範例DXF檔案轉python碼](../roads/pys/w_source.py)
+### 輸入
+
+- **sliced_gdf**: 一個 GeoDataFrame，包含多邊形的幾何資訊及其相關屬性（如 `elevation` 和 `maxAltitude`）。
+- **p, s, m**: 這些變數代表不同的索引集合，用於確定當前處理的幾何形狀類型。分別是多邊形、線段、與多個多邊形。
+
+### 輸出
+
+- **fname**: 生成的 DXF 檔案名稱。
+- **output**: 包含生成的 DXF 檔案的二進位資料，方便後續操作或直接返回給使用者。
+
+### 重要邏輯
+
+1. **DXF 檔案創建**: 使用 `ezdxf` 庫創建新的 DXF 檔案，並設置模型空間。
+2. **分層管理**: 根據每個多邊形的索引創建不同的圖層，並將多邊形的底部和頂部高度計算出來。
+3. **多邊形處理**: 根據 `sliced_gdf` 中的幾何資料，將多邊形的外部點提取出來，並為每個多邊形生成上下平面及其立面。
+   - 使用 `add_polyline2d` 和 `add_3dface` 方法將生成的點添加到模型空間中。
+4. **立面生成**: 對於每個多邊形的邊，生成對應的立面，並將其添加到 DXF 檔案中。
+
+### 較艱澀語法的解釋
+
+- **Vec3**: 用於表示三維空間中的點，通常包含 x, y, z 三個座標。
+- **add_polyline2d**: 用於將二維折線添加到模型空間中。
+- **add_3dface**
+  - 用於將**三維面**添加到模型空間中，通常用於構建立體幾何。
+  - **三維面**的限制是一次只能有3點、至多4點、同一平面的點。因此當點數多於4點的建築物，就必須執行迴圈，同時也要注意每一點都必須有前後點作為**三維面**，否則會出現多邊形無法閉合的情況。
+- MultiPolygon的處理：其函式`.geoms`的形態為個別多邊形所形成的序列，依序執行原來多邊形的任務即可。
+
+### 改進建議
+
+1. **錯誤處理**: 增加對於輸入資料有效性的檢查，避免因資料格式不正確而導致的執行錯誤。
+2. **性能優化**: 對於大規模的多邊形數據，可以考慮使用多執行緒或異步處理來加速生成過程。
+3. **功能擴展**: 可以考慮添加選項來支持不同的 DXF 版本，以滿足不同用戶的需求。
+
+這段程式碼的主要目的是將地理數據轉換為 DXF 格式的三維模型，並能夠根據多邊形的特性生成相應的結構。
+
+### 程式碼
+
+```python
+...
+  doc = ezdxf.new(dxfversion="R2010")
+  msp = doc.modelspace()
+  align=TextEntityAlignment.CENTER
+  ii=0
+  for i in sliced_gdf.index:
+    layer_name = f"Polygon_{ii}"
+    layer = doc.layers.add(layer_name)
+    bot=float(sliced_gdf.loc[i,'elevation'])
+    Vbot=Vec3(0, 0, bot)
+    top=bot+sliced_gdf.loc[i,'maxAltitude']
+    if i in p.index or i in s.index:
+      polygons=[sliced_gdf.loc[i,'geometry_twd97']]
+    if i in m.index:
+      polygons=[polygon for polygon in sliced_gdf.loc[i,'geometry_twd97'].geoms]
+    for polygon in polygons:
+      points=[j for j in polygon.exterior.coords] #reorder_polygon_points(polygon)
+      #上下平面
+      for hgt in [bot,top]:
+        pnts=[Vec3(p[0],p[1],hgt) for p in points]
+        npnts=len(pnts)
+        msp.add_polyline2d(pnts, dxfattribs={ "layer": layer_name, 'elevation':Vbot  })
+        if npnts <=4 and npnts in [3,4]:
+          msp.add_3dface(pnts, dxfattribs={'layer': layer_name})
+        else:
+          rep=npnts//4
+          for k in range(rep):
+            for n in range(2*k, npnts, 4):
+              nnd=min(n+4,npnts)
+              if nnd-n not in [3,4]:continue
+              msp.add_3dface(pnts[n:nnd], dxfattribs={'layer': layer_name})
+      #立面
+      for j in range(len(points)):
+        pj = points[j]
+        p1 = Vec3(pj[0],pj[1],bot)
+        pn = points[(j + 1) % len(points)]
+        p2 = Vec3(pn[0],pn[1],bot)
+        p3 = Vec3(p2[0], p2[1], top)
+        p4 = Vec3(p1[0], p1[1], top)
+        pnts=[p1, p2, p3, p4]
+        msp.add_polyline2d(pnts, dxfattribs={ "layer": layer_name, 'elevation': Vbot })
+        msp.add_3dface(pnts, dxfattribs={'layer': layer_name})
+    ii+=1
+
+  ran=tf.NamedTemporaryFile().name.replace('/','').replace('tmp','')
+  fname='bldn_'+ran+'.dxf'
+  output=BytesIO()
+  doc.write(output, fmt='bin')
+  output.seek(0)  # 重置指针位置
+  doc.saveas('./dxfs/'+fname)
+  return fname,output
+...
+```
+
+## 切割套件與應用
 
 ### app.py
 
+- 這個程式繼承自[API伺服器的設計](../../DTM/app.md)，新增建築物資料庫的切割功能。
 - 輸入bld2dxf模組
 - 新增`bld(swLL, neLL)`之呼叫
 
@@ -141,6 +229,6 @@ tags: GIS DXF
 
 ![](./pngs/1733720994018.jpg)
 
-## 程式碼[bld2dxf.py](./pys/bld2dxf.py)
+## 完整程式碼[bld2dxf.py](./pys/bld2dxf.py)
 
   {% include download.html content="建築物DXF檔之改寫[bld2dxf.py](./pys/bld2dxf.py)" %}

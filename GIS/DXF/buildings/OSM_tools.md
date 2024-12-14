@@ -1,32 +1,33 @@
----
-layout: default
-title:  OSM處理過程所用到的小工具
-parent: buildings
-grand_parent: DXF
-last_modified_date: 2024-12-09 14:33:45
-tags: GIS DXF
----
+  ---
+  layout: default
+  title:  OSM處理過程所用到的小工具
+  parent: buildings
+  grand_parent: DXF
+  last_modified_date: 2024-12-09 14:33:45
+  tags: GIS DXF
+  ---
 
-# OSM處理過程所用到的小工具
+  # OSM處理過程所用到的小工具
 
-{: .no_toc }
+  {: .no_toc }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-- TOC
-{:toc}
-</details>
+  <details open markdown="block">
+    <summary>
+      Table of contents
+    </summary>
+    {: .text-delta }
+  - TOC
+  {:toc}
+  </details>
 
----
+  ---
 
-## 背景
+  ## 背景
 
 - 因為工作太過複雜，工具當然是越多越好，如果不夠用也只好自己做。
 - 這種分享有時候也很殘忍，因為對某人很好用的工具，對其他人可能就沒那麼好用，見仁見智囉!
 
+## 區分及整併
 
 ### 新創平行運作所需之次目錄
 
