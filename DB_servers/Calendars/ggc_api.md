@@ -3,7 +3,7 @@ layout: default
 title:  Google Calendar API
 parent: Calendars
 grand_parent: DB_servers
-last_modified_date: 2024-08-19 18:54:53
+last_modified_date: 2024-12-12 13:22:35
 tags: calendar
 ---
 
@@ -29,7 +29,7 @@ tags: calendar
   - 可能因為需要指定的條件太多，還有`ACCESS_TOKEN`的取得也是層層關卡，到底是GET還是POST搞不清楚，乾脆用程式語言來做比較直接。
   - 但實際作業過程，還是產出或引用到許多json檔案的訊息，只是是用比較完整的語言工具來操作。
 
-|![](2024-07-29-19-05-34.png)|
+|![pngs/2024-07-29-19-05-34.png](pngs/2024-07-29-19-05-34.png)|
 |:-:|
 |[官網快速入門的語言選項](https://developers.google.com/calendar/api/guides/overview?hl=zh-tw)|
 
@@ -95,7 +95,12 @@ firefox &
 ```
 
 - 待python程式執行時，會在火狐瀏覽器畫面進行google身分認證。按照提示進行即可。
-- 不要嘗試使用其他遠端瀏覽器。
+- 也可以使用其他遠端瀏覽器。`./calendar_sample.py  --noauth_local_webserver`，複製google回應的token(如附圖)，在命令列程式的空格處貼上token即可。
+
+![](2024-12-12-13-20-25.png)
+
+
+![](2024-12-12-13-22-12.png)
 
 ## 測試程式
 
