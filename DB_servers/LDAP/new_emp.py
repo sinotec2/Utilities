@@ -1,4 +1,5 @@
 # 20240726版 edit by python大神天霖
+# api ref: https://python-freeipa.readthedocs.io/en/latest/
 from python_freeipa import ClientMeta
 
 ## 連線FreeIPA
@@ -29,6 +30,12 @@ user = {
     "UserGroup" "carbon" #分組名稱
 }
 
+#"UserGroup":
+#Out[36]: dict_keys(['admin', 'air', 'carbon', 'construction', 'counseling', 'editors', 'eia', 'ict', 'operation', 'pipeline', 'soil', 'waste', 'water', 'wind'])
+
+
+df=read_csv('ldapmember/group_id.csv')
+gnam_id={i:j for i,j in zip(df.group_name,df.GID)}
 
 # 重複資料處理
 user["Email"] = user["UserName"] + "@mail.sinotech-eng.com" # Email
@@ -56,6 +63,9 @@ client.user_add(
     o_title=user.get("DutyName"),
     # 員工類型(職等)先不新增 o_employeetype=user.get("TitleName"),
     # 家目錄先不新增 o_homedirectory=user.get("Home"),
+    o_gidnumber = gnam_id.get(user.get("UserGroup")),
 )
+
+client.group_add_member(a_cn=user.get("UserGroup"),o_user=user.get("UserName"),)
 
 client.logout()

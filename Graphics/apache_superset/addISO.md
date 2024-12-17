@@ -35,8 +35,8 @@ tags: apache_superset graphics
 ```bash
 cd superset-frontend/
 nvm use v20.11.1
-npm install && npm run plugins:build
-cd ../venv/[[2024-12-08]]
+npm install && npm run plugins:build && npm run build
+cd ../venv/lib/python3.11/site-packages/superset/s  tatic/assets
 rm -fr *
 cp -r ~/MyPrograms/superset/superset/static/assets/* .
 ```
@@ -175,7 +175,7 @@ PARTITIONED BY ALL
 - 在查詢處，國家下拉選單選擇Taiwan，ISO 3166-2 代碼選擇前述數據表中的`ISO`，
 - 指標：即為choropleth的顏色數量，選擇排放量-sum。
 
-![](2024-12-03-12-56-45.png)
+![](pngs/2024-12-03-12-56-45.png)
 
 ## polygon
 
@@ -214,4 +214,11 @@ gdf.drop('geometry', axis=1).to_csv('polygons.csv')
 - 雖然沒有dict的型態，仍然必須選JSON
 - 有搭配數量就可以著色與高度之區別(`指標`)
 
-![](2024-12-03-17-04-10.png)
+![](pngs/2024-12-03-17-04-10.png)
+
+## 中文介面
+
+- 設定檔位置：`~/MyPrograms/superset/venv/lib/python3.11/site-packages/superset/config.py`
+- 修改內容
+  - `BABEL_DEFAULT_LOCALE = "zh_TW"`
+  - `rm __pycache__/config.cpython-311.pyc`

@@ -36,11 +36,11 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
 
 2. **在 Superset 中添加 Druid 數據源：** 以管理者權限登錄到 Superset。點擊右上角的「+」按鈕，選擇「Data」及「Connect  database」。
 
-![](2024-07-12-10-50-12.png)
+![pngs/2024-07-12-10-50-12.png](pngs/2024-07-12-10-50-12.png)
 
 - 或由個人設定(Settings)中Data &rightarrow;Database Connections進入。
 
-![](2024-07-11-10-13-05.png)
+![pngs/2024-07-11-10-13-05.png](pngs/2024-07-11-10-13-05.png)
 
 3. **填寫 Druid 數據源的詳細信息：**
 
@@ -49,7 +49,7 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
 
 > druid://4○○○:y○○○○○○4○○○@${host}:8888/druid/v2/sql
 
-![](2024-07-11-09-57-02.png)
+![pngs/2024-07-11-09-57-02.png](pngs/2024-07-11-09-57-02.png)
 
 - 注意
   - 如果要修改(刪除或重建)一個連結，需要是原來的創建者
@@ -60,8 +60,8 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
 
 2. **添加 Druid 資料集：** 成功連接後，轉到「Datasets」頁面，然後點擊右上角的「+」按鈕來產生一個新的資料集，在DATABASE對話框下拉選擇「Druid」數據源、並選擇druid伺服器上的資料框架(Schema)。這將使您能夠在 Superset 中查詢 Druid 伺服器上的資料表(如下圖右半邊顯示)與其欄位名稱、數據類別等。最後按下新創資料庫及圖表。
 
-![](2024-06-21-16-33-30.png)
-![](2024-07-11-10-36-09.png)
+![pngs/2024-06-21-16-33-30.png](pngs/2024-06-21-16-33-30.png)
+![pngs/2024-07-11-10-36-09.png](pngs/2024-07-11-10-36-09.png)
 
 - 注意
   - 資料庫的名稱內設成druid遠端資料表的名稱，似乎不能修改。
@@ -132,7 +132,7 @@ Apache Superset 可以與 Apache Druid 整合，以便在 Superset 中查詢和�
 
 - 只有原創者可以刪除連結
 
-![](2024-07-11-09-45-10.png)
+![pngs/2024-07-11-09-45-10.png](pngs/2024-07-11-09-45-10.png)
 
 ## mysql之連結
 

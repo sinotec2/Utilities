@@ -1,0 +1,16 @@
+group_name,GID, description
+admin,1572800020,Admin Group
+admins,1572800000,Account administrators group
+air,1572800011,Air Group
+carbon,1572800012,Carbon Group
+construction,1572800017,Construction Group
+counseling,1572800019,Counseling Group
+editors,1572800002,Limited admins who can edit other users
+eia,1572800009,EIA Group
+ict,1572800035,ICT Group
+operation,1572800018,Operation Group
+pipeline,1572800013,Pipeline Group
+soil,1572800016,Soil Group
+waste,1572800015,Waste Group
+water,1572800014,Water Group
+wind,1572800010,Wind Group
