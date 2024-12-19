@@ -36,7 +36,7 @@ tags: apache_superset graphics
 cd superset-frontend/
 nvm use v20.11.1
 npm install && npm run plugins:build && npm run build
-cd ../venv/lib/python3.11/site-packages/superset/s  tatic/assets
+cd ../venv/lib/python3.11/site-packages/superset/static/assets
 rm -fr *
 cp -r ~/MyPrograms/superset/superset/static/assets/* .
 ```
@@ -44,6 +44,8 @@ cp -r ~/MyPrograms/superset/superset/static/assets/* .
 - 進入superset選取國家地圖檢視台灣地區成果
 
 ## 添加工業區邊界線
+
+- 添加工業區需要重新編譯，可能會讓儀表板不能存檔，慎入!
 
 ```python
 import pandas as pd
