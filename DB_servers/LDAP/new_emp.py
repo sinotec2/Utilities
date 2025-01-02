@@ -4,7 +4,7 @@ from python_freeipa import ClientMeta
 
 ## 連線FreeIPA
 client = ClientMeta("node03.sinotech-eng.com", verify_ssl=False)
-client.login("admin", "sino2024")
+client.login("admin", "***")
 
 deptDict = {
     "監理": "01",
@@ -17,6 +17,16 @@ deptDict = {
     "能資部": "18",
     "永續部": "19",
     "環境工程部": "EV"
+}
+
+
+deptDict2 = {
+    "研發及資訊部": "研資部",
+    "環境一部":"環評部",
+    "環境規劃一部":"環評部",
+    "環境二部":"環評部",
+    "環二部":"循環部",
+    "資源循環部":"能資部",
 }
 
 # 根據新進員工資訊修改此字典
