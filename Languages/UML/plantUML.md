@@ -30,6 +30,8 @@ tags: UML
 
 - request and response
 
+![](/pngs/2025-01-22-11-26-04.png)
+
 ```plantuml
 @startuml test_digram 
 
@@ -43,6 +45,8 @@ Alice <-- Bob: Another authentication Response
 ```
 
 - user sequential work
+
+![](pngs/2025-01-22-11-27-58.png)
 
 ```plantuml
 @startuml
@@ -65,6 +69,8 @@ deactivate A
 ```
 
 ### State Diagram 狀態圖
+
+![](pngs/2025-01-22-11-29-57.png)
 
 ```plantuml
 @startuml
@@ -91,6 +97,8 @@ state Configuring {
 
 ### Class Diagram 類別圖
 
+![](pngs/2025-01-22-11-31-06.png)
+
 ```plantuml
 @startuml
 class Car
@@ -103,6 +111,8 @@ Car -- Person : < owns
 ```
 
 ### E-R（Entity Relationship）Diagram 實體關係圖
+
+![](pngs/2025-01-22-11-32-47.png)
 
 ```plantuml
 @startuml
@@ -171,6 +181,8 @@ e03 }|..|| e06
 
 ### User Case Diagram 用例圖
 
+![](pngs/2025-01-22-11-35-01.png)
+
 ```plantuml
 @startuml
 
@@ -195,6 +207,8 @@ g --> UC3
 ```
 
 ### JSON Diagram
+
+![](pngs/2025-01-22-11-36-07.png)
 
 ```plantuml
 @startjson JSON_DIAGRAM
