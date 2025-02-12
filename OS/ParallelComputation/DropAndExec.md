@@ -106,6 +106,7 @@ last_modified_date: 2022-04-25 12:20:36
 ### 開源
 
 以下是幾款知名的開源 Web 文件管理器：
+
 	1.	eXtplorer：提供移動、複製、編輯、搜索、刪除、下載和上傳功能。此外，您也能用 eXtplorer 創建和提取檔案、文件夾和新文件。其主要功能是讓您通過 FTP 訪問文件。為了正常使用，伺服器的 PHP 最低版本要求為 4.3，並且必須更新 JavaScript。  ￼
 
 	2.	AjaXplorer：絕大多數瀏覽器都支持這個文件管理器，並且它能輕易地自動適應類似於手機一樣的小屏幕瀏覽。目前 iOS 版的程序已經被開發出來，安卓版的也將很快完成。要運行 AjaXplorer，您需要一個支持 PHP 5.1 或更高版本的 Web 伺服器。它允許您直接從伺服器串流傳輸視頻內容。  ￼
@@ -119,11 +120,12 @@ last_modified_date: 2022-04-25 12:20:36
 ### Github
 
 以下是幾個在 GitHub 上值得關注的開源 Web 文件瀏覽器項目：
+
 	1.	[FileBrowser](https://github.com/filebrowser/filebrowser):這是一個開源的 Web 文件管理器，提供在指定目錄內管理文件的介面。用戶可以上傳、刪除、預覽、重命名和編輯文件。它支持創建多個用戶，每個用戶可以擁有自己的目錄。該項目以 Go 語言編寫，提供單個靜態二進制文件，易於部署和使用。  ￼
 
-	2.	[Web File Browser](https://github.com/cgdave/webfilebrowser?utm_source=chatgpt.com):這是一個用 PHP 編寫的簡單開源文件瀏覽器，僅包含一個文件。它允許用戶通過輕量級的 Web 界面創建、刪除、編輯、複製、重命名、移動和上傳文件和目錄。安裝簡便，只需將單個 PHP 文件上傳到目標目錄即可。  ￼
+	2.	[Web File Browser](https://github.com/cgdave/webfilebrowser):這是一個用 PHP 編寫的簡單開源文件瀏覽器，僅包含一個文件。它允許用戶通過輕量級的 Web 界面創建、刪除、編輯、複製、重命名、移動和上傳文件和目錄。安裝簡便，只需將單個 PHP 文件上傳到目標目錄即可。  ￼
 
-	3.	[Fibr]()：這是一個旨在提供簡單文件系統瀏覽的項目。它是一個單一的靜態二進制文件，內嵌 HTML 模板，無需使用 JavaScript 框架。Fibr 旨在與多種平台兼容，包括 x86_64、arm、arm64 架構。  ￼
+	3.	[Fibr](https://github.com/ViBiOh/fibr):這是一個旨在提供簡單文件系統瀏覽的項目。它是一個單一的靜態二進制文件，內嵌 HTML 模板，無需使用 JavaScript 框架。Fibr 旨在與多種平台兼容，包括 x86_64、arm、arm64 架構。  ￼
 
 ## inotify
 
