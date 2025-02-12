@@ -117,7 +117,7 @@ last_modified_date: 2022-04-25 12:20:36
 
 ### 開源
 
-以下是幾款知名的開源 Web 文件管理器：
+以下是幾款知名的開源 Web 文件管理器(source:[10個開源的基於WEB的文件管理器](https://linuxstory.org/10-open-source-web-based-file-managers/zh-tw/))
 
 1.	 eXtplorer：提供移動、複製、編輯、搜索、刪除、下載和上傳功能。此外，您也能用 eXtplorer 創建和提取檔案、文件夾和新文件。其主要功能是讓您通過 FTP 訪問文件。為了正常使用，伺服器的 PHP 最低版本要求為 4.3，並且必須更新 JavaScript。  ￼
 2. AjaXplorer：絕大多數瀏覽器都支持這個文件管理器，並且它能輕易地自動適應類似於手機一樣的小屏幕瀏覽。目前 iOS 版的程序已經被開發出來，安卓版的也將很快完成。要運行 AjaXplorer，您需要一個支持 PHP 5.1 或更高版本的 Web 伺服器。它允許您直接從伺服器串流傳輸視頻內容。  ￼
