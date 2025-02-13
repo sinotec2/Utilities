@@ -1,11 +1,24 @@
 ---
-title: GPU插件
-icon: plug
-dir:
-  order: 4
+layout: default
+title:  Ganglia GPU插件
+parent: Graphics
+last_modified_date: 2024-01-04 10:44:40
+tags: graphics 
 ---
 
-# GPU插件
+# Ganglia GPU插件
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
 
 ## 背景
 
