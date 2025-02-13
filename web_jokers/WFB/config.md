@@ -21,8 +21,6 @@ tags: web
 </details>
 ---
 
-## 背景
-
 ## config init
 
 ### Synopsis
