@@ -1,4 +1,4 @@
----
+(---
 layout: default
 title: WebFileBrowser
 parent: Web Jokers
@@ -229,6 +229,7 @@ nginx -s reload
 Windows vs Ubuntu 的 Nginx 設定差異
 
 |項目|Windows	|Ubuntu
+-|:-|-
 配置檔案位置|C:\nginx\conf\nginx.conf|/etc/nginx/nginx.conf
 憑證路徑格式|C:/nginx/certs/|/etc/nginx/certs/
 服務啟動方式|nginx.exe|systemctl restart nginx
