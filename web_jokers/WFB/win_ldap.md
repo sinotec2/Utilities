@@ -1,4 +1,27 @@
+---
+layout: default
+title: Windows 上設定LDAP
+parent: web filebrowser
+grand_parent: Web Jokers
+nav_order: 99
+last_modified_date: 2025-02-13 14:40:16
+tags: web
+---
 
+#  Windows 上的 Nginx HTTPS 設定
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 
 Windows 版 Nginx 不 內建 LDAP 驗證功能，因此如果想讓 Nginx on Windows 使用 LDAP 進行登入驗證，通常需要額外的 外掛模組或代理方式。
