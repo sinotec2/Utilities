@@ -125,8 +125,9 @@ Remove-NetFirewallRule -DisplayName "開放80端口"
 ## 憑證
 
 在 Windows 上產生 HTTPS 憑證（TLS/SSL）通常有幾種方式，以下是兩種常見方法：
-	1.	使用 Let’s Encrypt（推薦）
-	2.	使用 OpenSSL 生成自簽憑證（適用於內部測試環境）
+
+1.	 使用 Let’s Encrypt（推薦）
+2.	 使用 OpenSSL 生成自簽憑證（適用於內部測試環境）
 
 ### Let’s Encrypt
 
@@ -227,12 +228,12 @@ nginx -s reload
 
 Windows vs Ubuntu 的 Nginx 設定差異
 
-項目	Windows	Ubuntu
-配置檔案位置	C:\nginx\conf\nginx.conf	/etc/nginx/nginx.conf
-憑證路徑格式	C:/nginx/certs/	/etc/nginx/certs/
-服務啟動方式	nginx.exe	systemctl restart nginx
-防火牆端口設定	需手動開啟 443 端口	ufw allow 443/tcp
-憑證取得方式	Certbot / OpenSSL 手動	certbot --nginx 自動配置
+|項目|Windows	|Ubuntu
+配置檔案位置|C:\nginx\conf\nginx.conf|/etc/nginx/nginx.conf
+憑證路徑格式|C:/nginx/certs/|/etc/nginx/certs/
+服務啟動方式|nginx.exe|systemctl restart nginx
+防火牆端口設定|需手動開啟 443 端口|ufw allow 443/tcp
+憑證取得方式|Certbot / OpenSSL 手動|certbot --nginx 自動配置
 
 Windows 版 Nginx 主要差異在 路徑格式、服務管理方式、防火牆設定，其他 HTTPS 設定基本相同。
 
