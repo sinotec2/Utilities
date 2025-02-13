@@ -1,7 +1,29 @@
+---
+layout: default
+title: window 端口設定
+parent: web filebrowser
+grand_parent: Web Jokers
+nav_order: 99
+last_modified_date: 2025-02-13 14:40:16
+tags: web
+---
 
-## window 端口設定
+# window 端口設定
+{: .no_toc }
 
-### 開放端口
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+
+
+## 開放端口
 
 是的，Windows 系統作為網路伺服器時，通常需要開放特定的網路端口，才能讓外部用戶存取服務。例如：
 
