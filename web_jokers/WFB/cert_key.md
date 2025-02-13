@@ -1,13 +1,34 @@
+---
+layout: default
+title:  windows 系統的tls 憑證
+parent: web filebrowser
+grand_parent: Web Jokers
+nav_order: 99
+last_modified_date: 2025-02-13 14:40:16
+tags: web
+---
 
+#  windows 系統的tls 憑證
+{: .no_toc }
 
-## 憑證
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 在 Windows 上產生 HTTPS 憑證（TLS/SSL）通常有幾種方式，以下是兩種常見方法：
 
 1.	 使用 Let’s Encrypt（推薦）
 2.	 使用 OpenSSL 生成自簽憑證（適用於內部測試環境）
 
-### Let’s Encrypt
+## Let’s Encrypt
 
 方法 1：使用 Let’s Encrypt（免費且自動續約）
 
@@ -57,7 +78,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout mykey.key -out mycer
 
 注意：自簽憑證不被瀏覽器信任，需要手動安裝到 Windows 信任的憑證存儲區。
 
-### 既有憑證
+## 既有憑證
 
 > 我的瀏覽器已經裝有一個聯外的憑證，可以利用來成為網路伺服器的憑證嗎？如何取得？
 
