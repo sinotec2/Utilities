@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Windows 上設定LDAP
+title: Windows系統的LDAP設定
 parent: web filebrowser
 grand_parent: Web Jokers
 nav_order: 99
@@ -8,7 +8,7 @@ last_modified_date: 2025-02-13 14:40:16
 tags: web
 ---
 
-#  Windows 上的 Nginx HTTPS 設定
+#  Windows HTTPS 的LDAP設定
 {: .no_toc }
 
 <details open markdown="block">
