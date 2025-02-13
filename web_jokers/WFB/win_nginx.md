@@ -1,6 +1,27 @@
+---
+layout: default
+title: Windows 上的 Nginx HTTPS 設定
+parent: web filebrowser
+grand_parent: Web Jokers
+nav_order: 99
+last_modified_date: 2025-02-13 14:40:16
+tags: web
+---
 
+#  Windows 上的 Nginx HTTPS 設定
+{: .no_toc }
 
-## Windows 上的 Nginx HTTPS 設定
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+---
+
+## 背景
 
 Windows 版 Nginx 設定 HTTPS 方式與 Ubuntu 相似，但有一些特別注意事項：
 
