@@ -4,7 +4,7 @@ title:  windows 系統的tls 憑證
 parent: web filebrowser
 grand_parent: Web Jokers
 nav_order: 99
-last_modified_date: 2025-02-13 14:40:16
+last_modified_date: 2025-02-14 08:32:07
 tags: web
 ---
 
@@ -25,8 +25,8 @@ tags: web
 
 在 Windows 上產生 HTTPS 憑證（TLS/SSL）通常有幾種方式，以下是兩種常見方法：
 
-1.	 使用 Let’s Encrypt（推薦）
-2.	 使用 OpenSSL 生成自簽憑證（適用於內部測試環境）
+1. 使用 Let’s Encrypt（推薦）
+2. 使用 OpenSSL 生成自簽憑證（適用於內部測試環境）
 
 ## Let’s Encrypt
 
@@ -42,19 +42,23 @@ Certbot 支援 Windows，可從官方下載 Certbot Windows 版 並安裝。
 
 開啟 PowerShell（管理員權限）並執行：
 
+```bash
 certbot certonly --standalone -d yourdomain.com --preferred-challenges http
+```
 
-	•	--standalone：Certbot 會啟動一個臨時 Web 伺服器來驗證域名，因此必須確保 80 端口未被佔用。
-	•	-d yourdomain.com：換成你的網域名稱。
-	•	憑證會存放在 C:\Certbot\live\yourdomain.com\
+- `--standalone`：Certbot 會啟動一個臨時 Web 伺服器來驗證域名，因此必須確保 80 端口未被佔用。
+- `-d yourdomain.com`：換成你的網域名稱。
+- 憑證會存放在 C:\Certbot\live\yourdomain.com\
 
 步驟 3：續約憑證
 
 Let’s Encrypt 憑證有效期限為 90 天，可使用排程工作（Task Scheduler）執行：
 
-certbot renew
+  ```bash
+  certbot renew
+  ```
 
-### OpenSSL
+## OpenSSL
 
 方法 2：使用 OpenSSL 產生自簽憑證（適用內部測試）
 
@@ -69,7 +73,9 @@ certbot renew
 
 開啟 PowerShell 或 cmd 並執行：
 
+```bash
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout mykey.key -out mycert.crt
+```
 
 這會產生：
 
