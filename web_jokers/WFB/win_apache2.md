@@ -113,3 +113,46 @@ Apache Lounge（手動安裝）|進階用戶|可手動設定，較靈活
 XAMPP（自動安裝）|初學者|一鍵安裝，內建 MySQL、PHP
 
 如果你只需要 Apache 網頁伺服器，建議 使用 Apache Lounge，可獨立安裝、靈活配置。
+
+## 記憶體管理
+
+> 看來httpd.conf MaxMemFree這個值越大越好？
+
+MaxMemFree 這個值並不是越大越好，需要根據實際情況調整。
+
+### MaxMemFree 是什麼？
+
+它控制 Apache HTTPD 釋放空閒記憶體的上限。當一個子行程 (worker) 釋放記憶體時，如果空閒記憶體超過 MaxMemFree 設定值，Apache 會將超出的部分釋放回作業系統，以避免佔用過多的 RAM。
+
+### 設定 MaxMemFree 的考量
+	•	值太小 (如 64 KB) → Apache 經常釋放記憶體，導致效能下降，因為每次請求都可能重新分配記憶體。
+	•	值太大 (如 1024 MB) → Apache 可能長時間佔用大量記憶體，即使不再需要，造成 記憶體浪費，甚至導致系統 Out of Memory (OOM)。
+
+### 最佳設定方式
+	•	如果記憶體夠多（如 16GB 以上 RAM），可以設較大，例如：
+
+MaxMemFree 512
+
+
+	•	如果系統 RAM 較少（如 4GB 以下），建議設定較小，例如：
+
+MaxMemFree 128
+
+
+	•	預設值通常是 0，表示 Apache 會使用 C 標準函式庫的 malloc() 行為，不會主動釋放記憶體。
+
+### 如何找出最佳數值？
+	1.	監控 Apache 記憶體使用情況：
+
+ps aux | grep httpd
+
+或使用 htop/top 觀察 Apache 進程的 RES (實際記憶體使用)。
+
+	2.	如果發現 Apache 進程的記憶體隨時間增長但未釋放，可能需要降低 MaxMemFree。
+	3.	若 Apache 經常重新分配記憶體，影響效能，可以適當提高 MaxMemFree。
+
+### 結論
+
+	•	MaxMemFree 不應該設定得太大，否則可能導致 Apache 長時間佔用不必要的記憶體。
+	•	依據系統 RAM 大小調整，避免記憶體浪費或頻繁釋放導致效能下降。
+	•	觀察 Apache 記憶體使用情況，再決定合適的 MaxMemFree 設定值。
