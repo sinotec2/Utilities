@@ -103,13 +103,15 @@ server {
 
 當 Windows 上的 Apache HTTPD 連接 CentOS LDAP 伺服器，使用 OU 群組認證 時出現「平台或記憶體不足」錯誤，而單獨使用者驗證沒有問題，可能的原因包括：
 
-可能的問題點
-	1.	LDAP 群組查詢結果過大，導致記憶體耗盡
-	•	若 OU (組織單位) 內的使用者數量龐大，Apache HTTPD 可能在處理群組驗證時耗盡記憶體或 CPU，導致錯誤。
-	•	解決方案：
-	•	減少 LDAP 查詢範圍，改用 require ldap-group 而不是 require ldap-filter 來精確匹配群組。
-	•	檢查 LimitRequestBody、LimitRequestFieldSize 等 HTTPD 參數，調整為較大值。
-	2.	LDAP 查詢超時 (Timeout)
+### 可能的問題點
+
+1.	 LDAP 群組查詢結果過大，導致記憶體耗盡
+  若 OU (組織單位) 內的使用者數量龐大，Apache HTTPD 可能在處理群組驗證時耗盡記憶體或 CPU，導致錯誤。
+- 解決方案：
+  - 減少 LDAP 查詢範圍，改用 require ldap-group 而不是 require ldap-filter 來精確匹配群組。
+  - 檢查 LimitRequestBody、LimitRequestFieldSize 等 HTTPD 參數，調整為較大值。
+
+2.	 LDAP 查詢超時 (Timeout)
 	•	群組驗證可能需要多層級的查詢，例如檢查 memberOf 屬性，若 LDAP 伺服器回應過慢，HTTPD 可能報錯。
 	•	解決方案：
 	•	調整 Apache LDAPTimeout 設定，例如：
