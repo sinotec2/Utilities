@@ -101,3 +101,55 @@ server {
 
 > Window Apache httpd 連線到centos的LDAP伺服器，通過ou的群組認證，卻不能回到網頁，出現平台或記憶體不足報錯，使用個別使用者檢核則沒有問題，可能是什麼原因？
 
+當 Windows 上的 Apache HTTPD 連接 CentOS LDAP 伺服器，使用 OU 群組認證 時出現「平台或記憶體不足」錯誤，而單獨使用者驗證沒有問題，可能的原因包括：
+
+可能的問題點
+	1.	LDAP 群組查詢結果過大，導致記憶體耗盡
+	•	若 OU (組織單位) 內的使用者數量龐大，Apache HTTPD 可能在處理群組驗證時耗盡記憶體或 CPU，導致錯誤。
+	•	解決方案：
+	•	減少 LDAP 查詢範圍，改用 require ldap-group 而不是 require ldap-filter 來精確匹配群組。
+	•	檢查 LimitRequestBody、LimitRequestFieldSize 等 HTTPD 參數，調整為較大值。
+	2.	LDAP 查詢超時 (Timeout)
+	•	群組驗證可能需要多層級的查詢，例如檢查 memberOf 屬性，若 LDAP 伺服器回應過慢，HTTPD 可能報錯。
+	•	解決方案：
+	•	調整 Apache LDAPTimeout 設定，例如：
+
+LDAPTimeout 10
+
+
+	•	使用 LDAP 索引來加速查詢 (slapd.conf 或 cn=config 中優化索引)。
+	•	測試手動查詢 LDAP，確認回應時間：
+
+ldapsearch -x -LLL -H ldap://centos-server -D "cn=admin,dc=example,dc=com" -W -b "ou=group,dc=example,dc=com"
+
+
+	3.	Apache HTTPD 模組 (mod_ldap) 記憶體問題
+	•	mod_ldap 和 mod_authnz_ldap 模組在驗證大量使用者時可能出現記憶體管理問題，導致錯誤。
+	•	解決方案：
+	•	增加 Apache MaxMemFree 限制，例如在 httpd.conf 加入：
+
+MaxMemFree 512
+
+
+	•	測試降低 LDAPCacheEntries，避免快取過多 LDAP 查詢：
+
+LDAPCacheEntries 100
+
+
+	4.	LDAP 群組配置方式不支援
+	•	部分 LDAP 伺服器使用 memberUid 而非 memberOf 來存儲群組資訊，這可能與 Apache HTTPD 的 LDAP 群組驗證方式不匹配。
+	•	解決方案：
+	•	在 Apache 設定中使用 AuthLDAPGroupAttributeIsDN off，例如：
+
+AuthLDAPGroupAttributeIsDN off
+
+
+
+建議的排查步驟
+	1.	檢查 Apache 記憶體使用狀況 (Task Manager 或 htop)。
+	2.	測試 單一群組驗證 (require ldap-group 而非 require ldap-filter)。
+	3.	監控 LDAP 伺服器負載 (top、htop、journalctl -u slapd 等)。
+	4.	縮小查詢範圍，減少 LDAP 回應時間。
+
+這些步驟應該能幫助你找到問題的根本原因。
+
