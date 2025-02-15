@@ -97,3 +97,7 @@ server {
 
 在 Windows 上運行 Nginx 並使用 LDAP 驗證，最佳方式是 方法 2（使用 Apache 代理） 或 方法 3（使用身份驗證系統）。
 
+## LDAP tunings
+
+> Window Apache httpd 連線到centos的LDAP伺服器，通過ou的群組認證，卻不能回到網頁，出現平台或記憶體不足報錯，使用個別使用者檢核則沒有問題，可能是什麼原因？
+
