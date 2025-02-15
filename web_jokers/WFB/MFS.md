@@ -8,7 +8,7 @@ last_modified_date: 2025-02-14 08:32:07
 tags: web
 ---
 
-#  windows 系統的tls 憑證
+#  Multi Factor Authentication 
 {: .no_toc }
 
 <details open markdown="block">
