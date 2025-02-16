@@ -71,9 +71,9 @@ Keycloak 的多因素驗證（MFA）可以透過 Authenticator 機制來實現�
 
 ## 進階應用
 
-	•	強制特定使用者群組啟用 MFA：可以使用 條件性流程（Conditional Flow），讓特定群組（如 Admin）必須使用 MFA。
-	•	允許使用 WebAuthn（FIDO2）：在 Authentication Flows 新增 WebAuthn Authenticator，並啟用 WebAuthn 設定。
-	•	整合外部 MFA 服務（如 Duo Security）：透過 Keycloak 外掛程式來支援 Duo Push 通知驗證。
+- 強制特定使用者群組啟用 MFA：可以使用 條件性流程（Conditional Flow），讓特定群組（如 Admin）必須使用 MFA。
+- 允許使用 WebAuthn（FIDO2）：在 Authentication Flows 新增 WebAuthn Authenticator，並啟用 WebAuthn 設定。
+- 整合外部 MFA 服務（如 Duo Security）：透過 Keycloak 外掛程式來支援 Duo Push 通知驗證。
 
 這樣，你就能在 Keycloak 上成功啟用 MFA，提升登入安全性！
 
