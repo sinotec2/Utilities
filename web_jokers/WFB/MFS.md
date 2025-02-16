@@ -86,3 +86,18 @@ tags: web
 
 如果你的系統 涉及遠端存取、機敏資料，或經常受到攻擊，那就應該啟用 MFA。
 
+## Terminology
+
+### GDPR etc 
+
+> 這些都是些什麼？GDPR, HIPAA, PCI-DSS
+
+這些都是 資料隱私與安全法規或標準，適用於不同產業和地區：
+
+縮寫|全名|適用範圍|主要目的
+-|-|-|-
+GDPR	|General Data Protection Regulation|歐盟（EU）|保護個人資料隱私，要求公司在蒐集、處理、儲存個資時，遵守透明、可控、安全的規範
+HIPAA|Health Insurance Portability and Accountability Act|美國|針對醫療資訊的隱私與安全，確保病患的電子健康紀錄（EHR）受到保護，防止未授權存取
+PCI-DSS|Payment Card Industry Data Security Standard|全球|適用於信用卡交易	保障信用卡支付的安全性，要求企業加密與安全儲存持卡人資訊，以防詐騙與資料外洩
+
+這些標準都與 資料保護與合規 有關，適用於不同領域，如 科技業、醫療業、金融業 等。
