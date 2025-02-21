@@ -30,10 +30,26 @@ tags: LDAP ldap3
   - 目前先連`ldap`,沒有ssl/tls、
   - `get_info`：使用ALL函式。
 - 連線
-  - 不必特別先binding，可以用`auto_bind=True`，但是必須在結束後`unbind`
+  - 不必特別先binding，可以用`auto_bind=True`，但是必須在結束後`unbind`。(其他的`auto_bind`選項無法連線)
   - `user`欄位：不必給提示(`user=user`)，必須是完整的`domain name`。
   - `password`欄位：也不必給提示(`password=password`)，直接給值就好。
   - 如果連不上，有可能是serveer錯誤、也可能是credential 錯誤，用`try`來辨識。如果連線錯誤，不給回值。
+
+### ldap上的搜尋
+
+- 連線(`binding`)後必須搜尋，來驗證連線的合法性。
+- 回值為一個`boolean`，如果不給容器`(result)`，似乎不能運作。
+- 回復前不要`unbind`，要在確認前保持`bind`。
+
+### 連線驗證
+
+- `conn.response_to_json()`這個函式是新版的，GPT無法回復。
+- 不需要真的指定`json`檔案名稱，因為這個函式的回覆是個`boolean`
+- 同樣的，也可以將回復輸出到txt等型態，除了寫檔案之外，也會回復`boolean`。
+
+### 後續DOM
+
+- 是否關閉原來的畫面？可能不需要。可以在`streamlit`開啟多個畫面。
 
 ## 程式碼
 
