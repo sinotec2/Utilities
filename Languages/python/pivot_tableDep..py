@@ -1,9 +1,6 @@
 from pandas import *
 import numpy as np
 
-fname='/Users/kuang/Downloads/2024_crawler.csv'
-df=read_csv(fname,encoding='utf8')
-df.head()
 def s2names(s):
     names = []
     i = 0 
