@@ -6,30 +6,25 @@ df=read_csv(fname,encoding='utf8')
 df.head()
 def s2names(s):
     names = []
-
-    # 遍歷字符串
     i = 0 
     while i < len(s):
         # 找到下一個 "'" 字符
         end = s.find("':", i)
         if end == -1: 
             break
-        
         # 找到下一個 "'" 字符
         start = s.find("'", end -4) 
-        
         # 提取名字
         name = s[start+1:end]
         names.append(name)
-        
         # 移動到下一個位置
         i = end + 1 
-    return names
+    return [i for i in names if len(i)>0]
 fnames=[f"/Users/kuang/Downloads/202{i}_crawler.csv" for i in '2345']
 
 years=[]
 names=[]
-buggs=[]
+budgs=[]
 depgr=[]
 for fname in fnames[:-1]:
     yr=fname[23:23+4]
@@ -38,20 +33,20 @@ for fname in fnames[:-1]:
         s=df.loc[i,'評審委員']
         if type(s)!=str:continue
         name_list=s2names(s)
-        bugg=df.loc[i,'決標金額']/len(name_list)
-        if not df.loc[i,'是否得標']:bugg*=-1
+        budg=df.loc[i,'決標金額']/len(name_list)
+        if not df.loc[i,'是否得標']:budg*=-1
         for name in name_list:
             names.append(name)
-            buggs.append(bugg)
+            budgs.append(budg)
             depgr.append(df.loc[i,'主辦部']) 
             years.append(yr)
-dff=DataFrame({'year':years,'name':names,'bugg':buggs,'depgr':depgr})
-pv=pivot_table(dff,index=['year','name'],values=['bugg'],aggfunc=sum).reset_index()
-yr_sum = {i:dff.loc[dff.year.astype(int)==i,'bugg'].sum() for i in range(2022, 2026)}
+dff=DataFrame({'year':years,'name':names,'budg':budgs,'depgr':depgr})
+pv=pivot_table(dff,index=['year','name'],values=['budg'],aggfunc=sum).reset_index()
+yr_sum = {i:dff.loc[dff.year.astype(int)==i,'budg'].sum() for i in range(2022, 2026)}
 pv.year=[int(i) for i in pv.year]
-pv['bugg_rate']=[i/yr_sum[j] for i,j in zip(pv.bugg,pv.year)]
-pvm=pivot_table(pv,index=['name'],values=['bugg_rate'],aggfunc=np.mean).reset_index()
-pvms=pvm.sort_values(by='bugg_rate', ascending=False).reset_index(drop=True)
+pv['budg_rate']=[i/yr_sum[j] for i,j in zip(pv.budg,pv.year)]
+pvm=pivot_table(pv,index=['name'],values=['budg_rate'],aggfunc=np.mean).reset_index()
+pvms=pvm.sort_values(by='budg_rate', ascending=False).reset_index(drop=True)
 
 names=[]
 yrs=[[],[],[]]
@@ -61,7 +56,7 @@ for name in set(pv.name):
     names.append(name)
     for y in range(3):
         yr=y+2022
-        br=list(a.loc[a.year==yr,'bugg_rate'])
+        br=list(a.loc[a.year==yr,'budg_rate'])
         if len(br)>0:
             yrs[y].append(br[0])
         else:
@@ -75,7 +70,7 @@ for i in idx[0]:
     if df_name_yr.loc[i,'y2024']<avg:
         name=df_name_yr.loc[i,'name']
         names.append(name)
-        percent.append(round(100*list(pvms.loc[pvms.name==name,'bugg_rate'])[0],3))
+        percent.append(round(100*list(pvms.loc[pvms.name==name,'budg_rate'])[0],3))
 dfnp=DataFrame({'name':names,'percent':percent})
 dfnps=dfnp.sort_values(by='percent',ascending=False).reset_index(drop=True)
 dfnps.to_csv('dfnps.csv',index=False)
@@ -86,9 +81,8 @@ for i in idx[0]:
     if df_name_yr.loc[i,'y2024']>=avg:
         name=df_name_yr.loc[i,'name']
         names.append(name)
-        percent.append(round(100*list(pvms.loc[pvms.name==name,'bugg_rate'])[0],3))
+        percent.append(round(100*list(pvms.loc[pvms.name==name,'budg_rate'])[0],3))
 dfnp=DataFrame({'name':names,'percent':percent})
 dfnps=dfnp.sort_values(by='percent',ascending=False).reset_index(drop=True)
-dfnps
 dfnps.to_csv('dfnpsGTavg.csv',index=False)
 
