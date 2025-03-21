@@ -54,6 +54,7 @@ tags: LDAP ldap3
 ## 程式碼
 
 ```python
+#/nas2/kuang/MyPrograms/streamlit/login.py
 import streamlit as st
 from ldap3 import Server, Connection, ALL, MODIFY_REPLACE, MODIFY_ADD, MODIFY_DELETE
 
