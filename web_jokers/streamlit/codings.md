@@ -27,7 +27,7 @@ tags: web
 
 ## 設定 VS Code
 
-VS Code 的預設編碼方式為 UTF-8，不含 BOM。
+VS Code 的預設編碼方式為 UTF-8，不含 [BOM](#bom)。
 
 若要設定 VS Code 的編碼，請移至 VS Code 設定（Ctrl+、），並設定 "files.encoding" 設定：
 
@@ -125,3 +125,10 @@ finally
 ::: 重要
 
 您擁有的任何其他觸控 PowerShell 腳本工具，都可能會受到編碼選擇的影響，或將腳本重新編碼為另一種編碼。
+
+
+## Terminology
+
+### BOM
+
+[wiki:端序記號](https://zh.wikipedia.org/wiki/端序記號)
