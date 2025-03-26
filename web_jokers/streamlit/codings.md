@@ -82,6 +82,25 @@ PowerShell 的預設編碼會因版本而異：
   }
 ```
 
+可能的結果如下：
+
+```powershell
+BodyName          : big5
+EncodingName      : 繁體中文 (Big5)
+HeaderName        : big5
+WebName           : big5
+WindowsCodePage   : 950
+IsBrowserDisplay  : True
+IsBrowserSave     : True
+IsMailNewsDisplay : True
+IsMailNewsSave    : True
+IsSingleByte      : False
+EncoderFallback   : System.Text.InternalEncoderBestFitFallback
+DecoderFallback   : System.Text.InternalDecoderBestFitFallback
+IsReadOnly        : True
+CodePage          : 950
+```
+
 下列 腳本 可用來判斷沒有 BOM 之腳本的 PowerShell 會話推斷的編碼方式。
 
 ```PowerShell
