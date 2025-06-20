@@ -13,12 +13,12 @@
             "state": {
               "type": "split-diff-view",
               "state": {
-                "aFile": "web_jokers/streamlit/0.streamlit.md",
-                "bFile": "web_jokers/streamlit/0.streamlit.md",
+                "aFile": ".obsidian/plugins/obsidian-git/manifest.json",
+                "bFile": ".obsidian/plugins/obsidian-git/manifest.json",
                 "aRef": ""
               },
               "icon": "diff",
-              "title": "Diff: 0.streamlit"
+              "title": "Diff: manifest.json"
             }
           }
         ]
@@ -181,6 +181,8 @@
   },
   "active": "a402b679699fc723",
   "lastOpenFiles": [
+    "conflict-files-obsidian-git.md",
+    "_posts/2025-04-06.md",
     "web_jokers/streamlit/codings.md",
     "web_jokers/streamlit/0.streamlit.md"
   ]
