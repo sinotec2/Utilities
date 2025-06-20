@@ -1,0 +1,187 @@
+{
+  "main": {
+    "id": "ce219e1418d1510e",
+    "type": "split",
+    "children": [
+      {
+        "id": "62904cac2b0004ca",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a402b679699fc723",
+            "type": "leaf",
+            "state": {
+              "type": "split-diff-view",
+              "state": {
+                "aFile": "web_jokers/streamlit/0.streamlit.md",
+                "bFile": "web_jokers/streamlit/0.streamlit.md",
+                "aRef": ""
+              },
+              "icon": "diff",
+              "title": "Diff: 0.streamlit"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2ee2e190768789b9",
+    "type": "split",
+    "children": [
+      {
+        "id": "b8b08ceeaeeb0bd1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3aa3b9dbffae3258",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "檔案瀏覽器"
+            }
+          },
+          {
+            "id": "e1beda19720f76a1",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜尋"
+            }
+          },
+          {
+            "id": "8566fc3b3189e789",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "書籤"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "c066aa4c5c4403a3",
+    "type": "split",
+    "children": [
+      {
+        "id": "d11ae249af82ee22",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b5d9dd6b2b3afdfd",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "web_jokers/streamlit/codings.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "codings 的反向連結"
+            }
+          },
+          {
+            "id": "303a831cd835b3c7",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "web_jokers/streamlit/codings.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "codings 的對外連結"
+            }
+          },
+          {
+            "id": "6200a09fd786b7b5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "標籤"
+            }
+          },
+          {
+            "id": "cc59eb7b3ecf224f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "web_jokers/streamlit/codings.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "codings 的大綱"
+            }
+          },
+          {
+            "id": "495ed07ed37f01ca",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:開啟快速切換": false,
+      "graph:查看關聯圖": false,
+      "canvas:建立新畫布": false,
+      "daily-notes:開啟今天的每日筆記": false,
+      "templates:插入模板": false,
+      "command-palette:開啟命令面板": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "a402b679699fc723",
+  "lastOpenFiles": [
+    "web_jokers/streamlit/codings.md",
+    "web_jokers/streamlit/0.streamlit.md"
+  ]
+}
