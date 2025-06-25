@@ -24,8 +24,24 @@
                   "icon": "lucide-file",
                   "title": "0.obsidian.md"
                 }
+              },
+              {
+                "id": "beb882379326e6fb",
+                "type": "leaf",
+                "state": {
+                  "type": "split-diff-view",
+                  "state": {
+                    "aFile": "web_jokers/streamlit/kb/_index.md",
+                    "bFile": "web_jokers/streamlit/kb/_index.md",
+                    "aRef": "HEAD",
+                    "bRef": ""
+                  },
+                  "icon": "diff",
+                  "title": "Diff: _index"
+                }
               }
-            ]
+            ],
+            "currentTab": 1
           },
           {
             "id": "3da33c8ac8e8b50c",
@@ -228,13 +244,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a2cc7652165d1fa5",
+  "active": "beb882379326e6fb",
   "lastOpenFiles": [
-    "MarkLang/note_systems/obsidian/0.obsidian.md.md",
-    "MarkLang/note_systems/rethingkins.md.md",
-    "MarkLang/note_systems/0.note_systems.md",
-    "MarkLang/note_systems/obsidian",
+    "MarkLang/note_systems/obsidian/obidian.md",
+    "DB_servers/note_systems/0.notes.md",
+    "DB_servers/note_systems",
     "MarkLang/note_systems/code_ug.md",
+    "MarkLang/note_systems/0.note_systems.md",
+    "MarkLang/note_systems/rethingkins.md.md",
+    "MarkLang/note_systems/obsidian/0.notes.md",
+    "MarkLang/note_systems/obsidian/0.obsidian.md.md",
+    "_posts/2025-04-06.md",
+    "conflict-files-obsidian-git.md",
+    "MarkLang/note_systems/obsidian",
     "MarkLang/0.MarkLanguages.md",
     "assets/js/vendor/lunr.min.js",
     "assets/js/zzzz-search-data.json",
@@ -246,7 +268,6 @@
     "assets/css/just-the-docs-head-nav.css",
     "assets/css/just-the-docs-default.scss",
     "assets/css/just-the-docs-dark.scss",
-    "assets/js",
     "MarkLang/md_to_PDF.md",
     "MarkLang/2024-07-08-13-16-18.png",
     "MarkLang/PRISMA.md",
