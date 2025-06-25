@@ -1,10 +1,11 @@
 ---
 layout: default
 title: 數位筆記系統使用心得
-parent:   Operation System
-grand_parent: Operation Systems
+parent: note systems
+grand_parent: MarkLang
 last_modified_date: 2022-10-11 08:57:40
-tags: note_system
+tags:
+  - note_system
 ---
 
 {: .no_toc }
