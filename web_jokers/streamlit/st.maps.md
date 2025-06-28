@@ -1,6 +1,6 @@
 ---
 layout: default
-title: vega_lite
+title: map
 parent: streamlit
 grand_parent: Web Jokers
 nav_order: 99
@@ -8,7 +8,7 @@ last_modified_date: 2025-03-26 08:32:07
 tags:
   - web
 ---
-# vega_lite
+# 地圖與地理資訊的應用
 
 {: .no_toc }
 
@@ -24,26 +24,21 @@ tags:
 
 ## 背景
 
+## st.map
 
-## graph types
-- [Single-View Plots](https://vega.github.io/vega-lite/examples/#single-view-plots)
-    - [Bar Charts](https://vega.github.io/vega-lite/examples/#bar-charts)
-    - [Histograms, Density Plots, and Dot Plots](https://vega.github.io/vega-lite/examples/#histograms-density-plots-and-dot-plots)
-    - [Scatter & Strip Plots](https://vega.github.io/vega-lite/examples/#scatter--strip-plots)
-    - [Line Charts](https://vega.github.io/vega-lite/examples/#line-charts)
-    - [Area Charts & Streamgraphs](https://vega.github.io/vega-lite/examples/#area-charts--streamgraphs)
-    - [Table-based Plots](https://vega.github.io/vega-lite/examples/#table-based-plots)
-    - [Circular Plots](https://vega.github.io/vega-lite/examples/#circular-plots)
-    - [Advanced Calculations](https://vega.github.io/vega-lite/examples/#advanced-calculations)
-- [Composite Marks](https://vega.github.io/vega-lite/examples/#composite-marks)
-    - [Error Bars & Error Bands](https://vega.github.io/vega-lite/examples/#error-bars--error-bands)
-    - [Box Plots](https://vega.github.io/vega-lite/examples/#box-plots)
-- [Layered Plots](https://vega.github.io/vega-lite/examples/#layered-plots)
-    - [Labeling & Annotation](https://vega.github.io/vega-lite/examples/#labeling--annotation)
-    - [Other Layered Plots](https://vega.github.io/vega-lite/examples/#other-layered-plots)
-- [Multi-View Displays](https://vega.github.io/vega-lite/examples/#multi-view-displays)
-    - [Faceting (Trellis Plot / Small Multiples)](https://vega.github.io/vega-lite/examples/#faceting-trellis-plot--small-multiples)
-    - [Repeat & Concatenation](https://vega.github.io/vega-lite/examples/#repeat--concatenation)
+```python
+import streamlit as st
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(
+    np.random.randn(1000, 2) / [50, 50] + [23.76, 120.4],
+    columns=["lat", "lon"],
+)
+st.map(df)
+```
+## vega_lite types
+
 - [Maps (Geographic Displays)](https://vega.github.io/vega-lite/examples/#maps-geographic-displays)
 - [Interactive](https://vega.github.io/vega-lite/examples/#interactive)
     - [Interactive Charts](https://vega.github.io/vega-lite/examples/#interactive-charts)
@@ -68,8 +63,8 @@ tags:
 - Multi Series Line Chart with Tooltip
 - Isotype Grid
 - Brushing Scatter Plot to show data on a table
-- [ Selectable Heatmap](https://vega.github.io/vega-lite/examples/selection_heatmap.html)
-		- Bar Chart with a Minimap
+- Selectable Heatmap
+- Bar Chart with a Minimap
 - Interactive Index Chart
 - Focus + Context - Smooth Histogram Zooming
 - Dynamic Color Legend
@@ -149,27 +144,29 @@ tags:
 - **Interactive Scatterplot Matrix** 
  - 功能：通過多個散點圖的矩陣排列，展示多變量之間的相關性。 
  - 特點：支持交互式選擇（如單擊、框選），實時更新子圖數據，適用於探索性數據分析（EDA）。 
-- **Interactive Dashboard with Cross Highlight** 
- - 功能：綜合多個視覺組件（如圖表、地圖、表格）的交互式儀表板，支持組件間的高亮聯動。 
- - 特點：用戶操作某一組件時（如選中數據點），其他組件同步高亮顯示相關數據，增強數據關聯性分析。 
+	[- **Interactive Dashboard with Cross Highlight** ](https://vega.github.io/vega-lite/examples/interactive_concat_layer.html)
+	 - 功能：綜合多個視覺組件（如圖表、地圖、表格）的交互式儀表板，支持組件間的高亮聯動。 
+	 - 特點：用戶操作某一組件時（如選中數據點），其他組件同步高亮顯示相關數據，增強數據關聯性分析。 
 ### **二、按應用主題與場景分類** 
 
-- **Seattle Weather Exploration** 
- - 主題：西雅圖氣象數據的可視化探索（如溫度、降水、季節性趨勢等）。 
- - 場景：氣象分析、環境科學或城市規劃。 
- - taking summaries in block area(time line) 
+
 - **Connections among Major U.S. Airports** 
- - 主題：美國主要機場的航線網絡連接分析（如航班流量、樞紐機場影響力等）。 
- - 場景：交通運輸、航空物流或地理網絡分析。
- - hover lines showing
-- **An interactive scatter plot of global health statistics by country and year** 
- - 主題：全球各國健康指標（如預期壽命、嬰兒死亡率、醫療資源等）的時空分布與關聯分析。 
- - 場景：公共衛生、國際發展或社會科學研究。
- - 年度左右拉bar
+	 - 主題：美國主要機場的航線網絡連接分析（如航班流量、樞紐機場影響力等）。 
+	 - 場景：交通運輸、航空物流或地理網絡分析。
+	 - hover lines showing
 
-## 參考
+## Deck.gl
 
-- case example: [資料科學第六週-期中了！用Streamlit展示文字資訊與圖表(**阿盧老師Coding嚕**2024)](https://codinglu.tw/index.html)
-- official sites [st.line_chart](https://docs.streamlit.io/develop/api-reference/charts/st.line_chart)
-- [Data Visualisation in Data Science](https://vda-lab.github.io/visualisation-tutorial/index.html)
- - [Vega-Lite tutorial](https://vda-lab.github.io/visualisation-tutorial/vegalite_landing_page.html)
+- [miniMap, radio radius in US](https://deck.gl/examples/multi-view)
+	- hover with center point information
+
+## MapBox
+
+- [style url](mapbox://styles/sinotec2/cm46plqbe001o01stgthy8mvu)
+- [access token](pk.eyJ1Ijoic2lub3RlYzIiLCJhIjoiY200Nm9uOHlpMTgzMTJscXd0emVybnppMiJ9.fyDbNCIwln5ck1SBQ2_OVw)
+	
+
+website embeded
+```html
+<iframe width='100%' height='400px' src="https://api.mapbox.com/styles/v1/sinotec2/cm46plqbe001o01stgthy8mvu.html?title=false&access_token=pk.eyJ1Ijoic2lub3RlYzIiLCJhIjoiY200Nm9uOHlpMTgzMTJscXd0emVybnppMiJ9.fyDbNCIwln5ck1SBQ2_OVw&zoomwheel=false#2/38/-34" title="normal" style="border:none;"></iframe>
+```
