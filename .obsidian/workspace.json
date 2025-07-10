@@ -1,80 +1,41 @@
 {
   "main": {
-    "id": "5c3039bdaae3678c",
+    "id": "c717e8e80184fbaa",
     "type": "split",
     "children": [
       {
-        "id": "3da33c8ac8e8b50c",
+        "id": "70ca9ad81c8612b2",
         "type": "tabs",
         "children": [
           {
-            "id": "a2cc7652165d1fa5",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "terminal:terminal",
-              "state": {
-                "terminal:terminal": {
-                  "cwd": "/Users/kuang/GitHub/Utilities",
-                  "focus": false,
-                  "profile": {
-                    "args": [],
-                    "executable": "/bin/zsh",
-                    "name": "macOS terminal",
-                    "platforms": {
-                      "darwin": true
-                    },
-                    "pythonExecutable": "/opt/miniconda3/envs/llm_st/bin/python3",
-                    "restoreHistory": false,
-                    "successExitCodes": [
-                      "0",
-                      "SIGINT",
-                      "SIGTERM"
-                    ],
-                    "terminalOptions": {
-                      "documentOverride": null
-                    },
-                    "type": "integrated",
-                    "useWin32Conhost": true
-                  },
-                  "serial": null
-                }
-              },
-              "pinned": true,
-              "icon": "terminal",
-              "title": "Terminal: kuang@125-229-149-182:~/GitHub/Utilities/web_jokers/streamlit"
-            }
-          },
-          {
-            "id": "5393a77a07063ec4",
+            "id": "62d4827de8fdbe3a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "split-diff-view",
               "state": {
-                "file": "web_jokers/streamlit/st.maps.md",
-                "mode": "source",
-                "source": false
+                "aFile": ".obsidian/plugins/terminal/data.json",
+                "bFile": ".obsidian/plugins/terminal/data.json",
+                "aRef": ""
               },
-              "icon": "lucide-file",
-              "title": "st.maps"
+              "icon": "diff",
+              "title": "Diff: data.json"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "2d85f5b170f55503",
+    "id": "68e1b01ac82eaf1a",
     "type": "split",
     "children": [
       {
-        "id": "67e8a4f8230b36c4",
+        "id": "138b9aa63f008b9d",
         "type": "tabs",
         "children": [
           {
-            "id": "8a72f793ee14d9af",
+            "id": "14ce3c12350a28f5",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -87,12 +48,12 @@
             }
           },
           {
-            "id": "c961620b7ec8c580",
+            "id": "0454b01b2e7c1a2e",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "note_",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -104,7 +65,7 @@
             }
           },
           {
-            "id": "45b314e7b8b07270",
+            "id": "88e567b9ef83ffa3",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -120,20 +81,19 @@
     "width": 300
   },
   "right": {
-    "id": "91281dfdb29ce27f",
+    "id": "642fb0397404cf75",
     "type": "split",
     "children": [
       {
-        "id": "beeefcc0956268ba",
+        "id": "796aef8d431e3d48",
         "type": "tabs",
         "children": [
           {
-            "id": "5281e9bbb8011024",
+            "id": "9c9201b78cac0931",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "web_jokers/streamlit/st.maps.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -143,25 +103,24 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "st.maps 的反向連結"
+              "title": "反向連結"
             }
           },
           {
-            "id": "cc62af2524b6090c",
+            "id": "36d5bb90a0a55658",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "web_jokers/streamlit/st.maps.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "st.maps 的對外連結"
+              "title": "對外連結"
             }
           },
           {
-            "id": "45786000acbe5022",
+            "id": "e22846aae5fd3fd3",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -176,22 +135,21 @@
             }
           },
           {
-            "id": "076574229a4f447a",
+            "id": "f8ca3f1d596922b5",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "web_jokers/streamlit/st.maps.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "st.maps 的大綱"
+              "title": "大綱"
             }
           },
           {
-            "id": "09ad8c7cbeda73b9",
+            "id": "cc379d6a4d5de696",
             "type": "leaf",
             "state": {
               "type": "git-view",
@@ -205,7 +163,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 611.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -219,47 +177,41 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "5393a77a07063ec4",
+  "active": "62d4827de8fdbe3a",
   "lastOpenFiles": [
+    "tools/office/AI_edit.md",
+    "tools/office/offices.md",
+    "tools/office/0.office.md",
+    "tools/office/AI_edit.pngs/Pasted image 20250630143335.png",
+    "tools/office/AI_edit.pngs",
+    "web_jokers/streamlit/codings.md",
+    "web_jokers/streamlit/drawing.md",
+    "tools/office",
     "web_jokers/streamlit/st.maps.md",
     "web_jokers/streamlit/map1.py",
-    "web_jokers/streamlit/vega_lite.md",
-    "web_jokers/streamlit/drawing.md",
     "web_jokers/streamlit/terms_definitions_tutorial.md",
-    "assets/images/code_2.PNG",
-    "assets/images/code_1.PNG",
-    "_posts/2025-06-23.md",
+    "web_jokers/streamlit/vega_lite.md",
     "MarkLang/note_systems/obsidian/obsidian_tmp.md",
     "Graphics/gangliaGPU_GPTtalks.md",
-    "web_jokers/streamlit/csv_ldap.md",
-    "web_jokers/streamlit/codings.md",
-    "web_jokers/streamlit/0.streamlit.md",
-    "web_jokers/streamlit/deploy/community-cloud/manage-your-account/update-your-email.md",
-    "web_jokers/streamlit/develop/quick-references/changelog.md",
-    "Graphics/plotly/c_sharp.md",
-    "web_jokers/streamlit/deploy/community-cloud/manage-your-app/app-settings.md",
+    "Graphics/gangliaGPU_plugin.md",
     "MarkLang/note_systems/obsidian/obsidian_briefing.md",
-    "MarkLang/note_systems/obsidian/obsidian_briefing_pngs",
     "MarkLang/note_systems/obsidian/0.obsidian.md.md",
+    "MarkLang/note_systems/0.note_systems.md",
     "筆記標題.md",
+    "MarkLang/note_systems/obsidian",
+    "MarkLang/note_systems/rethingkins.md.md",
+    "MarkLang/note_systems/code_ug.md",
+    "MarkLang/note_systems",
     "DB_servers/note_systems/0.notes.md",
     "DB_servers/note_systems",
-    "MarkLang/note_systems/code_ug.md",
-    "MarkLang/note_systems/0.note_systems.md",
-    "MarkLang/note_systems/rethingkins.md.md",
-    "MarkLang/note_systems/obsidian/0.notes.md",
-    "_posts/2025-04-06.md",
-    "conflict-files-obsidian-git.md",
-    "MarkLang/note_systems/obsidian",
-    "MarkLang/0.MarkLanguages.md",
-    "assets/js/vendor/lunr.min.js",
-    "assets/js/zzzz-search-data.json",
-    "assets/js/vendor",
-    "assets/js/just-the-docs.js",
-    "assets/images/small-image.jpg",
-    "assets/images/large-image.jpg",
-    "assets/css/just-the-docs-light.scss",
-    "assets/css/just-the-docs-head-nav.css",
-    "MarkLang/2024-07-08-13-16-18.png"
+    "OS/note_systems/notes.md",
+    "OS/OperationSystem/code_ug.md",
+    "OS/note_systems",
+    "OS/OperationSystem/note_systems.md",
+    "assets/images/code_1.PNG",
+    "assets/images/code_2.PNG",
+    "OS/systems.md",
+    "docs/search.md",
+    "OS/OperationSystem/git.md"
   ]
 }
