@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "70ca9ad81c8612b2",
+        "id": "b2e03979578e3162",
         "type": "tabs",
         "children": [
           {
-            "id": "62d4827de8fdbe3a",
+            "id": "6c81b569cf5dd597",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": ".obsidian/plugins/terminal/data.json",
-                "bFile": ".obsidian/plugins/terminal/data.json",
-                "aRef": ""
+                "file": "Languages/python/netcdf4.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "diff",
-              "title": "Diff: data.json"
+              "icon": "lucide-file",
+              "title": "netcdf4"
             }
           }
         ]
@@ -140,12 +140,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Languages/python/netcdf4.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大綱"
+              "title": "netcdf4 的大綱"
             }
           },
           {
@@ -167,6 +168,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:建立新的 base": false,
       "switcher:開啟快速切換": false,
       "graph:查看關聯圖": false,
       "canvas:建立新畫布": false,
@@ -177,41 +179,44 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "62d4827de8fdbe3a",
+  "active": "cc379d6a4d5de696",
   "lastOpenFiles": [
+    "Languages/python/python.md",
+    "Languages/python/netcdf4.md",
+    "Languages/python/pivot_tables.md",
+    "Languages/c_sharp.md",
+    "Languages/languages.md",
+    "Languages/python/0.python.md",
+    "web_jokers/StaticGen.md/blog.md",
+    "web_jokers/StaticGen.md/VuePress/Vue.js.md",
+    "web_jokers/StaticGen.md/VuePress/VP_general.md",
+    "web_jokers/StaticGen.md/VuePress/VP_deployment.md",
+    "web_jokers/StaticGen.md/VuePress/templates.md",
+    "web_jokers/StaticGen.md/VuePress/ServVSDep.md",
+    "web_jokers/StaticGen.md/VuePress/RenewDist.md",
+    "web_jokers/StaticGen.md/VuePress/act_runner.md",
+    "web_jokers/StaticGen.md/VuePress/question_box.md",
+    "web_jokers/StaticGen.md/VuePress/pngs/2024-10-12-20-03-19.png",
+    "web_jokers/StaticGen.md/VuePress/PAT.md",
+    "web_jokers/StaticGen.md/VuePress/LinksGiteaJenkins.md",
+    "web_jokers/StaticGen.md/VuePress/0.VuePress.md",
+    "web_jokers/StaticGen.md/0.StaticGen.md",
+    "筆記標題.md",
     "tools/office/AI_edit.md",
     "tools/office/offices.md",
+    "web_jokers/streamlit/st.maps.md",
     "tools/office/0.office.md",
     "tools/office/AI_edit.pngs/Pasted image 20250630143335.png",
     "tools/office/AI_edit.pngs",
     "web_jokers/streamlit/codings.md",
     "web_jokers/streamlit/drawing.md",
     "tools/office",
-    "web_jokers/streamlit/st.maps.md",
     "web_jokers/streamlit/map1.py",
-    "web_jokers/streamlit/terms_definitions_tutorial.md",
-    "web_jokers/streamlit/vega_lite.md",
-    "MarkLang/note_systems/obsidian/obsidian_tmp.md",
-    "Graphics/gangliaGPU_GPTtalks.md",
-    "Graphics/gangliaGPU_plugin.md",
-    "MarkLang/note_systems/obsidian/obsidian_briefing.md",
-    "MarkLang/note_systems/obsidian/0.obsidian.md.md",
-    "MarkLang/note_systems/0.note_systems.md",
-    "筆記標題.md",
     "MarkLang/note_systems/obsidian",
-    "MarkLang/note_systems/rethingkins.md.md",
-    "MarkLang/note_systems/code_ug.md",
     "MarkLang/note_systems",
-    "DB_servers/note_systems/0.notes.md",
     "DB_servers/note_systems",
-    "OS/note_systems/notes.md",
-    "OS/OperationSystem/code_ug.md",
     "OS/note_systems",
-    "OS/OperationSystem/note_systems.md",
     "assets/images/code_1.PNG",
-    "assets/images/code_2.PNG",
-    "OS/systems.md",
-    "docs/search.md",
-    "OS/OperationSystem/git.md"
+    "assets/images/code_2.PNG"
   ]
 }
