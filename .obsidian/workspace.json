@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Languages/python/netcdf4.md",
+                "file": "Languages/python/python.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "netcdf4"
+              "title": "python"
             }
           }
         ]
@@ -140,13 +140,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Languages/python/netcdf4.md",
+                "file": "Languages/python/python.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "netcdf4 的大綱"
+              "title": "python 的大綱"
             }
           },
           {
@@ -181,7 +181,9 @@
   },
   "active": "cc379d6a4d5de696",
   "lastOpenFiles": [
+    "Languages/python/crawler.md",
     "Languages/python/python.md",
+    "Languages/python/grib2.md",
     "Languages/python/netcdf4.md",
     "Languages/python/pivot_tables.md",
     "Languages/c_sharp.md",
@@ -208,8 +210,6 @@
     "tools/office/0.office.md",
     "tools/office/AI_edit.pngs/Pasted image 20250630143335.png",
     "tools/office/AI_edit.pngs",
-    "web_jokers/streamlit/codings.md",
-    "web_jokers/streamlit/drawing.md",
     "tools/office",
     "web_jokers/streamlit/map1.py",
     "MarkLang/note_systems/obsidian",
