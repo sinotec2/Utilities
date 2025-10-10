@@ -1,6 +1,13 @@
 ---
+layout: default
 title: API Reference
-slug: /develop/api-reference
+parent: Develop
+grand_parent: streamlit
+nav_order: 99
+has_children: true
+permalink: /web_jokers/streamlit/develop/api-reference
+last_modified_date: 2025-01-15 08:09:26
+tags: web
 ---
 
 # API reference

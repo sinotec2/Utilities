@@ -1,6 +1,15 @@
 ---
+layout: default
 title: Develop
-slug: /develop
+parent: streamlit
+nav_order: 99
+has_children: true
+grand_parent: Web Jokers
+permalink: /web_jokers/streamlit/develop
+last_modified_date: 2025-01-15 08:09:26
+tags: web
+---
+
 ---
 
 # Develop
