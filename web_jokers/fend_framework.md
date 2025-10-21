@@ -106,8 +106,12 @@ tags: web
 - MVVM 幫助把「資料取得/處理」與「UI 呈現」分離，對大型或可維護的前端專案很有幫助。
 - 在實作 ECharts 圖表時，把 data fetch / mapping / option 建構 / 事件處理等邏輯放在 ViewModel（或 component 的邏輯層）可以讓 View（DOM、圖表初始化與渲染）更乾淨且可重用。
 
-若你要我：
-- 將你提供的 ECharts 範例改寫成遵循 MVVM 的 component 範本（例如 Vue 版的 component，包含 fetch、process、render 與事件處理），或
-- 提供更簡單的流程圖或 checklist（如何把現有程式分層為 Model/View/ViewModel）；
+### DOM
+
+DOM，即文件物件模型（Document Object Model），是將HTML或XML文件轉換為樹狀結構的程式介面。 
+
+它讓程式語言（如JavaScript）可以存取、修改文件內容、樣式及結構，並可為節點附加事件處理器。 
+
+本質上，DOM是一個將網頁與程式語言連結起來的橋樑，瀏覽器透過這個模型來理解和操作網頁。 
 
 
