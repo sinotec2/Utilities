@@ -5,7 +5,11 @@ nav_order: 99
 has_children: true
 permalink: /Languages/vue/ldap-login-app
 last_modified_date: 2024-01-26 11:10:05
-tags: operation_systems
+tags:
+  - LDAP
+  - VuPress
+parent: vue
+grand_parent: Languages
 ---
 
 # ldap-login-app
