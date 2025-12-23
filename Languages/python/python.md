@@ -1,4 +1,26 @@
+---
+layout: default
+title: Python程式語言工作手冊
+parent: python
+grand_parent: Languages
+last_modified_date: 2024-01-02 13:33:58
+tags: UML
+---
+
 # Python **程式語言工作手冊**
+
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
 
 ## 背景說明
 
