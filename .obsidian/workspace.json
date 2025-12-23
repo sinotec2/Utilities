@@ -11,10 +11,14 @@
             "id": "6c81b569cf5dd597",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Languages/python/pivot_tables 1.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新分頁"
+              "title": "pivot_tables 1"
             }
           }
         ]
@@ -136,12 +140,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Languages/python/pivot_tables 1.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大綱"
+              "title": "pivot_tables 1 的大綱"
             }
           },
           {
@@ -176,6 +181,10 @@
   },
   "active": "cc379d6a4d5de696",
   "lastOpenFiles": [
+    "Languages/python/grib2.md",
+    "Languages/python/pivot_tables 1.md",
+    "Languages/python/pivot_tables.md",
+    "Languages/python/netcdf4.md",
     "web_jokers/streamlit/kb/deployments/huh-this-is-isnt-supposed-to-happen-message-after-trying-to-log-in.md",
     "web_jokers/streamlit/kb/deployments/how-to-submit-a-support-case-for-streamlit-community-cloud.md",
     "web_jokers/streamlit/kb/deployments/does-streamlit-support-wsgi-protocol.md",
@@ -195,14 +204,10 @@
     "web_jokers/Crawlers/tp_future/tp_future.md",
     "Languages/python/crawler.md",
     "Languages/python/python.md",
-    "Languages/python/grib2.md",
-    "Languages/python/netcdf4.md",
-    "Languages/python/pivot_tables.md",
     "Languages/c_sharp.md",
     "Languages/languages.md",
     "Languages/python/0.python.md",
     "web_jokers/StaticGen.md/blog.md",
-    "web_jokers/StaticGen.md/VuePress/Vue.js.md",
     "web_jokers/StaticGen.md/VuePress/pngs/2024-10-12-20-03-19.png",
     "tools/office/AI_edit.pngs/Pasted image 20250630143335.png",
     "tools/office/AI_edit.pngs",
