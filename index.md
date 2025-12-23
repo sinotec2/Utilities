@@ -19,6 +19,15 @@ last_modified_date: 2024-01-16 15:27:26
 
 ## What's New
 
+- 2025-12-23 回顧今年各個月份的重點：
+	- 1月份嘗試了[odoo](./EPR/odoo_logins.md)，建立了報修系統，也建了基本的設備資料庫，想到這一題如果沒有顯著的差異(例如語音AI報修)，還是暫時擱置。
+	- 2月份開始了[Ganglia](./Graphics/gangliaGPU_plugin.md)的監測與紀錄，面對現實的殘酷吧!也開始想同仁怎麼在我們工作站存取檔案?[Web File Browser (WFB)]也許會是一個方案，10月底開始的LibreChat證明了這事。
+	- 3月休假回來加緊腳步做RAG還有AI繪製科學圖，嘗試了[streamlit](./web_jokers/0.streamlit.md)。
+	- 4月份一個偶然的機緣發現瀏覽器插件的效能較前有顯著的提升，還可以接端的ollama，展開了建置還有[推廣](https://sinotec2.github.io/AIEE/NLP/plugins)的工作
+	- 5月：在去年5月開始的[lawchat](https://sinotec2.github.io/AIEE/NLP/lawchat/)這個議題上開始測試各樣的索引方式、資料庫引擎、引用的UI整合套件是streamlit、RAG套件是llama-index。
+	- 6月寫了[obsidian](https://sinotec2.github.io/Utilities/MarkLang/note_systems/obsidian/obsidian_briefing)的使用指引，因為5月份他們開源了。
+	- 11月中這個專案算是交卷了(內部[Repo](https://github.com/Sinotech-Air/contract_chat))
+	- 
 - 2024-01-15 慢慢將FAQ系統切分成好查詢的小系統，例如小工具utilites.
 - 2023-06-17 這半年來似乎乏善可陳，主要卡在[預報系統](http://sinotec2.github.io/Focus-on-Air-Quality/ForecastSystem)的枝微細節，晚上斷電的問題、國網的調適問題、畫面輸出與使用者介面等等，方案定不下來，重複卻少許變動的筆記越寫越多，也不敢說什麼才是真正新的、值得分享的。或許發展系統最終的結局就是等著被替代更新吧！
 - 2022-12-28 隨著5G與影音世界的開放，知識、或者知識管理(KM)有了全新的面貌，甚至OpenKM公司官網也將其軟體正名為檔案管理系統(DMS)。作為一個知識經濟從業者，關於KM過去還有蠻多理想與實作。過去有關OpenKM的文件、程式，整理放在[另外一個gh-page][okm]供參。

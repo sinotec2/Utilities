@@ -2,7 +2,7 @@
 layout: default
 title: 數位筆記系統使用心得
 parent: note systems
-grand_parent: MarkLang
+grand_parent: Marking Languages
 last_modified_date: 2022-10-11 08:57:40
 tags:
   - note_system
