@@ -11,14 +11,10 @@
             "id": "6c81b569cf5dd597",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "README"
+              "title": "新分頁"
             }
           }
         ]
@@ -140,13 +136,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "web_jokers/Crawlers/Crawlers.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Crawlers 的大綱"
+              "title": "大綱"
             }
           },
           {
@@ -181,6 +176,16 @@
   },
   "active": "cc379d6a4d5de696",
   "lastOpenFiles": [
+    "web_jokers/streamlit/kb/deployments/huh-this-is-isnt-supposed-to-happen-message-after-trying-to-log-in.md",
+    "web_jokers/streamlit/kb/deployments/how-to-submit-a-support-case-for-streamlit-community-cloud.md",
+    "web_jokers/streamlit/kb/deployments/does-streamlit-support-wsgi-protocol.md",
+    "web_jokers/streamlit/kb/deployments/deploy-multiple-streamlit-apps-different-subdomains.md",
+    "web_jokers/streamlit/kb/deployments/authentication-without-sso.md",
+    "MarkLang/md_to_PDF.md",
+    "MarkLang/cntr_kml_py.md",
+    "MarkLang/cntr_kml.py.md",
+    "MarkLang/PRISMA.md",
+    "README.md",
     "web_jokers/fend_framework.md",
     "Graphics/echart/0.echart.md",
     "Graphics/echart",
@@ -198,17 +203,7 @@
     "Languages/python/0.python.md",
     "web_jokers/StaticGen.md/blog.md",
     "web_jokers/StaticGen.md/VuePress/Vue.js.md",
-    "web_jokers/StaticGen.md/VuePress/VP_general.md",
-    "web_jokers/StaticGen.md/VuePress/VP_deployment.md",
-    "web_jokers/StaticGen.md/VuePress/templates.md",
-    "web_jokers/StaticGen.md/VuePress/ServVSDep.md",
-    "web_jokers/StaticGen.md/VuePress/RenewDist.md",
-    "web_jokers/StaticGen.md/VuePress/act_runner.md",
-    "web_jokers/StaticGen.md/VuePress/question_box.md",
     "web_jokers/StaticGen.md/VuePress/pngs/2024-10-12-20-03-19.png",
-    "web_jokers/StaticGen.md/VuePress/PAT.md",
-    "web_jokers/StaticGen.md/VuePress/LinksGiteaJenkins.md",
-    "web_jokers/StaticGen.md/VuePress/0.VuePress.md",
     "tools/office/AI_edit.pngs/Pasted image 20250630143335.png",
     "tools/office/AI_edit.pngs",
     "tools/office",
