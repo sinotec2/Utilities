@@ -1,9 +1,8 @@
-
 ---
 layout: default
-title:  bld2dxf
+title: bld2dxf
 grand_parent: DXF
-parent: buildings
+parent: roads
 last_modified_date: 2024-12-08 16:24:44
 tags: GIS DXF
 ---
