@@ -13,7 +13,7 @@ last_modified_date: 2024-01-16 15:27:26
 這裡分享小工具與小經驗
 {: .fs-6 .fw-300 }
 
-[News at 2024-01-15][okm]{: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [每日空品預報和其他](https://sinotec2.github.io/){: .btn .fs-5 .mb-4 .mb-md-0 } [blogs](https://sinotec2.github.io/FAQ/){: .btn .fs-5 .mb-4 .mb-md-0 } [OpenKM][okm]{: .btn .fs-5 .mb-4 .mb-md-0 } [AIEE][aiee]{: .btn .fs-5 .mb-4 .mb-md-0 }[Focus-On-Air-Quality][faq]{: .btn .fs-5 .mb-4 .mb-md-0 }
+[News at 2025-12-23][okm]{: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [每日空品預報和其他](https://sinotec2.github.io/){: .btn .fs-5 .mb-4 .mb-md-0 } [blogs](https://sinotec2.github.io/FAQ/){: .btn .fs-5 .mb-4 .mb-md-0 } [OpenKM][okm]{: .btn .fs-5 .mb-4 .mb-md-0 } [AIEE][aiee]{: .btn .fs-5 .mb-4 .mb-md-0 }[Focus-On-Air-Quality][faq]{: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -25,8 +25,11 @@ last_modified_date: 2024-01-16 15:27:26
 	- 3月休假回來加緊腳步做RAG還有AI繪製科學圖，嘗試了[streamlit](./web_jokers/0.streamlit.md)。
 	- 4月份一個偶然的機緣發現瀏覽器插件的效能較前有顯著的提升，還可以接端的ollama，展開了建置還有[推廣](https://sinotec2.github.io/AIEE/NLP/plugins)的工作
 	- 5月：在去年5月開始的[lawchat](https://sinotec2.github.io/AIEE/NLP/lawchat/)這個議題上開始測試各樣的索引方式、資料庫引擎、引用的UI整合套件是streamlit、RAG套件是llama-index。
-	- 6月寫了[obsidian](https://sinotec2.github.io/Utilities/MarkLang/note_systems/obsidian/obsidian_briefing)的使用指引，因為5月份他們開源了。
-	- 11月中這個專案算是交卷了(內部[Repo](https://github.com/Sinotech-Air/contract_chat))
+	- 6月寫了[obsidian](https://sinotec2.github.io/Utilities/MarkLang/note_systems/obsidian/obsidian_briefing)的使用指引，因為5月份他們開源了。6月中插入了標前AI審查的專案。
+	- 7月暑假我們做了期中報告。
+	- 8月陸續執行程式開發的收尾交付會議，也在母公司的引導下擴大研發議題的討論。一直到9月才逐一定案。
+	- 10月我們準備在集團IT會議中報告標前審查的成果。總算在11月中這個專案算是交卷了(內部[Repo](https://github.com/Sinotech-Air/contract_chat))，集團會議後我們隨即展開了LibreChat系統。
+	- 
 	- 
 - 2024-01-15 慢慢將FAQ系統切分成好查詢的小系統，例如小工具utilites.
 - 2023-06-17 這半年來似乎乏善可陳，主要卡在[預報系統](http://sinotec2.github.io/Focus-on-Air-Quality/ForecastSystem)的枝微細節，晚上斷電的問題、國網的調適問題、畫面輸出與使用者介面等等，方案定不下來，重複卻少許變動的筆記越寫越多，也不敢說什麼才是真正新的、值得分享的。或許發展系統最終的結局就是等著被替代更新吧！
