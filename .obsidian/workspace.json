@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "b2e03979578e3162",
+        "id": "7c99b5042ebc4134",
         "type": "tabs",
         "children": [
           {
-            "id": "6c81b569cf5dd597",
+            "id": "eb825e3db4a7bf01",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Graphics/echart/0.echart.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "0.echart"
+              "title": "新分頁"
             }
           }
         ]
@@ -140,13 +136,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Graphics/echart/0.echart.md",
+                "file": "MarkLang/note_systems/rethingkins.md.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "0.echart 的大綱"
+              "title": "rethingkins.md 的大綱"
             }
           },
           {
@@ -179,8 +175,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6c81b569cf5dd597",
+  "active": "cc379d6a4d5de696",
   "lastOpenFiles": [
+    "MarkLang/note_systems/code_ug.md",
+    "MarkLang/note_systems/0.note_systems.md",
+    "MarkLang/cntr_kml_py.md",
+    "MarkLang/0.MarkLanguages.md",
     "Graphics/echart/0.echart.md",
     "Graphics/echart/0.echart.md",
     "Graphics/earth/earth.md",
@@ -199,15 +199,11 @@
     "web_jokers/streamlit/kb/deployments/deploy-multiple-streamlit-apps-different-subdomains.md",
     "web_jokers/streamlit/kb/deployments/authentication-without-sso.md",
     "MarkLang/md_to_PDF.md",
-    "MarkLang/cntr_kml_py.md",
     "MarkLang/cntr_kml.py.md",
     "MarkLang/PRISMA.md",
     "README.md",
     "web_jokers/fend_framework.md",
     "Graphics/echart",
-    "DB_servers/note_systems/MediaWiki.md",
-    "web_jokers/Crawlers/Crawlers.md",
-    "Languages/vue/vue_ecology copy.md",
     "web_jokers/StaticGen.md/VuePress/pngs/2024-10-12-20-03-19.png",
     "tools/office/AI_edit.pngs/Pasted image 20250630143335.png",
     "tools/office/AI_edit.pngs",
