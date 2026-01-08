@@ -1,4 +1,24 @@
+---
+layout: default
+title:  localDB
+parent: DB_servers
+last_modified_date: 2024-01-16 10:51:11
+tags: DB_servers
+---
 
+# db conversions
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
 以下為使用 SQL Server Express LocalDB 的簡明使用說明（繁體中文），涵蓋安裝、建立/啟動執行個體、連線、共用、管理與疑難排解重點。
 
 1. 先決條件與安裝
