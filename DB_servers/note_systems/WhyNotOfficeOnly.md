@@ -1,4 +1,28 @@
+---
+layout: default
+title:  mysql之安裝
+parent: 
+grand_parent: DB_servers
+last_modified_date: 2024-01-16 10:51:11
+tags: mysql
+---
 
+# mysql安裝
+
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+---
+
+## 背景
 
 這個主題很好 👍
 如果你的對象是公司同仁（尤其像你在研資部的環境，可能常需要彙整資料、技術筆記、專案紀錄），我會建議你用「工作流程差異」當主軸，而不是單純介紹工具。
