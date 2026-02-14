@@ -5,7 +5,7 @@ nav_order: 99
 has_children: true
 last_modified_date: 2024-01-11 15:58:26
 grand_parent: DB_servers 
-parent: note_system
+parent: 卡片筆記系統
 
 tags: DB_servers note_system 
 ---
