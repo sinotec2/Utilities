@@ -1,3 +1,15 @@
+---
+layout: default
+title: MediaWiki 
+nav_order: 99
+has_children: true
+last_modified_date: 2024-01-11 15:58:26
+grand_parent: DB_servers 
+parent: note_system
+
+tags: DB_servers note_system 
+---
+
 
 
 太好了，你用的是 MediaWiki，那就更清楚了。
