@@ -1,13 +1,13 @@
 ---
 layout: default
-title:  mysql之安裝
-parent: 
+title:  Office痛點與筆記系統的必要性
+parent: 卡片筆記系統
 grand_parent: DB_servers
 last_modified_date: 2024-01-16 10:51:11
 tags: mysql
 ---
 
-# mysql安裝
+# Office痛點與筆記系統的必要性
 
 {: .no_toc }
 
