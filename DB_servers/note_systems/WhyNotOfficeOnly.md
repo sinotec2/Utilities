@@ -3,8 +3,8 @@ layout: default
 title:  Office痛點與筆記系統的必要性
 parent: 卡片筆記系統
 grand_parent: DB_servers
-last_modified_date: 2024-01-16 10:51:11
-tags: mysql
+last_modified_date: 2026-02-15 5:51:11
+tags: note_system 
 ---
 
 # Office痛點與筆記系統的必要性
